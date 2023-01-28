@@ -1,17 +1,36 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  OnModuleInit,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User, UserService } from '../user/user.service';
+import {
+  AUTH_SERVICE_NAME,
+  AuthServiceClient,
+  ValidateResponse,
+} from './auth.pb';
+import { firstValueFrom, Observable } from 'rxjs';
+import { ClientGrpc } from '@nestjs/microservices';
 
 @Injectable()
-export class AuthService {
-  constructor(private readonly usersService: UserService) {}
+export class AuthService implements OnModuleInit {
+  private authServiceClient: AuthServiceClient;
 
-  validateUser(username: string, password: string): User {
-    const user = this.usersService.findByUsername(username);
+  @Inject(AUTH_SERVICE_NAME)
+  private readonly authClient: ClientGrpc;
 
-    if (!user || user.password !== password) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
+  public onModuleInit(): void {
+    this.authServiceClient =
+      this.authClient.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
+  }
 
-    return user;
+  public async validateUser(
+    sessionId: string,
+    deviceId: string,
+  ): Promise<ValidateResponse> {
+    return await firstValueFrom(
+      this.authServiceClient.validate({ sessionId, deviceId }),
+    );
   }
 }

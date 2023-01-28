@@ -7,8 +7,8 @@ import {
   Session,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './guards/local-auth/local-auth.guard';
-import { IsAuthenticatedGuard } from './guards/is-authenticated/is-authenticated.guard';
+import { LocalAuthGuard } from './utils/guards/local-auth/local-auth.guard';
+import { IsAuthenticatedGuard } from './utils/guards/is-authenticated/is-authenticated.guard';
 
 @Controller('auth')
 export class AuthController {
