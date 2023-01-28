@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { sessionSettings } from './utils/config/config';
 
 async function run() {
   const app = await NestFactory.create(AppModule);
@@ -11,23 +12,12 @@ async function run() {
   const PORT: number = config.get<number>('PORT');
 
   app.useGlobalPipes(new ValidationPipe());
-
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: config.get<string>('FRONTEND_URL'),
     credentials: true,
   });
 
-  app.use(
-    session({
-      name: 'user-session',
-      secret: 'dskdaskdaskdas',
-      resave: false,
-      saveUninitialized: true,
-      cookie: {
-        maxAge: 60000,
-      },
-    }),
-  );
+  app.use(session(sessionSettings));
   app.use(passport.initialize());
   app.use(passport.session());
 
