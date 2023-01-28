@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import * as DeviceDetector from 'device-detector-js';
-// TODO: ГЛЯНУТЬ REAL-ESTATE ДЛЯ ПРОВЕРКИ АВТОРИЗАЦИИ (используй микросервисы для проверки sessionID)
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {
