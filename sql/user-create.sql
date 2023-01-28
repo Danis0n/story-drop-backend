@@ -36,5 +36,6 @@ CREATE TABLE sd_user
 CREATE TABLE sd_role_user
 (
     role_id INT NOT NULL REFERENCES role(role_id) ON DELETE CASCADE ON UPDATE CASCADE ,
-    user_id UUID NOT NULL REFERENCES sd_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+    user_id UUID NOT NULL REFERENCES sd_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT user_role_pkey PRIMARY KEY(user_id,role_id)
 );

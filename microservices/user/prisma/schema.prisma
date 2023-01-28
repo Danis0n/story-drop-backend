@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model image {
+  image_id     String    @id @db.Uuid
+  content_type String    @db.VarChar(30)
+  data         Bytes
+  image_name   String    @db.VarChar(100)
+  image_size   BigInt
+  sd_user      sd_user[]
+}
+
+model role {
+  role_id      Int            @id @default(autoincrement())
+  role_name    String         @db.VarChar(30)
+  sd_role_user sd_role_user[]
+}
+
+model sd_role_user {
+  role_id Int
+  user_id String  @db.Uuid
+  role    role    @relation(fields: [role_id], references: [role_id], onDelete: Cascade)
+  sd_user sd_user @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  @@id([user_id, role_id], map: "user_role_pkey")
+}
+
+model sd_user {
+  user_id      String         @id @db.Uuid
+  username     String         @unique @db.VarChar(100)
+  password     String         @db.VarChar(200)
+  email        String         @db.VarChar(100)
+  nickname     String         @db.VarChar(100)
+  is_enabled   Boolean
+  is_blocked   Boolean
+  info_id      Int?
+  avatar_id    String?        @db.Uuid
+  sd_role_user sd_role_user[]
+  image        image?         @relation(fields: [avatar_id], references: [image_id], onDelete: Cascade)
+  sd_user_info sd_user_info?  @relation(fields: [info_id], references: [info_id], onDelete: Cascade)
+}
+
+model sd_user_info {
+  info_id Int       @id @default(autoincrement())
+  text    String?
+  contact String?
+  sd_user sd_user[]
+}
