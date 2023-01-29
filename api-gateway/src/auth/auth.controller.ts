@@ -9,9 +9,9 @@ import {
   Inject,
   OnModuleInit,
 } from '@nestjs/common';
-import { AuthGuard } from './utils/guards/local-auth/auth.guard';
+import { AuthGuard } from './utils/guards/auth/auth.guard';
 import { IsAuthenticatedGuard } from './utils/guards/is-authenticated/is-authenticated.guard';
-import { User } from './utils/decorators/user.decorator';
+import { User } from '../utils/decorators/user.decorator';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 
@@ -36,17 +36,7 @@ export class AuthController implements OnModuleInit {
 
   @UseGuards(IsAuthenticatedGuard)
   @Post('logout')
-  async logout(@Request() request) {
-    const logoutError = await new Promise((resolve) =>
-      request.logOut({ keepSessionInfo: false }, (error) => resolve(error)),
-    );
-
-    if (logoutError) {
-      console.error(logoutError);
-
-      throw new InternalServerErrorException('Could not log out user');
-    }
-
+  private async logout() {
     return {
       logout: true,
     };
@@ -54,7 +44,7 @@ export class AuthController implements OnModuleInit {
 
   @UseGuards(IsAuthenticatedGuard)
   @Get('protected')
-  protected() {
+  private protected() {
     return {
       message: 'This route is protected against unauthenticated users!',
     };

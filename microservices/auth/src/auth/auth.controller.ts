@@ -4,6 +4,8 @@ import {
   AUTH_SERVICE_NAME,
   LoginRequest,
   LoginResponse,
+  ValidateRequest,
+  ValidateResponse,
 } from './proto/auth.pb';
 
 @Controller()
@@ -27,5 +29,12 @@ export class AuthController {
         uuid: '123',
       },
     };
+  }
+
+  // change ip-address in db if it's new
+  @GrpcMethod(AUTH_SERVICE_NAME, 'Validate')
+  private async validate(payload: ValidateRequest): Promise<ValidateResponse> {
+    console.log(payload);
+    return { permission: true };
   }
 }
