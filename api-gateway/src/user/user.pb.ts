@@ -43,7 +43,6 @@ export interface CreateUser {
 export interface User {
   uuid: string;
   username: string;
-  password: string;
   email: string;
   nickname: string;
   isEnabled: boolean;

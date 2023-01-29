@@ -34,7 +34,6 @@ export class UserService {
       isEnabled: true,
       isLocked: false,
       nickname: 'dans',
-      password: '321eas',
       roles: ['admin'],
       username: 'das',
       uuid: '123',

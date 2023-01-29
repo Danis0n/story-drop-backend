@@ -22,7 +22,7 @@ export interface LoginRequest {
   username: string;
   password: string;
   sessionId: string;
-  sessionExpire: string;
+  sessionExpire: number;
   userAgent: string;
   ip: string;
 }
@@ -37,7 +37,6 @@ export interface LoginResponse {
 export interface User {
   uuid: string;
   username: string;
-  password: string;
   email: string;
   nickname: string;
   isEnabled: boolean;

@@ -4,7 +4,6 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import * as DeviceDetector from 'device-detector-js';
 import { AuthService } from '../../../auth.service';
 import { ValidateResponse } from '../../../auth.pb';
 
@@ -15,16 +14,16 @@ export class IsAuthenticatedGuard implements CanActivate {
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const deviceDetector = new DeviceDetector();
 
     // TODO: implement cookie check and ip-address
     // change ip-address in db if it's new
-
     // if (false) {
     //   return false;
     // }
 
-    console.log(deviceDetector.parse(request.get('user-agent')));
+    // const { session, device, ip } = this.serializeCookie(request);
+
+    // console.log(deviceDetector.parse(request.get('user-agent')));
     console.log(request.socket.remoteAddress);
 
     const response: ValidateResponse = await this.authService.validateUser(

@@ -10,6 +10,7 @@ import {
 export class AuthController {
   @GrpcMethod(AUTH_SERVICE_NAME, 'Login')
   private async login(payload: LoginRequest): Promise<LoginResponse> {
+    console.log(payload);
     return {
       deviceId: payload.userAgent,
       isLogged: true,
@@ -21,9 +22,8 @@ export class AuthController {
         isEnabled: true,
         isLocked: false,
         nickname: 'dans',
-        password: '321eas',
         roles: ['admin'],
-        username: 'das',
+        username: payload.username,
         uuid: '123',
       },
     };

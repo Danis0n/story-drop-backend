@@ -7,7 +7,12 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../../../auth.service';
 import { LoginRequest, LoginResponse } from '../../../auth.pb';
-import * as DeviceDetector from 'device-detector-js';
+import {
+  COOKIE_DEVICE,
+  COOKIE_LOGGED_IN,
+  COOKIE_MAX_AGE,
+} from '../../../../utils/config/constants';
+import { serializeUserAgentToString } from '../../../../utils/mapper/user-agent.mapper';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -18,27 +23,20 @@ export class AuthGuard implements CanActivate {
     username: string,
     password: string,
   ): LoginRequest {
-    const deviceDetector = new DeviceDetector();
-
-    const parser: DeviceDetector.DeviceDetectorResult = deviceDetector.parse(
-      req.get('user-agent'),
-    );
-    const os: string | null = parser.os?.name;
-    const device: string | null =
-      parser.device?.type + ' ' + parser.device?.brand;
-    const client: string | null = parser.client.type + ' ' + parser.client.name;
+    const cookieMaxAge: number = req.session.cookie.originalMaxAge;
+    const userAgent: string = serializeUserAgentToString(req.get('user-agent'));
+    const sessionID: string = req.sessionID;
 
     return {
       ip: 'localhost',
-      password: '1234',
-      username: 'dasdas',
-      userAgent: os + ' ' + device + ' ' + client,
-      sessionId: 'dsdasd3edsa',
-      sessionExpire: '19-02-2022',
+      password: password,
+      username: username,
+      userAgent: userAgent,
+      sessionId: sessionID,
+      sessionExpire: cookieMaxAge,
     };
   }
 
-  // implement login
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
@@ -52,7 +50,13 @@ export class AuthGuard implements CanActivate {
 
     request.user = loginResponse.user;
 
-    console.log(request.sessionID);
+    response.cookie(COOKIE_DEVICE, loginResponse.deviceId, {
+      maxAge: COOKIE_MAX_AGE,
+    });
+    response.cookie(COOKIE_LOGGED_IN, loginResponse.isLogged, {
+      maxAge: COOKIE_MAX_AGE,
+    });
+
     return true;
   }
 }

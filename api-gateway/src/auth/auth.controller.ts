@@ -6,19 +6,32 @@ import {
   Request,
   Session,
   InternalServerErrorException,
+  Inject,
+  OnModuleInit,
 } from '@nestjs/common';
 import { AuthGuard } from './utils/guards/local-auth/auth.guard';
 import { IsAuthenticatedGuard } from './utils/guards/is-authenticated/is-authenticated.guard';
 import { User } from './utils/decorators/user.decorator';
+import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
+import { ClientGrpc } from '@nestjs/microservices';
 
 @Controller('auth')
-export class AuthController {
+export class AuthController implements OnModuleInit {
+  private authServiceClient: AuthServiceClient;
+
+  @Inject(AUTH_SERVICE_NAME)
+  private readonly authClient: ClientGrpc;
+
+  public onModuleInit(): void {
+    this.authServiceClient =
+      this.authClient.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
+  }
+
   @UseGuards(AuthGuard)
   @Post('login')
-  login(@Session() session: Record<string, any>, @User() user: any) {
-    console.log(user);
+  private login(@Session() session: Record<string, any>, @User() user: any) {
     session.user = user;
-    return { sessionId: session.id, session };
+    return { sessionId: session.id, session: session.user };
   }
 
   @UseGuards(IsAuthenticatedGuard)
