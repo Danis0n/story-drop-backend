@@ -18,8 +18,6 @@ async function run() {
   });
 
   app.use(session(sessionSettings));
-  app.use(passport.initialize());
-  app.use(passport.session());
 
   await app.listen(PORT);
 }

@@ -25,4 +25,19 @@ export class UserService {
   public async findOneId(payload: FindOneIdRequest): Promise<User> {
     return null;
   }
+
+  public async findOneSession(payload: FindOneIdRequest): Promise<User> {
+    return {
+      avatar: null,
+      email: 'sood',
+      info: null,
+      isEnabled: true,
+      isLocked: false,
+      nickname: 'dans',
+      password: '321eas',
+      roles: ['admin'],
+      username: 'das',
+      uuid: '123',
+    };
+  }
 }

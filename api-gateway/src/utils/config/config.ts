@@ -1,6 +1,7 @@
 import { USER_PACKAGE_NAME, USER_SERVICE_NAME } from '../../user/user.pb';
 import { ClientProviderOptions, Transport } from '@nestjs/microservices';
 import { AUTH_SERVICE_NAME, AUTH_PACKAGE_NAME } from '../../auth/auth.pb';
+import { COOKIE_MAX_AGE } from './constants';
 
 export const UserServiceProto: ClientProviderOptions = {
   name: USER_SERVICE_NAME,
@@ -26,8 +27,8 @@ export const sessionSettings = {
   name: 'user-session',
   secret: 'dskdaskdaskdas',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    maxAge: 60000,
+    maxAge: COOKIE_MAX_AGE,
   },
 };

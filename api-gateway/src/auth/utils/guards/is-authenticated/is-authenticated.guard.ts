@@ -30,6 +30,7 @@ export class IsAuthenticatedGuard implements CanActivate {
     const response: ValidateResponse = await this.authService.validateUser(
       'sessionId',
       'deviceId',
+      '',
     );
 
     return response.permission;

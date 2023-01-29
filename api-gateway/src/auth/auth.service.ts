@@ -1,16 +1,12 @@
-import {
-  Inject,
-  Injectable,
-  OnModuleInit,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { User, UserService } from '../user/user.service';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import {
   AUTH_SERVICE_NAME,
   AuthServiceClient,
+  LoginRequest,
+  LoginResponse,
   ValidateResponse,
 } from './auth.pb';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ClientGrpc } from '@nestjs/microservices';
 
 @Injectable()
@@ -28,9 +24,14 @@ export class AuthService implements OnModuleInit {
   public async validateUser(
     sessionId: string,
     deviceId: string,
+    ip: string,
   ): Promise<ValidateResponse> {
     return await firstValueFrom(
-      this.authServiceClient.validate({ sessionId, deviceId }),
+      this.authServiceClient.validate({ sessionId, deviceId, ip }),
     );
+  }
+
+  public async login(login: LoginRequest): Promise<LoginResponse> {
+    return await firstValueFrom(this.authServiceClient.login(login));
   }
 }

@@ -3,8 +3,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStrategy } from '../utils/local-strategy';
-import { UserSerializer } from '../utils/user-serializer';
+import { ClientsModule } from '@nestjs/microservices';
+import { AuthServiceProto } from '../utils/config/config';
 
 @Module({
   imports: [
@@ -12,8 +12,9 @@ import { UserSerializer } from '../utils/user-serializer';
     PassportModule.register({
       session: true,
     }),
+    ClientsModule.register([AuthServiceProto]),
   ],
-  providers: [AuthService, LocalStrategy, UserSerializer],
+  providers: [AuthService],
   controllers: [AuthController],
 })
 export class AuthModule {}

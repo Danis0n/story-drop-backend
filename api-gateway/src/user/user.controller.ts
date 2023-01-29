@@ -7,9 +7,11 @@ import {
   OnModuleInit,
   Param,
   Put,
+  Query,
 } from '@nestjs/common';
 import {
   FindAllResponse,
+  FindOneByRequest,
   User,
   USER_SERVICE_NAME,
   UserServiceClient,
@@ -32,6 +34,13 @@ export class UserController implements OnModuleInit {
   @Get()
   private async findAll(): Promise<Observable<FindAllResponse>> {
     return this.userServiceClient.findAll({});
+  }
+
+  @Get()
+  private async findOneBy(
+    @Query() params: FindOneByRequest,
+  ): Promise<Observable<User>> {
+    return this.userServiceClient.findOneBy(params);
   }
 
   @Get('/:id')

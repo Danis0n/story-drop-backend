@@ -4,6 +4,16 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface FindOneSessionRequest {
+  sessionId: string;
+}
+
+export interface UpdateRequest {
+}
+
+export interface UpdateResponse {
+}
+
 export interface FindOneIdRequest {
   uuid: string;
 }
@@ -69,6 +79,10 @@ export interface UserServiceClient {
   findOneBy(request: FindOneByRequest): Observable<User>;
 
   findOneId(request: FindOneIdRequest): Observable<User>;
+
+  findOneSession(request: FindOneSessionRequest): Observable<User>;
+
+  update(request: UpdateRequest): Observable<UpdateResponse>;
 }
 
 export interface UserServiceController {
@@ -79,11 +93,15 @@ export interface UserServiceController {
   findOneBy(request: FindOneByRequest): Promise<User> | Observable<User> | User;
 
   findOneId(request: FindOneIdRequest): Promise<User> | Observable<User> | User;
+
+  findOneSession(request: FindOneSessionRequest): Promise<User> | Observable<User> | User;
+
+  update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
 }
 
 export function UserServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneBy", "findOneId"];
+    const grpcMethods: string[] = ["create", "findAll", "findOneBy", "findOneId", "findOneSession", "update"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);

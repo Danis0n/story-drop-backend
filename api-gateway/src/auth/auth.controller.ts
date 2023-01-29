@@ -7,16 +7,18 @@ import {
   Session,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './utils/guards/local-auth/local-auth.guard';
+import { AuthGuard } from './utils/guards/local-auth/auth.guard';
 import { IsAuthenticatedGuard } from './utils/guards/is-authenticated/is-authenticated.guard';
+import { User } from './utils/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AuthGuard)
   @Post('login')
-  login(@Session() session: Record<string, any>) {
-    console.log(session.id);
-    return session;
+  login(@Session() session: Record<string, any>, @User() user: any) {
+    console.log(user);
+    session.user = user;
+    return { sessionId: session.id, session };
   }
 
   @UseGuards(IsAuthenticatedGuard)

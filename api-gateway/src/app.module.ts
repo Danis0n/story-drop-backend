@@ -13,9 +13,6 @@ import { FRONTEND_URL, PORT } from './utils/config/constants';
       envFilePath: `.${process.env.NODE_ENV}.env`,
       load: [PORT, FRONTEND_URL],
     }),
-    PassportModule.register({
-      session: true,
-    }),
     AuthModule,
     UserModule,
   ],

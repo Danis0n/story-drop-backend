@@ -35,4 +35,9 @@ export class UserController {
   private async findOneId(payload: FindOneIdRequest): Promise<User> {
     return this.service.findOneId(payload);
   }
+
+  @GrpcMethod(USER_SERVICE_NAME, 'FindOneSession')
+  private async findOneSession(payload: FindOneIdRequest): Promise<User> {
+    return this.service.findOneSession(payload);
+  }
 }
