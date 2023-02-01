@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -6,10 +7,12 @@ import {
   NotImplementedException,
   OnModuleInit,
   Param,
+  Post,
   Put,
   Query,
 } from '@nestjs/common';
 import {
+  CreateUser,
   FindAllResponse,
   FindOneByRequest,
   User,
@@ -41,6 +44,15 @@ export class UserController implements OnModuleInit {
     @Query() params: FindOneByRequest,
   ): Promise<Observable<User>> {
     return this.userServiceClient.findOneBy(params);
+  }
+
+  // test
+  // use register in auth module instead
+  @Post()
+  private async create(
+    @Body() createUser: CreateUser,
+  ): Promise<Observable<User>> {
+    return this.userServiceClient.create(createUser);
   }
 
   @Get('/:id')

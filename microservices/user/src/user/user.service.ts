@@ -1,17 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
-  CreateUser,
   FindAllRequest,
   FindAllResponse,
   FindOneByRequest,
   FindOneIdRequest,
   User,
 } from './proto/user.pb';
+import { UserMapper } from './mapper/user.mapper';
+import { UserRepository, UserWithInclude } from './repository/user.repository';
+import { CreateUserDto } from './dto/requests.dto';
 
 @Injectable()
 export class UserService {
-  public async create(payload: CreateUser): Promise<User> {
-    return null;
+  @Inject(UserMapper)
+  private readonly mapper: UserMapper;
+
+  @Inject(UserRepository)
+  private readonly repository: UserRepository;
+
+  public async create(createUser: CreateUserDto): Promise<User> {
+    const user: UserWithInclude = await this.repository.createUser(createUser);
+    return this.mapper.mapToUserDto(user);
   }
 
   public async findAll(payload: FindAllRequest): Promise<FindAllResponse> {

@@ -30,6 +30,8 @@
     "@nestjs/microservices": "^9.2.1",
     "@nestjs/platform-express": "^9.0.0",
     "@prisma/client": "^4.9.0",
+    "builder-pattern": "^2.2.0",
+    "class-validator": "^0.14.0",
     "nestjs-grpc-exceptions": "^0.1.1",
     "prisma": "^4.9.0",
     "reflect-metadata": "^0.1.13",

@@ -1,18 +1,16 @@
 /* eslint-disable */
-import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
-import { Observable } from "rxjs";
+import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
 
-export const protobufPackage = "user";
+export const protobufPackage = 'user';
 
 export interface FindOneSessionRequest {
   sessionId: string;
 }
 
-export interface UpdateRequest {
-}
+export interface UpdateRequest {}
 
-export interface UpdateResponse {
-}
+export interface UpdateResponse {}
 
 export interface FindOneIdRequest {
   uuid: string;
@@ -24,8 +22,7 @@ export interface FindOneByRequest {
   nickname: string;
 }
 
-export interface FindAllRequest {
-}
+export interface FindAllRequest {}
 
 export interface FindAllResponse {
   users: User[];
@@ -68,7 +65,7 @@ export interface Image {
   name: string;
 }
 
-export const USER_PACKAGE_NAME = "user";
+export const USER_PACKAGE_NAME = 'user';
 
 export interface UserServiceClient {
   create(request: CreateUser): Observable<User>;
@@ -87,30 +84,57 @@ export interface UserServiceClient {
 export interface UserServiceController {
   create(request: CreateUser): Promise<User> | Observable<User> | User;
 
-  findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
+  findAll(
+    request: FindAllRequest,
+  ): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
   findOneBy(request: FindOneByRequest): Promise<User> | Observable<User> | User;
 
   findOneId(request: FindOneIdRequest): Promise<User> | Observable<User> | User;
 
-  findOneSession(request: FindOneSessionRequest): Promise<User> | Observable<User> | User;
+  findOneSession(
+    request: FindOneSessionRequest,
+  ): Promise<User> | Observable<User> | User;
 
-  update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
+  update(
+    request: UpdateRequest,
+  ): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
 }
 
 export function UserServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneBy", "findOneId", "findOneSession", "update"];
+    const grpcMethods: string[] = [
+      'create',
+      'findAll',
+      'findOneBy',
+      'findOneId',
+      'findOneSession',
+      'update',
+    ];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcMethod('UserService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("UserService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method,
+      );
+      GrpcStreamMethod('UserService', method)(
+        constructor.prototype[method],
+        method,
+        descriptor,
+      );
     }
   };
 }
 
-export const USER_SERVICE_NAME = "UserService";
+export const USER_SERVICE_NAME = 'UserService';

@@ -16,8 +16,8 @@ CREATE TABLE image
 CREATE TABLE sd_user_info
 (
     info_id SERIAL NOT NULL PRIMARY KEY,
-    text TEXT,
-    contact TEXT
+    text TEXT DEFAULT NULL,
+    contact TEXT DEFAULT NULL
 );
 
 CREATE TABLE sd_user
@@ -30,7 +30,7 @@ CREATE TABLE sd_user
     is_enabled BOOLEAN NOT NULL,
     is_blocked BOOLEAN NOT NULL,
     info_id INT REFERENCES sd_user_info(info_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    avatar_id UUID REFERENCES image(image_id) ON DELETE CASCADE ON UPDATE CASCADE
+    avatar_id UUID REFERENCES image(image_id) ON DELETE CASCADE ON UPDATE CASCADE DEFAULT NULL
 );
 
 CREATE TABLE sd_role_user
