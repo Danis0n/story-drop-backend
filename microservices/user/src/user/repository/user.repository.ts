@@ -1,37 +1,20 @@
-import {
-  sd_user as UserEntity,
-  sd_user_info as UserInfoEntity,
-  role as RoleEntity,
-  image as ImageEntity,
-  sd_role_user as RoleUserEntity,
-  Prisma,
-} from '@prisma/client';
 import { Inject } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
 import { ROLE_USER } from '../../utils/config/constants';
 import { CreateUserDto } from '../dto/requests.dto';
-import {
-  userInclude,
-  UserWithInclude,
-} from '../../prisma/utils/prisma.validate';
+import { UserWithRelationData } from '../../prisma/utils/prisma.validate';
 
 export class UserRepository {
   @Inject(PrismaService)
   private readonly prisma: PrismaService;
 
-  public async test() {
-    const user: UserWithInclude[] = await this.prisma.sd_user.findMany({
-      include: userInclude,
-    });
-  }
-
-  public async createUser(payload: CreateUserDto): Promise<UserWithInclude> {
-    const uuid: string = randomUUID();
-
-    const user: UserWithInclude = await this.prisma.sd_user.create({
+  public async createUser(
+    payload: CreateUserDto,
+  ): Promise<UserWithRelationData> {
+    return await this.prisma.sd_user.create({
       data: {
-        user_id: uuid,
+        user_id: randomUUID(),
         username: payload.username,
         email: payload.email,
         password: payload.password,
@@ -54,15 +37,23 @@ export class UserRepository {
       },
       include: {
         sd_user_info: true,
-        sd_role_user: true,
+        sd_role_user: {
+          include: { role: true },
+        },
         image: true,
       },
     });
+  }
 
-    user.sd_role_user.map((role) => {
-      console.log(role.role_id);
+  public async findAll(): Promise<UserWithRelationData[]> {
+    return await this.prisma.sd_user.findMany({
+      include: {
+        sd_user_info: true,
+        sd_role_user: {
+          include: { role: true },
+        },
+        image: true,
+      },
     });
-
-    return user;
   }
 }

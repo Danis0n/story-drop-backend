@@ -15,14 +15,14 @@ import {
   CreateUser,
   FindAllResponse,
   FindOneByRequest,
-  User,
+  FindOneResponse,
   USER_SERVICE_NAME,
   UserServiceClient,
 } from './user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
-@Controller('users')
+@Controller('api/users')
 export class UserController implements OnModuleInit {
   private userServiceClient: UserServiceClient;
 
@@ -42,7 +42,7 @@ export class UserController implements OnModuleInit {
   @Get()
   private async findOneBy(
     @Query() params: FindOneByRequest,
-  ): Promise<Observable<User>> {
+  ): Promise<Observable<FindOneResponse>> {
     return this.userServiceClient.findOneBy(params);
   }
 
@@ -51,22 +51,28 @@ export class UserController implements OnModuleInit {
   @Post()
   private async create(
     @Body() createUser: CreateUser,
-  ): Promise<Observable<User>> {
+  ): Promise<Observable<FindOneResponse>> {
     return this.userServiceClient.create(createUser);
   }
 
   @Get('/:id')
-  private async findOneId(@Param('id') id: string): Promise<Observable<User>> {
+  private async findOneId(
+    @Param('id') id: string,
+  ): Promise<Observable<FindOneResponse>> {
     return this.userServiceClient.findOneId({ uuid: id });
   }
 
   @Put('/:id')
-  private async update(@Param('id') id: string): Promise<Observable<any>> {
+  private async update(
+    @Param('id') id: string,
+  ): Promise<Observable<FindOneResponse>> {
     throw new NotImplementedException('Not implemented yet');
   }
 
   @Delete('/:id')
-  private async delete(@Param('id') id: string): Promise<Observable<any>> {
+  private async delete(
+    @Param('id') id: string,
+  ): Promise<Observable<FindOneResponse>> {
     throw new NotImplementedException('Not implemented yet');
   }
 }

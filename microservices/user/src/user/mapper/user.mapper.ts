@@ -8,38 +8,31 @@ import {
 import { UserDto, UserInfoDto } from '../dto/user.dto';
 import { Builder } from 'builder-pattern';
 import {
-  roleWithInclude,
-  UserWithInclude,
+  roleWithRelationData,
+  UserWithRelationData,
 } from '../../prisma/utils/prisma.validate';
 
 // TODO: make mapper with builder
 
 export class UserMapper {
-  public mapToUserDto(user: UserWithInclude): UserDto {
-    return (
-      Builder(UserDto)
-        .uuid(user.user_id)
-        .email(user.email)
-        .username(user.username)
-        .nickname(user.nickname)
-        .isEnabled(user.is_enabled)
-        .isLocked(user.is_blocked)
-        .info(this.mapToUserInfoDto(user.sd_user_info))
-        // .roles(this.mapRoleToString(user.sd_role_user))
-        .build()
-    );
+  public mapToUserDto(user: UserWithRelationData): UserDto {
+    return Builder(UserDto)
+      .uuid(user.user_id)
+      .email(user.email)
+      .username(user.username)
+      .nickname(user.nickname)
+      .isEnabled(user.is_enabled)
+      .isLocked(user.is_blocked)
+      .info(this.mapToUserInfoDto(user.sd_user_info))
+      .isAvatar(!!user.avatar_id)
+      .roles(this.mapRoleToString(user.sd_role_user))
+      .build();
   }
 
-  private mapRoleToString(userRoles: roleWithInclude[]): string[] {
-    const roles: string[] = [];
-    userRoles.map((role) => {
-      role.role.role_name;
+  private mapRoleToString(userRoles: roleWithRelationData[]): string[] {
+    return userRoles.map((role) => {
+      return role.role.role_name;
     });
-    // userRoles.map(role => {
-    //   role.
-    // })
-
-    return roles;
   }
 
   private mapToUserInfoDto(userInfo: UserInfoEntity): UserInfoDto {
@@ -47,5 +40,11 @@ export class UserMapper {
       .text(userInfo.text)
       .contact(userInfo.contact)
       .build();
+  }
+
+  mapArrayToUserDto(users: UserWithRelationData[]): UserDto[] {
+    return users.map((user) => {
+      return this.mapToUserDto(user);
+    });
   }
 }

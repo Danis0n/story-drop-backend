@@ -4,6 +4,14 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface FindOneResponse {
+  user: User | undefined;
+}
+
+export interface FindAvatarResponse {
+  avatar: Image | undefined;
+}
+
 export interface FindAvatarByUserRequest {
   uuid: string;
 }
@@ -75,35 +83,39 @@ export interface Image {
 export const USER_PACKAGE_NAME = "user";
 
 export interface UserServiceClient {
-  create(request: CreateUser): Observable<User>;
+  create(request: CreateUser): Observable<FindOneResponse>;
 
   findAll(request: FindAllRequest): Observable<FindAllResponse>;
 
-  findOneBy(request: FindOneByRequest): Observable<User>;
+  findOneBy(request: FindOneByRequest): Observable<FindOneResponse>;
 
-  findOneId(request: FindOneIdRequest): Observable<User>;
+  findOneId(request: FindOneIdRequest): Observable<FindOneResponse>;
 
-  findOneSession(request: FindOneSessionRequest): Observable<User>;
+  findOneSession(request: FindOneSessionRequest): Observable<FindOneResponse>;
 
   update(request: UpdateRequest): Observable<UpdateResponse>;
 
-  findAvatarByUser(request: FindAvatarByUserRequest): Observable<Image>;
+  findAvatarByUser(request: FindAvatarByUserRequest): Observable<FindAvatarResponse>;
 }
 
 export interface UserServiceController {
-  create(request: CreateUser): Promise<User> | Observable<User> | User;
+  create(request: CreateUser): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
   findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
-  findOneBy(request: FindOneByRequest): Promise<User> | Observable<User> | User;
+  findOneBy(request: FindOneByRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
-  findOneId(request: FindOneIdRequest): Promise<User> | Observable<User> | User;
+  findOneId(request: FindOneIdRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
-  findOneSession(request: FindOneSessionRequest): Promise<User> | Observable<User> | User;
+  findOneSession(
+    request: FindOneSessionRequest,
+  ): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
   update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
 
-  findAvatarByUser(request: FindAvatarByUserRequest): Promise<Image> | Observable<Image> | Image;
+  findAvatarByUser(
+    request: FindAvatarByUserRequest,
+  ): Promise<FindAvatarResponse> | Observable<FindAvatarResponse> | FindAvatarResponse;
 }
 
 export function UserServiceControllerMethods() {

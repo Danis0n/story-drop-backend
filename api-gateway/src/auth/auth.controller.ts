@@ -3,9 +3,7 @@ import {
   Get,
   Post,
   UseGuards,
-  Request,
   Session,
-  InternalServerErrorException,
   Inject,
   OnModuleInit,
 } from '@nestjs/common';
@@ -15,7 +13,7 @@ import { User } from '../utils/decorators/user.decorator';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController implements OnModuleInit {
   private authServiceClient: AuthServiceClient;
 
