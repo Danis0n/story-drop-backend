@@ -4,6 +4,10 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface FindAvatarByUserRequest {
+  uuid: string;
+}
+
 export interface FindOneSessionRequest {
   sessionId: string;
 }
@@ -47,7 +51,7 @@ export interface User {
   nickname: string;
   isEnabled: boolean;
   isLocked: boolean;
-  avatar: Image | undefined;
+  isAvatar: boolean;
   info: UserInfo | undefined;
   roles: string[];
 }
@@ -82,6 +86,8 @@ export interface UserServiceClient {
   findOneSession(request: FindOneSessionRequest): Observable<User>;
 
   update(request: UpdateRequest): Observable<UpdateResponse>;
+
+  findAvatarByUser(request: FindAvatarByUserRequest): Observable<Image>;
 }
 
 export interface UserServiceController {
@@ -96,11 +102,21 @@ export interface UserServiceController {
   findOneSession(request: FindOneSessionRequest): Promise<User> | Observable<User> | User;
 
   update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
+
+  findAvatarByUser(request: FindAvatarByUserRequest): Promise<Image> | Observable<Image> | Image;
 }
 
 export function UserServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["create", "findAll", "findOneBy", "findOneId", "findOneSession", "update"];
+    const grpcMethods: string[] = [
+      "create",
+      "findAll",
+      "findOneBy",
+      "findOneId",
+      "findOneSession",
+      "update",
+      "findAvatarByUser",
+    ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UserService", method)(constructor.prototype[method], method, descriptor);

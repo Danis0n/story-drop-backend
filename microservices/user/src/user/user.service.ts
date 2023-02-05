@@ -7,8 +7,9 @@ import {
   User,
 } from './proto/user.pb';
 import { UserMapper } from './mapper/user.mapper';
-import { UserRepository, UserWithInclude } from './repository/user.repository';
+import { UserRepository } from './repository/user.repository';
 import { CreateUserDto } from './dto/requests.dto';
+import { UserWithInclude } from '../prisma/utils/prisma.validate';
 
 @Injectable()
 export class UserService {
@@ -37,7 +38,7 @@ export class UserService {
 
   public async findOneSession(payload: FindOneIdRequest): Promise<User> {
     return {
-      avatar: null,
+      isAvatar: false,
       email: 'sood',
       info: null,
       isEnabled: true,

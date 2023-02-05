@@ -18,7 +18,7 @@ export class AuthController {
       isLogged: true,
       sessionId: payload.sessionId,
       user: {
-        avatar: null,
+        isAvatar: false,
         email: 'sood',
         info: null,
         isEnabled: true,

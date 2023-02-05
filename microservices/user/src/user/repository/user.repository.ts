@@ -11,7 +11,10 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
 import { ROLE_USER } from '../../utils/config/constants';
 import { CreateUserDto } from '../dto/requests.dto';
-import { userInclude, UserWithInclude } from '../../prisma/prisma.validate';
+import {
+  userInclude,
+  UserWithInclude,
+} from '../../prisma/utils/prisma.validate';
 
 export class UserRepository {
   @Inject(PrismaService)

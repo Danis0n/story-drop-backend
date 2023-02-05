@@ -41,7 +41,7 @@ export interface User {
   nickname: string;
   isEnabled: boolean;
   isLocked: boolean;
-  avatar: Image | undefined;
+  isAvatar: boolean;
   info: UserInfo | undefined;
   roles: string[];
 }

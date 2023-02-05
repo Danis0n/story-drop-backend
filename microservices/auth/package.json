@@ -20,7 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/Danis0n/story-drop-proto.git",
-    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/auth/proto node_modules/story-drop-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
+    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/auth/proto node_modules/story-drop-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:user": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/user/proto node_modules/story-drop-proto/proto/user.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:user && npm run proto:auth"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.7",

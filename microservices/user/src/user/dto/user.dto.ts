@@ -13,7 +13,7 @@ export class UserInfoDto implements UserInfo {
 }
 
 export class UserDto implements User {
-  avatar: ImageDto;
+  isAvatar: boolean;
   email: string;
   info: UserInfoDto;
   isEnabled: boolean;
