@@ -25,7 +25,7 @@ CREATE TABLE sd_user
     user_id UUID NOT NULL PRIMARY KEY UNIQUE,
     username VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(200) NOT NULL,
-    email VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     nickname VARCHAR(100) NOT NULL,
     is_enabled BOOLEAN NOT NULL,
     is_blocked BOOLEAN NOT NULL,

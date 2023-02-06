@@ -30,10 +30,14 @@ export interface FindOneIdRequest {
   uuid: string;
 }
 
-export interface FindOneByRequest {
+export interface FindAnyByRequest {
   username: string;
   email: string;
-  nickname: string;
+}
+
+export interface FindAnyByResponse {
+  foundByUsername: boolean;
+  foundByEmail: boolean;
 }
 
 export interface FindAllRequest {
@@ -87,7 +91,7 @@ export interface UserServiceClient {
 
   findAll(request: FindAllRequest): Observable<FindAllResponse>;
 
-  findOneBy(request: FindOneByRequest): Observable<FindOneResponse>;
+  findAnyExistBy(request: FindAnyByRequest): Observable<FindAnyByResponse>;
 
   findOneId(request: FindOneIdRequest): Observable<FindOneResponse>;
 
@@ -103,7 +107,9 @@ export interface UserServiceController {
 
   findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
-  findOneBy(request: FindOneByRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  findAnyExistBy(
+    request: FindAnyByRequest,
+  ): Promise<FindAnyByResponse> | Observable<FindAnyByResponse> | FindAnyByResponse;
 
   findOneId(request: FindOneIdRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
@@ -123,7 +129,7 @@ export function UserServiceControllerMethods() {
     const grpcMethods: string[] = [
       "create",
       "findAll",
-      "findOneBy",
+      "findAnyExistBy",
       "findOneId",
       "findOneSession",
       "update",

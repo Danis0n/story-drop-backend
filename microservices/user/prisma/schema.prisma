@@ -35,7 +35,7 @@ model sd_user {
   user_id      String         @id @db.Uuid
   username     String         @unique @db.VarChar(100)
   password     String         @db.VarChar(200)
-  email        String         @db.VarChar(100)
+  email        String         @unique @db.VarChar(100)
   nickname     String         @db.VarChar(100)
   is_enabled   Boolean
   is_blocked   Boolean

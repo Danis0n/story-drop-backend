@@ -1,9 +1,12 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
-import { ROLE_USER } from '../../utils/config/constants';
 import { CreateUserDto } from '../dto/requests.dto';
 import { UserWithRelationData } from '../../prisma/utils/prisma.validate';
+import {
+  PRISMA_USER_CREATE_BASE_ROLE,
+  PRISMA_USER_INCLUDE,
+} from '../../prisma/utils/prisma.constants';
 
 export class UserRepository {
   @Inject(PrismaService)
@@ -21,13 +24,7 @@ export class UserRepository {
         nickname: payload.nickname,
         is_enabled: false,
         is_blocked: false,
-        sd_role_user: {
-          create: [
-            {
-              role_id: ROLE_USER,
-            },
-          ],
-        },
+        sd_role_user: PRISMA_USER_CREATE_BASE_ROLE,
         sd_user_info: {
           create: {
             text: payload.text,
@@ -35,25 +32,38 @@ export class UserRepository {
           },
         },
       },
-      include: {
-        sd_user_info: true,
-        sd_role_user: {
-          include: { role: true },
-        },
-        image: true,
-      },
+      include: PRISMA_USER_INCLUDE,
     });
   }
 
   public async findAll(): Promise<UserWithRelationData[]> {
     return await this.prisma.sd_user.findMany({
-      include: {
-        sd_user_info: true,
-        sd_role_user: {
-          include: { role: true },
-        },
-        image: true,
-      },
+      include: PRISMA_USER_INCLUDE,
     });
+  }
+
+  public async findOneId(uuid: string): Promise<UserWithRelationData> {
+    return await this.prisma.sd_user.findUnique({
+      where: {
+        user_id: uuid,
+      },
+      include: PRISMA_USER_INCLUDE,
+    });
+  }
+
+  public async isExistByUsername(username: string): Promise<boolean> {
+    return !!(await this.prisma.sd_user.findUnique({
+      where: {
+        username: username,
+      },
+    }));
+  }
+
+  public async isExistByEmail(email: string): Promise<boolean> {
+    return !!(await this.prisma.sd_user.findUnique({
+      where: {
+        email: email,
+      },
+    }));
   }
 }

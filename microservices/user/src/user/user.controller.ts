@@ -3,9 +3,9 @@ import { UserService } from './user.service';
 import { GrpcMethod } from '@nestjs/microservices';
 import {
   CreateUser,
-  FindAllRequest,
   FindAllResponse,
-  FindOneByRequest,
+  FindAnyByRequest,
+  FindAnyByResponse,
   FindOneIdRequest,
   FindOneResponse,
   USER_SERVICE_NAME,
@@ -26,9 +26,11 @@ export class UserController {
     return this.service.findAll();
   }
 
-  @GrpcMethod(USER_SERVICE_NAME, 'FindOneBy')
-  private async findOne(payload: FindOneByRequest): Promise<FindOneResponse> {
-    return this.service.findOne(payload);
+  @GrpcMethod(USER_SERVICE_NAME, 'FindAnyExistBy')
+  private async findAnyExist(
+    payload: FindAnyByRequest,
+  ): Promise<FindAnyByResponse> {
+    return this.service.findAnyExist(payload);
   }
 
   @GrpcMethod(USER_SERVICE_NAME, 'FindOneId')

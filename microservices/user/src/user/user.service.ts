@@ -1,17 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
-  FindAllRequest,
   FindAllResponse,
-  FindOneByRequest,
+  FindAnyByRequest,
+  FindAnyByResponse,
   FindOneIdRequest,
   FindOneResponse,
-  User,
 } from './proto/user.pb';
 import { UserMapper } from './mapper/user.mapper';
 import { UserRepository } from './repository/user.repository';
 import { CreateUserDto } from './dto/requests.dto';
 import { UserWithRelationData } from '../prisma/utils/prisma.validate';
-import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -33,8 +31,15 @@ export class UserService {
     return { users: this.mapper.mapArrayToUserDto(users) };
   }
 
-  public async findOne(payload: FindOneByRequest): Promise<FindOneResponse> {
-    return null;
+  public async findAnyExist(
+    payload: FindAnyByRequest,
+  ): Promise<FindAnyByResponse> {
+    const foundEmail = await this.repository.isExistByEmail(payload.email);
+    const foundUsername = await this.repository.isExistByUsername(
+      payload.username,
+    );
+
+    return { foundByEmail: foundEmail, foundByUsername: foundUsername };
   }
 
   public async findOneId(payload: FindOneIdRequest): Promise<FindOneResponse> {
