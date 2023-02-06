@@ -2,13 +2,20 @@ import { IsOptional } from 'class-validator';
 import {
   CreateImage,
   CreateUser,
+  DeleteRequest,
+  DeleteResponse,
   FindAllResponse,
   FindAnyByRequest,
   FindAnyByResponse,
+  FindAvatarByUserRequest,
+  FindAvatarResponse,
   FindOneIdRequest,
   FindOneResponse,
+  Image,
   UpdateAvatarRequest,
   UpdateAvatarResponse,
+  UpdateRequest,
+  UpdateResponse,
   User,
   UserInfo,
 } from '../../user/proto/user.pb';
@@ -46,7 +53,41 @@ export class UpdateAvatarDto {
   delete: boolean;
 }
 
+export class FindAvatarByUserRequestDto implements FindAvatarByUserRequest {
+  uuid: string;
+}
+
+export class FindAvatarResponseDto implements FindAvatarResponse {
+  avatar: ImageDto;
+}
+
+export class ImageDto implements Image {
+  buffer: string;
+  date: string;
+  imageUuid: string;
+  name: string;
+}
+
 export class UpdateAvatarResponseDto implements UpdateAvatarResponse {
+  success: boolean;
+}
+
+export class UpdateRequestDto implements UpdateRequest {
+  contact: string;
+  nickname: string;
+  text: string;
+  uuid: string;
+}
+
+export class UpdateResponseDto implements UpdateResponse {
+  user: UserDto;
+}
+
+export class DeleteRequestDto implements DeleteRequest {
+  uuid: string;
+}
+
+export class DeleteResponseDto implements DeleteResponse {
   success: boolean;
 }
 

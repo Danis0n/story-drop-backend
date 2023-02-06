@@ -1,5 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserMapper } from '../common';
+import {
+  DeleteRequestDto,
+  FindAvatarByUserRequestDto,
+  UpdateAvatarRequestDto,
+  UpdateRequestDto,
+  UserMapper,
+} from '../common';
 import { UserRepository } from '../common';
 import { UserWithRelationData } from '../common';
 import {
@@ -58,5 +64,21 @@ export class UserService {
     payload: FindOneIdRequestDto,
   ): Promise<FindOneResponseDto> {
     return { user: undefined };
+  }
+
+  updateAvatar(payload: UpdateAvatarRequestDto) {
+    return undefined;
+  }
+
+  findAvatar(payload: FindAvatarByUserRequestDto) {
+    return undefined;
+  }
+
+  delete(payload: DeleteRequestDto) {
+    return undefined;
+  }
+
+  update(payload: UpdateRequestDto) {
+    return undefined;
   }
 }

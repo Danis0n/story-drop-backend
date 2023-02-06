@@ -1,1 +1,9 @@
-export const CREATE_USER_METHOD = 'ss';
+export const CREATE_USER_METHOD = 'Create';
+export const UPDATE_METHOD = 'Update';
+export const DELETE_METHOD = 'Delete';
+export const FIND_ALL_METHOD = 'FindAll';
+export const FIND_ANY_EXIST_BY_METHOD = 'FindAnyExistBy';
+export const FIND_ONE_ID_METHOD = 'FindOneId';
+export const FIND_ONE_SESSION_METHOD = 'FindOneSession';
+export const FIND_AVATAR_BY_USER_METHOD = 'FindAvatarByUser';
+export const UPDATE_AVATAR_METHOD = 'UpdateAvatar';
