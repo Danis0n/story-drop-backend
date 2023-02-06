@@ -11,6 +11,7 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
   UseGuards,
 } from '@nestjs/common';
 import { USER_SERVICE_NAME, UserServiceClient } from './user.pb';
@@ -18,12 +19,18 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import {
   CreateUserDto,
+  DeleteResponseDto,
   FindAllResponseDto,
   FindAnyByRequestDto,
   FindAnyByResponseDto,
   FindOneResponseDto,
+  UpdateAvatarDto,
+  UpdateAvatarResponseDto,
+  UpdateDto,
 } from '../utils/dto/user.dto';
-import { IsAuthenticatedGuard } from '../auth/utils/guards/is-authenticated/is-authenticated.guard';
+import { IsAuthenticatedGuard } from '../utils/guards/is-authenticated/is-authenticated.guard';
+import { mapToUpdateImage } from '../utils/mapper/image.mapper';
+import { mapToUpdateUser } from '../utils/mapper/user.mapper';
 
 @Controller('api/users')
 export class UserController implements OnModuleInit {
@@ -51,7 +58,7 @@ export class UserController implements OnModuleInit {
 
   // test
   // use register in auth module instead
-  // delete it, not for direct use by api
+  // delete it, not for direct use by frontend
   @Post()
   private async create(
     @Body() createUser: CreateUserDto,
@@ -70,15 +77,28 @@ export class UserController implements OnModuleInit {
   @Patch('/:id')
   private async update(
     @Param('id') id: string,
+    @Body() payload: UpdateDto,
   ): Promise<Observable<FindOneResponseDto>> {
-    throw new NotImplementedException('Not implemented yet');
+    return this.userServiceClient.update(mapToUpdateUser(id, payload));
+  }
+
+  @UseGuards(IsAuthenticatedGuard)
+  @Put('/:id/image')
+  private async updateImage(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() payload: UpdateAvatarDto,
+  ): Promise<Observable<UpdateAvatarResponseDto>> {
+    return this.userServiceClient.updateAvatar(
+      mapToUpdateImage(id, file, payload),
+    );
   }
 
   @UseGuards(IsAuthenticatedGuard)
   @Delete('/:id')
   private async delete(
     @Param('id') id: string,
-  ): Promise<Observable<FindOneResponseDto>> {
-    throw new NotImplementedException('Not implemented yet');
+  ): Promise<Observable<DeleteResponseDto>> {
+    return this.userServiceClient.delete({ uuid: id });
   }
 }

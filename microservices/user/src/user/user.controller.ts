@@ -38,6 +38,11 @@ export class UserController {
     return this.service.findOneId(payload);
   }
 
+  // @GrpcMethod(USER_SERVICE_NAME,'FindAvatarByUser')
+  // @GrpcMethod(USER_SERVICE_NAME,'UpdateAvatar')
+  // @GrpcMethod(USER_SERVICE_NAME,'Update')
+  // @GrpcMethod(USER_SERVICE_NAME,'Delete')
+
   @GrpcMethod(USER_SERVICE_NAME, 'FindOneSession')
   private async findOneSession(
     payload: FindOneIdRequest,

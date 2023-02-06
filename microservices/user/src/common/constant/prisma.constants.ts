@@ -1,4 +1,4 @@
-import { ROLE_USER } from '../../utils/config/constants';
+import { ROLE_USER } from './role.constants';
 
 export const PRISMA_USER_INCLUDE = {
   sd_user_info: true,

@@ -7,8 +7,8 @@ import {
   Inject,
   OnModuleInit,
 } from '@nestjs/common';
-import { AuthGuard } from './utils/guards/auth/auth.guard';
-import { IsAuthenticatedGuard } from './utils/guards/is-authenticated/is-authenticated.guard';
+import { AuthGuard } from '../utils/guards/auth/auth.guard';
+import { IsAuthenticatedGuard } from '../utils/guards/is-authenticated/is-authenticated.guard';
 import { User } from '../utils/decorators/user.decorator';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';

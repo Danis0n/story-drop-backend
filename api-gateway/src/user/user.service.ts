@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import { User, USER_SERVICE_NAME, UserServiceClient } from './user.pb';
+import { USER_SERVICE_NAME, UserServiceClient } from './user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class UserService implements OnModuleInit {

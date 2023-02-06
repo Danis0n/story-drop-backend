@@ -4,6 +4,14 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface DeleteRequest {
+  uuid: string;
+}
+
+export interface DeleteResponse {
+  success: boolean;
+}
+
 export interface FindOneResponse {
   user: User | undefined;
 }
@@ -20,10 +28,33 @@ export interface FindOneSessionRequest {
   sessionId: string;
 }
 
+export interface CreateImage {
+  buffer: Uint8Array;
+  fieldName: string;
+  originalName: string;
+  mimetype: string;
+  size: number;
+}
+
+export interface UpdateAvatarRequest {
+  uuid: string;
+  delete: boolean;
+  image: CreateImage | undefined;
+}
+
+export interface UpdateAvatarResponse {
+  success: boolean;
+}
+
 export interface UpdateRequest {
+  uuid: string;
+  nickname: string;
+  contact: string;
+  text: string;
 }
 
 export interface UpdateResponse {
+  user: User | undefined;
 }
 
 export interface FindOneIdRequest {
@@ -99,7 +130,11 @@ export interface UserServiceClient {
 
   update(request: UpdateRequest): Observable<UpdateResponse>;
 
+  updateAvatar(request: UpdateAvatarRequest): Observable<UpdateAvatarResponse>;
+
   findAvatarByUser(request: FindAvatarByUserRequest): Observable<FindAvatarResponse>;
+
+  delete(request: DeleteRequest): Observable<DeleteResponse>;
 }
 
 export interface UserServiceController {
@@ -119,9 +154,15 @@ export interface UserServiceController {
 
   update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
 
+  updateAvatar(
+    request: UpdateAvatarRequest,
+  ): Promise<UpdateAvatarResponse> | Observable<UpdateAvatarResponse> | UpdateAvatarResponse;
+
   findAvatarByUser(
     request: FindAvatarByUserRequest,
   ): Promise<FindAvatarResponse> | Observable<FindAvatarResponse> | FindAvatarResponse;
+
+  delete(request: DeleteRequest): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
 }
 
 export function UserServiceControllerMethods() {
@@ -133,7 +174,9 @@ export function UserServiceControllerMethods() {
       "findOneId",
       "findOneSession",
       "update",
+      "updateAvatar",
       "findAvatarByUser",
+      "delete",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

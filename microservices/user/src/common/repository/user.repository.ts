@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
-import { CreateUserDto } from '../dto/requests.dto';
-import { UserWithRelationData } from '../../prisma/utils/prisma.validate';
+import { UserWithRelationData } from '../validation/validate.prisma';
 import {
   PRISMA_USER_CREATE_BASE_ROLE,
   PRISMA_USER_INCLUDE,
-} from '../../prisma/utils/prisma.constants';
+} from '../constant/prisma.constants';
+import { CreateUserDto } from '../dto/user.dto';
 
 export class UserRepository {
   @Inject(PrismaService)

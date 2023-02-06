@@ -1,19 +1,17 @@
+import { IsOptional } from 'class-validator';
 import {
   CreateImage,
   CreateUser,
-  DeleteRequest,
-  DeleteResponse,
   FindAllResponse,
   FindAnyByRequest,
   FindAnyByResponse,
+  FindOneIdRequest,
   FindOneResponse,
   UpdateAvatarRequest,
   UpdateAvatarResponse,
-  UpdateRequest,
   User,
   UserInfo,
-} from '../../user/user.pb';
-import { IsOptional } from 'class-validator';
+} from '../../user/proto/user.pb';
 
 export class FindAnyByRequestDto implements FindAnyByRequest {
   @IsOptional()
@@ -52,27 +50,12 @@ export class UpdateAvatarResponseDto implements UpdateAvatarResponse {
   success: boolean;
 }
 
-export class UpdateDto {
-  @IsOptional()
-  contact: string;
-  @IsOptional()
-  nickname: string;
-  @IsOptional()
-  text: string;
-}
-
-export class UpdateRequestDto implements UpdateRequest {
-  uuid: string;
-  @IsOptional()
-  contact: string;
-  @IsOptional()
-  nickname: string;
-  @IsOptional()
-  text: string;
-}
-
 export class FindAllResponseDto implements FindAllResponse {
   users: UserDto[];
+}
+
+export class FindOneIdRequestDto implements FindOneIdRequest {
+  uuid: string;
 }
 
 export class FindOneResponseDto implements FindOneResponse {
@@ -103,12 +86,4 @@ export class CreateUserDto implements CreateUser {
   password: string;
   text: string;
   username: string;
-}
-
-export class DeleteRequestDto implements DeleteRequest {
-  uuid: string;
-}
-
-export class DeleteResponseDto implements DeleteResponse {
-  success: boolean;
 }

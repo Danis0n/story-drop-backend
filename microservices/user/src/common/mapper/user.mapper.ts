@@ -1,18 +1,7 @@
-import {
-  sd_user as UserEntity,
-  sd_user_info as UserInfoEntity,
-  role as RoleEntity,
-  image as ImageEntity,
-  sd_role_user as RoleUserEntity,
-} from '@prisma/client';
-import { UserDto, UserInfoDto } from '../dto/user.dto';
+import { sd_user_info as UserInfoEntity } from '@prisma/client';
+import { UserDto, UserInfoDto } from '../dto';
 import { Builder } from 'builder-pattern';
-import {
-  roleWithRelationData,
-  UserWithRelationData,
-} from '../../prisma/utils/prisma.validate';
-
-// TODO: make mapper with builder
+import { roleWithRelationData, UserWithRelationData } from '../validation';
 
 export class UserMapper {
   public mapToUserDto(user: UserWithRelationData): UserDto {

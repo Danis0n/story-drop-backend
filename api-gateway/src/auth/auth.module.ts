@@ -1,20 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { UserModule } from '../user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { ClientsModule } from '@nestjs/microservices';
 import { AuthServiceProto } from '../utils/config/config';
 
 @Module({
   imports: [
-    UserModule,
     PassportModule.register({
       session: true,
     }),
     ClientsModule.register([AuthServiceProto]),
   ],
-  providers: [AuthService],
   controllers: [AuthController],
+  providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}
