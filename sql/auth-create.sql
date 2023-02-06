@@ -10,6 +10,7 @@ CREATE TABLE session
 (
     session_id VARCHAR(100) UNIQUE NOT NULL PRIMARY KEY,
     device_id VARCHAR(100) NOT NULL REFERENCES device(device_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    user_id UUID NOT NULL,
     sing_in DATE NOT NULL,
     expire_at DATE NOT NULL
 );

@@ -55,18 +55,6 @@ export class UserService {
   public async findOneSession(
     payload: FindOneIdRequest,
   ): Promise<FindOneResponse> {
-    return {
-      user: {
-        isAvatar: false,
-        email: 'sood',
-        info: null,
-        isEnabled: true,
-        isLocked: false,
-        nickname: 'dans',
-        roles: ['admin'],
-        username: 'das',
-        uuid: '123',
-      },
-    };
+    return { user: undefined };
   }
 }
