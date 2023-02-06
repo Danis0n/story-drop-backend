@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as session from 'express-session';
-import { sessionSettings } from './utils/config/config';
+import { sessionSettings } from './common';
 import * as cookieParser from 'cookie-parser';
 
 async function run() {

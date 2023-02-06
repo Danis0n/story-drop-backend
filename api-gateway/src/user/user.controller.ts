@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Inject,
-  NotImplementedException,
   OnModuleInit,
   Param,
   Patch,
@@ -27,10 +26,10 @@ import {
   UpdateAvatarDto,
   UpdateAvatarResponseDto,
   UpdateDto,
-} from '../utils/dto/user.dto';
-import { IsAuthenticatedGuard } from '../utils/guards/is-authenticated/is-authenticated.guard';
-import { mapToUpdateImage } from '../utils/mapper/image.mapper';
-import { mapToUpdateUser } from '../utils/mapper/user.mapper';
+} from '../common';
+import { IsAuthenticatedGuard } from '../common';
+import { mapToUpdateUser } from '../common';
+import { mapToUpdateImage } from '../common';
 
 @Controller('api/users')
 export class UserController implements OnModuleInit {
