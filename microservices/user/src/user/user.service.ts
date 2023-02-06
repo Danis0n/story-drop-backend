@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserMapper } from '../common/mapper/user.mapper';
-import { UserRepository } from '../common/repository/user.repository';
-import { UserWithRelationData } from '../common/validation/validate.prisma';
+import { UserMapper } from '../common';
+import { UserRepository } from '../common';
+import { UserWithRelationData } from '../common';
 import {
   CreateUserDto,
   FindAllResponseDto,
@@ -9,7 +9,7 @@ import {
   FindAnyByResponseDto,
   FindOneIdRequestDto,
   FindOneResponseDto,
-} from '../common/dto/user.dto';
+} from '../common';
 
 @Injectable()
 export class UserService {

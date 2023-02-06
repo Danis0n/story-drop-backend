@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { UserMapper } from '../common/mapper/user.mapper';
+import { UserMapper } from '../common';
 import { PrismaService } from '../prisma/prisma.service';
-import { UserRepository } from '../common/repository/user.repository';
+import { UserRepository } from '../common';
 
 @Module({
   providers: [UserService, UserMapper, UserRepository, PrismaService],
