@@ -34,28 +34,22 @@ export class UserService {
   public async findAnyExist(
     payload: FindAnyByRequest,
   ): Promise<FindAnyByResponse> {
-    const foundEmail = await this.repository.isExistByEmail(payload.email);
-    const foundUsername = await this.repository.isExistByUsername(
-      payload.username,
-    );
+    const foundEmail = !!payload.email
+      ? await this.repository.isExistByEmail(payload.email)
+      : false;
+    const foundUsername = !!payload.username
+      ? await this.repository.isExistByUsername(payload.username)
+      : false;
 
     return { foundByEmail: foundEmail, foundByUsername: foundUsername };
   }
 
   public async findOneId(payload: FindOneIdRequest): Promise<FindOneResponse> {
-    return {
-      user: {
-        isAvatar: false,
-        email: 'sood',
-        info: null,
-        isEnabled: true,
-        isLocked: false,
-        nickname: 'dans',
-        roles: ['admin'],
-        username: 'das',
-        uuid: '123',
-      },
-    };
+    const user: UserWithRelationData = await this.repository.findOneId(
+      payload.uuid,
+    );
+
+    return { user: this.mapper.mapToUserDto(user) };
   }
 
   public async findOneSession(
