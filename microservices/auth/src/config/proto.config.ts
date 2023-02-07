@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { Transport } from '@nestjs/microservices';
-import { protobufPackage } from '../../auth/proto/auth.pb';
+import { protobufPackage } from '../auth/proto/auth.pb';
 
 export const authServiceProto = {
   transport: Transport.GRPC,

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { authServiceProto } from './utils/config/proto.config';
+import { authServiceProto } from './config';
 import { INestMicroservice } from '@nestjs/common';
 
 async function bootstrap() {
