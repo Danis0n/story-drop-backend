@@ -18,6 +18,7 @@ import {
   DeleteResponseDto,
   UpdateResponseDto,
   FindOneRolesResponseDto,
+  UserWithRoleRelationData,
 } from '../common';
 
 @Injectable()
@@ -32,6 +33,7 @@ export class UserService {
     const user: UserWithRelationData = await this.repository.createUser(
       createUser,
     );
+
     return { user: this.mapper.mapToUserDto(user) };
   }
 
@@ -63,10 +65,18 @@ export class UserService {
     return { user: this.mapper.mapToUserDto(user) };
   }
 
-  public async findOneSession(
+  public async findOneRoles(
     payload: FindOneIdRequestDto,
-  ): Promise<FindOneResponseDto> {
-    return { user: null };
+  ): Promise<FindOneRolesResponseDto> {
+    const user: UserWithRoleRelationData = await this.repository.findRolesId(
+      payload.uuid,
+    );
+
+    const roles: string[] = user.sd_role_user.map((role) => {
+      return role.role.role_name;
+    });
+
+    return { roles: roles };
   }
 
   public async updateAvatar(
@@ -87,11 +97,5 @@ export class UserService {
 
   public async update(payload: UpdateRequestDto): Promise<UpdateResponseDto> {
     return { user: null };
-  }
-
-  public async findOneRoles(
-    payload: FindOneIdRequestDto,
-  ): Promise<FindOneRolesResponseDto> {
-    return { roles: ['Admin', 'User'] };
   }
 }

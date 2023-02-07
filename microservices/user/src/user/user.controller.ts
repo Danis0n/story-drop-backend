@@ -83,13 +83,6 @@ export class UserController {
     return this.service.delete(payload);
   }
 
-  @GrpcMethod(USER_SERVICE_NAME, FIND_ONE_SESSION_METHOD)
-  private async findOneSession(
-    payload: FindOneIdRequestDto,
-  ): Promise<FindOneResponseDto> {
-    return this.service.findOneSession(payload);
-  }
-
   @GrpcMethod(USER_SERVICE_NAME, FIND_ONE_ROLES_METHOD)
   private async findOneRoles(
     payload: FindOneIdRequestDto,

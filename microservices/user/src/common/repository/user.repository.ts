@@ -1,12 +1,13 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
-import { UserWithRelationData } from '../validation/validate.prisma';
+import { UserWithRelationData, UserWithRoleRelationData } from '../validation';
 import {
   PRISMA_USER_CREATE_BASE_ROLE,
   PRISMA_USER_INCLUDE,
-} from '../constant/prisma.constants';
-import { CreateUserDto } from '../dto/user.dto';
+  PRISMA_USER_INCLUDE_ROLE,
+} from '../constant';
+import { CreateUserDto } from '../dto';
 
 export class UserRepository {
   @Inject(PrismaService)
@@ -48,6 +49,15 @@ export class UserRepository {
         user_id: uuid,
       },
       include: PRISMA_USER_INCLUDE,
+    });
+  }
+
+  public async findRolesId(uuid: string): Promise<UserWithRoleRelationData> {
+    return await this.prisma.sd_user.findUnique({
+      where: {
+        user_id: uuid,
+      },
+      include: PRISMA_USER_INCLUDE_ROLE,
     });
   }
 
