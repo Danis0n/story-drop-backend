@@ -23,6 +23,8 @@ import {
   FindAnyByRequestDto,
   FindAnyByResponseDto,
   FindOneResponseDto,
+  RoleGuard,
+  Roles,
   UpdateAvatarDto,
   UpdateAvatarResponseDto,
   UpdateDto,
@@ -93,7 +95,8 @@ export class UserController implements OnModuleInit {
     );
   }
 
-  @UseGuards(IsAuthenticatedGuard)
+  @Roles('Admin')
+  @UseGuards(RoleGuard)
   @Delete('/:id')
   private async delete(
     @Param('id') id: string,

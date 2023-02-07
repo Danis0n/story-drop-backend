@@ -4,6 +4,10 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface FindOneRolesResponse {
+  roles: string[];
+}
+
 export interface DeleteRequest {
   uuid: string;
 }
@@ -135,6 +139,8 @@ export interface UserServiceClient {
   findAvatarByUser(request: FindAvatarByUserRequest): Observable<FindAvatarResponse>;
 
   delete(request: DeleteRequest): Observable<DeleteResponse>;
+
+  findOneRoles(request: FindOneIdRequest): Observable<FindOneRolesResponse>;
 }
 
 export interface UserServiceController {
@@ -163,6 +169,10 @@ export interface UserServiceController {
   ): Promise<FindAvatarResponse> | Observable<FindAvatarResponse> | FindAvatarResponse;
 
   delete(request: DeleteRequest): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
+
+  findOneRoles(
+    request: FindOneIdRequest,
+  ): Promise<FindOneRolesResponse> | Observable<FindOneRolesResponse> | FindOneRolesResponse;
 }
 
 export function UserServiceControllerMethods() {
@@ -177,6 +187,7 @@ export function UserServiceControllerMethods() {
       "updateAvatar",
       "findAvatarByUser",
       "delete",
+      "findOneRoles",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

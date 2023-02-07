@@ -8,6 +8,7 @@ import {
 } from './auth.pb';
 import { firstValueFrom } from 'rxjs';
 import { ClientGrpc } from '@nestjs/microservices';
+import { FindOneRolesResponseDto } from '../common';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -33,5 +34,9 @@ export class AuthService implements OnModuleInit {
 
   public async login(login: LoginRequest): Promise<LoginResponse> {
     return await firstValueFrom(this.authServiceClient.login(login));
+  }
+
+  async findOneUserIdBySession(session: string) {
+    return undefined;
   }
 }

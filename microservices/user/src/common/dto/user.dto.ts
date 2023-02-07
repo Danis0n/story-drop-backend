@@ -11,6 +11,7 @@ import {
   FindAvatarResponse,
   FindOneIdRequest,
   FindOneResponse,
+  FindOneRolesResponse,
   Image,
   UpdateAvatarRequest,
   UpdateAvatarResponse,
@@ -127,4 +128,8 @@ export class CreateUserDto implements CreateUser {
   password: string;
   text: string;
   username: string;
+}
+
+export class FindOneRolesResponseDto implements FindOneRolesResponse {
+  roles: string[];
 }

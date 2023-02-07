@@ -7,6 +7,7 @@ import {
   FindAnyByRequest,
   FindAnyByResponse,
   FindOneResponse,
+  FindOneRolesResponse,
   UpdateAvatarRequest,
   UpdateAvatarResponse,
   UpdateRequest,
@@ -111,4 +112,8 @@ export class DeleteRequestDto implements DeleteRequest {
 
 export class DeleteResponseDto implements DeleteResponse {
   success: boolean;
+}
+
+export class FindOneRolesResponseDto implements FindOneRolesResponse {
+  roles: string[];
 }

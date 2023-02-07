@@ -12,6 +12,7 @@ import {
   FIND_ANY_EXIST_BY_METHOD,
   FIND_AVATAR_BY_USER_METHOD,
   FIND_ONE_ID_METHOD,
+  FIND_ONE_ROLES_METHOD,
   FIND_ONE_SESSION_METHOD,
   FindAllResponseDto,
   FindAnyByRequestDto,
@@ -20,6 +21,7 @@ import {
   FindAvatarResponseDto,
   FindOneIdRequestDto,
   FindOneResponseDto,
+  FindOneRolesResponseDto,
   UPDATE_AVATAR_METHOD,
   UPDATE_METHOD,
   UpdateAvatarRequestDto,
@@ -86,5 +88,12 @@ export class UserController {
     payload: FindOneIdRequestDto,
   ): Promise<FindOneResponseDto> {
     return this.service.findOneSession(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, FIND_ONE_ROLES_METHOD)
+  private async findOneRoles(
+    payload: FindOneIdRequestDto,
+  ): Promise<FindOneRolesResponseDto> {
+    return this.service.findOneRoles(payload);
   }
 }

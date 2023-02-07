@@ -7,3 +7,4 @@ export const FIND_ONE_ID_METHOD = 'FindOneId';
 export const FIND_ONE_SESSION_METHOD = 'FindOneSession';
 export const FIND_AVATAR_BY_USER_METHOD = 'FindAvatarByUser';
 export const UPDATE_AVATAR_METHOD = 'UpdateAvatar';
+export const FIND_ONE_ROLES_METHOD = 'FindOneRoles';

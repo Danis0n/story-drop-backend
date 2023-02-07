@@ -5,16 +5,19 @@ import {
   UpdateAvatarRequestDto,
   UpdateRequestDto,
   UserMapper,
-} from '../common';
-import { UserRepository } from '../common';
-import { UserWithRelationData } from '../common';
-import {
   CreateUserDto,
   FindAllResponseDto,
   FindAnyByRequestDto,
   FindAnyByResponseDto,
   FindOneIdRequestDto,
   FindOneResponseDto,
+  UserRepository,
+  UserWithRelationData,
+  UpdateAvatarResponseDto,
+  FindAvatarResponseDto,
+  DeleteResponseDto,
+  UpdateResponseDto,
+  FindOneRolesResponseDto,
 } from '../common';
 
 @Injectable()
@@ -63,22 +66,32 @@ export class UserService {
   public async findOneSession(
     payload: FindOneIdRequestDto,
   ): Promise<FindOneResponseDto> {
-    return { user: undefined };
+    return { user: null };
   }
 
-  updateAvatar(payload: UpdateAvatarRequestDto) {
-    return undefined;
+  public async updateAvatar(
+    payload: UpdateAvatarRequestDto,
+  ): Promise<UpdateAvatarResponseDto> {
+    return { success: false };
   }
 
-  findAvatar(payload: FindAvatarByUserRequestDto) {
-    return undefined;
+  public async findAvatar(
+    payload: FindAvatarByUserRequestDto,
+  ): Promise<FindAvatarResponseDto> {
+    return { avatar: null };
   }
 
-  delete(payload: DeleteRequestDto) {
-    return undefined;
+  public async delete(payload: DeleteRequestDto): Promise<DeleteResponseDto> {
+    return { success: false };
   }
 
-  update(payload: UpdateRequestDto) {
-    return undefined;
+  public async update(payload: UpdateRequestDto): Promise<UpdateResponseDto> {
+    return { user: null };
+  }
+
+  public async findOneRoles(
+    payload: FindOneIdRequestDto,
+  ): Promise<FindOneRolesResponseDto> {
+    return { roles: ['Admin', 'User'] };
   }
 }

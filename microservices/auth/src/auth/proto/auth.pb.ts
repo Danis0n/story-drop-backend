@@ -4,6 +4,14 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "auth";
 
+export interface FindOneUserIdBySessionRequest {
+  session: string;
+}
+
+export interface FindOneUserIdBySessionResponse {
+  uuid: string;
+}
+
 export interface ValidateResponse {
   permission: boolean;
 }
@@ -70,6 +78,8 @@ export interface AuthServiceClient {
   logout(request: ValidateRequest): Observable<LogoutResponse>;
 
   validate(request: ValidateRequest): Observable<ValidateResponse>;
+
+  findOneUserIdBySession(request: FindOneUserIdBySessionRequest): Observable<FindOneUserIdBySessionResponse>;
 }
 
 export interface AuthServiceController {
@@ -78,11 +88,18 @@ export interface AuthServiceController {
   logout(request: ValidateRequest): Promise<LogoutResponse> | Observable<LogoutResponse> | LogoutResponse;
 
   validate(request: ValidateRequest): Promise<ValidateResponse> | Observable<ValidateResponse> | ValidateResponse;
+
+  findOneUserIdBySession(
+    request: FindOneUserIdBySessionRequest,
+  ):
+    | Promise<FindOneUserIdBySessionResponse>
+    | Observable<FindOneUserIdBySessionResponse>
+    | FindOneUserIdBySessionResponse;
 }
 
 export function AuthServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["login", "logout", "validate"];
+    const grpcMethods: string[] = ["login", "logout", "validate", "findOneUserIdBySession"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AuthService", method)(constructor.prototype[method], method, descriptor);

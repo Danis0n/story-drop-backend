@@ -4,14 +4,14 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { AuthService } from '../../../auth/auth.service';
-import { ValidateResponse } from '../../../auth/auth.pb';
+import { AuthService } from '../../auth/auth.service';
+import { ValidateResponse } from '../../auth/auth.pb';
 import {
   COOKIE_DEVICE,
   COOKIE_LOGGED_IN,
   COOKIE_MAX_AGE,
   COOKIE_SESSION,
-} from '../../config/constants';
+} from '../config';
 
 // for authenticated requests only.
 // checks if request have a session, logged and device status. Updates it if necessary.
