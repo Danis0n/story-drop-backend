@@ -8,9 +8,8 @@ import {
   FindOneUsernameResponse,
   UpdateAvatarResponse,
   UpdateResponse,
-  User,
-} from '../../user/proto/user.pb';
-import { ImageDto, UserDto } from './user.dto';
+} from '../../../auth/proto/user.pb';
+import { ImageDto, UserDto } from '../user.dto';
 
 export class FindOneRolesResponseDto implements FindOneRolesResponse {
   roles: string[];
@@ -38,7 +37,7 @@ export class FindOneResponseDto implements FindOneResponse {
 
 export class FindOneUsernameResponseDto implements FindOneUsernameResponse {
   hashedPassword: string;
-  user: User;
+  user: UserDto;
   isFound: boolean;
 }
 

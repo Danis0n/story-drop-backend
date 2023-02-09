@@ -2,8 +2,8 @@ import {
   FindOneUserIdBySessionResponse,
   LoginResponse,
   LogoutResponse,
-} from '../../auth/proto/auth.pb';
-import { User } from '../../auth/proto/user.pb';
+} from '../../../auth/proto/auth.pb';
+import { User } from '../../../auth/proto/user.pb';
 
 export class LoginResponseDto implements LoginResponse {
   deviceId: string;

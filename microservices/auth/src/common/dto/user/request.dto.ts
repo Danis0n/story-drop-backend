@@ -1,3 +1,4 @@
+import { IsOptional } from 'class-validator';
 import {
   DeleteRequest,
   FindAnyByRequest,
@@ -6,9 +7,8 @@ import {
   FindOneUsernameRequest,
   UpdateAvatarRequest,
   UpdateRequest,
-} from '../../user/proto/user.pb';
-import { IsOptional } from 'class-validator';
-import { CreateImageDto } from './user.dto';
+} from '../../../auth/proto/user.pb';
+import { CreateImageDto } from '../user.dto';
 
 export class FindAnyByRequestDto implements FindAnyByRequest {
   @IsOptional()

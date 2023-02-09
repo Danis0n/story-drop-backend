@@ -61,6 +61,17 @@ export class UserRepository {
     });
   }
 
+  public async findOneUsername(
+    username: string,
+  ): Promise<UserWithRelationData> {
+    return await this.prisma.sd_user.findUnique({
+      where: {
+        username: username,
+      },
+      include: PRISMA_USER_INCLUDE,
+    });
+  }
+
   public async isExistByUsername(username: string): Promise<boolean> {
     return !!(await this.prisma.sd_user.findUnique({
       where: {

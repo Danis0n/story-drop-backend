@@ -13,7 +13,7 @@ import {
   FIND_AVATAR_BY_USER_METHOD,
   FIND_ONE_ID_METHOD,
   FIND_ONE_ROLES_METHOD,
-  FIND_ONE_SESSION_METHOD,
+  FIND_ONE_USERNAME_METHOD,
   FindAllResponseDto,
   FindAnyByRequestDto,
   FindAnyByResponseDto,
@@ -22,6 +22,8 @@ import {
   FindOneIdRequestDto,
   FindOneResponseDto,
   FindOneRolesResponseDto,
+  FindOneUsernameRequestDto,
+  FindOneUsernameResponseDto,
   UPDATE_AVATAR_METHOD,
   UPDATE_METHOD,
   UpdateAvatarRequestDto,
@@ -57,6 +59,13 @@ export class UserController {
     payload: FindOneIdRequestDto,
   ): Promise<FindOneResponseDto> {
     return this.service.findOneId(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, FIND_ONE_USERNAME_METHOD)
+  private async findOneUsername(
+    payload: FindOneUsernameRequestDto,
+  ): Promise<FindOneUsernameResponseDto> {
+    return this.service.findOneUsername(payload);
   }
 
   @GrpcMethod(USER_SERVICE_NAME, FIND_AVATAR_BY_USER_METHOD)

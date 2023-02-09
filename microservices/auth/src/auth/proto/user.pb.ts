@@ -4,6 +4,16 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface FindOneUsernameResponse {
+  user: User | undefined;
+  hashedPassword: string;
+  isFound: boolean;
+}
+
+export interface FindOneUsernameRequest {
+  username: string;
+}
+
 export interface FindOneRolesResponse {
   roles: string[];
 }
@@ -141,6 +151,8 @@ export interface UserServiceClient {
   delete(request: DeleteRequest): Observable<DeleteResponse>;
 
   findOneRoles(request: FindOneIdRequest): Observable<FindOneRolesResponse>;
+
+  findOneUsername(request: FindOneUsernameRequest): Observable<FindOneUsernameResponse>;
 }
 
 export interface UserServiceController {
@@ -173,6 +185,10 @@ export interface UserServiceController {
   findOneRoles(
     request: FindOneIdRequest,
   ): Promise<FindOneRolesResponse> | Observable<FindOneRolesResponse> | FindOneRolesResponse;
+
+  findOneUsername(
+    request: FindOneUsernameRequest,
+  ): Promise<FindOneUsernameResponse> | Observable<FindOneUsernameResponse> | FindOneUsernameResponse;
 }
 
 export function UserServiceControllerMethods() {
@@ -188,6 +204,7 @@ export function UserServiceControllerMethods() {
       "findAvatarByUser",
       "delete",
       "findOneRoles",
+      "findOneUsername",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

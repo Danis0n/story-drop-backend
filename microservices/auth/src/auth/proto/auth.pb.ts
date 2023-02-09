@@ -31,7 +31,8 @@ export interface LoginRequest {
   password: string;
   sessionId: string;
   sessionExpire: number;
-  userAgent: string;
+  deviceName: string;
+  deviceType: string;
   ip: string;
 }
 

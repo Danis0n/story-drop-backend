@@ -3,15 +3,16 @@ import {
   LoginRequest,
   ValidateRequest,
   ValidateResponse,
-} from '../../auth/proto/auth.pb';
+} from '../../../auth/proto/auth.pb';
 
 export class LoginRequestDto implements LoginRequest {
   ip: string;
   password: string;
   sessionExpire: number;
   sessionId: string;
-  userAgent: string;
   username: string;
+  deviceName: string;
+  deviceType: string;
 }
 
 export class ValidateRequestDto implements ValidateRequest {

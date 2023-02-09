@@ -19,6 +19,8 @@ import {
   UpdateResponseDto,
   FindOneRolesResponseDto,
   UserWithRoleRelationData,
+  FindOneUsernameRequestDto,
+  FindOneUsernameResponseDto,
 } from '../common';
 
 @Injectable()
@@ -55,21 +57,19 @@ export class UserService {
     return { foundByEmail: foundEmail, foundByUsername: foundUsername };
   }
 
-  public async findOneId(
-    payload: FindOneIdRequestDto,
-  ): Promise<FindOneResponseDto> {
-    const user: UserWithRelationData = await this.repository.findOneId(
-      payload.uuid,
-    );
+  public async findOneId({
+    uuid,
+  }: FindOneIdRequestDto): Promise<FindOneResponseDto> {
+    const user: UserWithRelationData = await this.repository.findOneId(uuid);
 
     return { user: this.mapper.mapToUserDto(user) };
   }
 
-  public async findOneRoles(
-    payload: FindOneIdRequestDto,
-  ): Promise<FindOneRolesResponseDto> {
+  public async findOneRoles({
+    uuid,
+  }: FindOneIdRequestDto): Promise<FindOneRolesResponseDto> {
     const user: UserWithRoleRelationData = await this.repository.findRolesId(
-      payload.uuid,
+      uuid,
     );
 
     const roles: string[] = user.sd_role_user.map((role) => {
@@ -85,17 +85,32 @@ export class UserService {
     return { success: false };
   }
 
-  public async findAvatar(
-    payload: FindAvatarByUserRequestDto,
-  ): Promise<FindAvatarResponseDto> {
+  public async findAvatar({
+    uuid,
+  }: FindAvatarByUserRequestDto): Promise<FindAvatarResponseDto> {
     return { avatar: null };
   }
 
-  public async delete(payload: DeleteRequestDto): Promise<DeleteResponseDto> {
+  public async delete({ uuid }: DeleteRequestDto): Promise<DeleteResponseDto> {
     return { success: false };
   }
 
   public async update(payload: UpdateRequestDto): Promise<UpdateResponseDto> {
     return { user: null };
+  }
+
+  public async findOneUsername({
+    username,
+  }: FindOneUsernameRequestDto): Promise<FindOneUsernameResponseDto> {
+    const user: UserWithRelationData = await this.repository.findOneUsername(
+      username,
+    );
+    if (!user) return { hashedPassword: null, isFound: false, user: null };
+
+    return {
+      isFound: true,
+      hashedPassword: user.password,
+      user: this.mapper.mapToUserDto(user),
+    };
   }
 }

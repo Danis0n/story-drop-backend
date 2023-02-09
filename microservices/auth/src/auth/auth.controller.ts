@@ -12,6 +12,8 @@ import {
   LOGOUT_METHOD,
   LogoutResponseDto,
   FIND_ONE_USER_ID_BY_SESSION_METHOD,
+  FindOneUserIdBySessionResponseDto,
+  FindOneUserIdBySessionRequestDto,
 } from '../common';
 
 @Controller()
@@ -40,8 +42,8 @@ export class AuthController {
 
   @GrpcMethod(AUTH_SERVICE_NAME, FIND_ONE_USER_ID_BY_SESSION_METHOD)
   private async findOneUserIdBySession(
-    payload: ValidateRequestDto,
-  ): Promise<LogoutResponseDto> {
+    payload: FindOneUserIdBySessionRequestDto,
+  ): Promise<FindOneUserIdBySessionResponseDto> {
     return this.service.findOneUserIdBySession(payload);
   }
 }

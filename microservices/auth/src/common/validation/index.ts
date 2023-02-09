@@ -1,1 +1,2 @@
-export * from './validate.prisma';
+export * from './prisma.validate';
+export * from './password.validate';

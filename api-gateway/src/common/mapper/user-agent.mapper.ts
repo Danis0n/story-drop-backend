@@ -6,12 +6,22 @@ interface UserAgentData {
   device: string;
 }
 
-export function serializeUserAgentToString(userAgent: string): string {
+export interface serializeUserAgentData {
+  deviceType: string;
+  deviceName: string;
+}
+
+export function serializeUserAgentToString(
+  userAgent: string,
+): serializeUserAgentData {
   const { os, device, client } = serializeUserAgent(userAgent);
 
-  return String(os + ' ' + device + ' ' + client)
+  const deviceType = String(os + ' ' + device)
     .replace(/undefined/g, '')
     .trim();
+  const deviceName = client.replace(/undefined/g, '').trim();
+
+  return { deviceName: deviceName, deviceType: deviceType };
 }
 
 export function serializeUserAgent(userAgent: string): UserAgentData {
@@ -20,9 +30,8 @@ export function serializeUserAgent(userAgent: string): UserAgentData {
     deviceDetector.parse(userAgent);
 
   const os: string | null = parser.os?.name;
-  const device: string | null =
-    parser.device?.type + ' ' + parser.device?.brand;
+  const deviceType: string | null = parser.device?.type;
   const client: string | null = parser.client.type + ' ' + parser.client.name;
 
-  return { client: os, device: device, os: client };
+  return { client: client, device: deviceType, os: os };
 }

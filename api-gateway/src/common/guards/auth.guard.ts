@@ -7,31 +7,31 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { LoginRequest, LoginResponse } from '../../auth/auth.pb';
-import {
-  COOKIE_DEVICE,
-  COOKIE_LOGGED_IN,
-  COOKIE_MAX_AGE,
-} from '../config/constants';
-import { serializeUserAgentToString } from '../mapper/user-agent.mapper';
+import { serializeUserAgentToString } from '../mapper';
+import { setLoginCookieFail, setLoginCookieSuccess } from '../service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(@Inject(AuthService) public readonly authService: AuthService) {}
 
-  private serialize(
+  private serializeLoginRequest(
     req: any,
     username: string,
     password: string,
   ): LoginRequest {
     const cookieMaxAge: number = req.session.cookie.originalMaxAge;
-    const userAgent: string = serializeUserAgentToString(req.get('user-agent'));
+
+    const { deviceName, deviceType } = serializeUserAgentToString(
+      req.get('user-agent'),
+    );
     const sessionID: string = req.sessionID;
 
     return {
-      ip: 'localhost',
+      ip: 'localhost', // for local ip
       password: password,
       username: username,
-      userAgent: userAgent,
+      deviceName: deviceName,
+      deviceType: deviceType,
       sessionId: sessionID,
       sessionExpire: cookieMaxAge,
     };
@@ -42,21 +42,19 @@ export class AuthGuard implements CanActivate {
     const response = context.switchToHttp().getResponse();
 
     const loginResponse: LoginResponse = await this.authService.login(
-      this.serialize(request, request.body.username, request.body.password),
+      this.serializeLoginRequest(
+        request,
+        request.body.username,
+        request.body.password,
+      ),
     );
 
-    if (!loginResponse.isLogged)
+    if (!loginResponse.isLogged) {
+      setLoginCookieFail(response);
       throw new UnauthorizedException('Неверный логин или пароль');
+    }
 
-    request.user = loginResponse.user;
-
-    response.cookie(COOKIE_DEVICE, loginResponse.deviceId, {
-      maxAge: COOKIE_MAX_AGE,
-    });
-    response.cookie(COOKIE_LOGGED_IN, loginResponse.isLogged, {
-      maxAge: COOKIE_MAX_AGE,
-    });
-
+    setLoginCookieSuccess(response, loginResponse);
     return true;
   }
 }
