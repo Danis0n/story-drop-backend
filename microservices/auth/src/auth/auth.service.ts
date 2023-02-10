@@ -15,15 +15,14 @@ import {
   RegisterResponseDto,
   FindAnyByResponseDto,
   FindOneResponseDto,
+  handleCreateUserException,
+  handleRegisterExceptions,
+  hashPassword,
 } from '../common';
 import { USER_SERVICE_NAME, UserServiceClient } from './proto/user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { randomUUID } from 'crypto';
-import {
-  handleCreateUserException,
-  handleRegisterExceptions,
-} from '../common/exception';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -83,13 +82,6 @@ export class AuthService implements OnModuleInit {
     };
   }
 
-  // change ip-address in db if it's new
-  public async validate(
-    payload: ValidateRequestDto,
-  ): Promise<ValidateResponseDto> {
-    return { permission: false };
-  }
-
   public async logout(payload: ValidateRequestDto): Promise<LogoutResponseDto> {
     return { isLoggedOut: false };
   }
@@ -106,12 +98,20 @@ export class AuthService implements OnModuleInit {
       );
     handleRegisterExceptions(foundByEmail, foundByUsername);
 
+    payload.password = hashPassword(payload.password);
     const { user }: FindOneResponseDto = await firstValueFrom(
       this.userServiceClient.create(payload),
     );
 
     if (!user) handleCreateUserException();
     return { success: true, user: user };
+  }
+
+  // change ip-address in db if it's new
+  public async validate(
+    payload: ValidateRequestDto,
+  ): Promise<ValidateResponseDto> {
+    return { permission: false };
   }
 
   public async findOneUserIdBySession(
