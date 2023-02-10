@@ -102,7 +102,9 @@ export class CreateUserDto implements CreateUser {
   email: string;
   nickname: string;
   password: string;
+  @IsOptional()
   text: string;
+  @IsOptional()
   username: string;
 }
 

@@ -28,10 +28,10 @@ import {
   UpdateAvatarDto,
   UpdateAvatarResponseDto,
   UpdateDto,
+  IsAuthenticatedGuard,
+  mapToUpdateUser,
+  mapToUpdateImage,
 } from '../common';
-import { IsAuthenticatedGuard } from '../common';
-import { mapToUpdateUser } from '../common';
-import { mapToUpdateImage } from '../common';
 
 @Controller('api/users')
 export class UserController implements OnModuleInit {

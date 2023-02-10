@@ -38,3 +38,27 @@ export const setLoginCookieFail = (response: any) => {
     maxAge: 0,
   });
 };
+
+export const cookieSerializer = (request: any) => {
+  const device = request.cookies[COOKIE_DEVICE];
+  const logged = request.cookies[COOKIE_LOGGED_IN];
+  const session = request.cookies[COOKIE_SESSION];
+  const ip = request.socket.remoteAddress;
+
+  return { device, logged, session, ip };
+};
+
+export const setCookieValidationFail = (response: any) => {
+  response.cookie(COOKIE_DEVICE, '', {
+    maxAge: 1,
+  });
+  response.cookie(COOKIE_LOGGED_IN, false, {
+    maxAge: COOKIE_MAX_AGE,
+  });
+};
+
+export const setCookieLoginTrue = (response: any) => {
+  response.cookie(COOKIE_LOGGED_IN, true, {
+    maxAge: COOKIE_MAX_AGE,
+  });
+};

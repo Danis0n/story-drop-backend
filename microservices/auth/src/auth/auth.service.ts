@@ -11,10 +11,19 @@ import {
   ValidateRequestDto,
   ValidateResponseDto,
   validatePassword,
+  RegisterRequestDto,
+  RegisterResponseDto,
+  FindAnyByResponseDto,
+  FindOneResponseDto,
 } from '../common';
 import { USER_SERVICE_NAME, UserServiceClient } from './proto/user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
+import { randomUUID } from 'crypto';
+import {
+  handleCreateUserException,
+  handleRegisterExceptions,
+} from '../common/exception';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -47,14 +56,29 @@ export class AuthService implements OnModuleInit {
     if (!isValidate)
       return { deviceId: null, isLogged: false, sessionId: null, user: null };
 
-    // const device = await this.deviceRepository.create();
-    // create device in db and return deviceId
-    // create session in db and return sessionId
+    const device = await this.deviceRepository.create({
+      deviceName: payload.deviceName,
+      deviceType: payload.deviceType,
+      uuid: randomUUID(),
+      ipAddress: payload.ip,
+    });
+
+    if (!device)
+      return { deviceId: null, isLogged: false, sessionId: null, user: null };
+
+    const session = await this.sessionRepository.create({
+      sessionId: payload.sessionId,
+      userId: user.uuid,
+      deviceId: device.device_id,
+    });
+
+    if (!session)
+      return { deviceId: null, isLogged: false, sessionId: null, user: null };
 
     return {
-      deviceId: payload.deviceName,
+      deviceId: device.device_id,
       isLogged: true,
-      sessionId: payload.sessionId,
+      sessionId: session.session_id,
       user: user,
     };
   }
@@ -68,6 +92,26 @@ export class AuthService implements OnModuleInit {
 
   public async logout(payload: ValidateRequestDto): Promise<LogoutResponseDto> {
     return { isLoggedOut: false };
+  }
+
+  public async register(
+    payload: RegisterRequestDto,
+  ): Promise<RegisterResponseDto> {
+    const { foundByEmail, foundByUsername }: FindAnyByResponseDto =
+      await firstValueFrom(
+        this.userServiceClient.findAnyExistBy({
+          username: payload.username,
+          email: payload.email,
+        }),
+      );
+    handleRegisterExceptions(foundByEmail, foundByUsername);
+
+    const { user }: FindOneResponseDto = await firstValueFrom(
+      this.userServiceClient.create(payload),
+    );
+
+    if (!user) handleCreateUserException();
+    return { success: true, user: user };
   }
 
   public async findOneUserIdBySession(

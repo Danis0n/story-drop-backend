@@ -6,12 +6,20 @@ import {
   Session,
   Inject,
   OnModuleInit,
+  Body,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '../common';
 import { IsAuthenticatedGuard } from '../common';
 import { User } from '../common';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';
+import {
+  RegisterRequestDto,
+  RegisterResponseDto,
+} from '../common/dto/auth.dto';
+import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/auth')
 export class AuthController implements OnModuleInit {
@@ -38,6 +46,14 @@ export class AuthController implements OnModuleInit {
     return {
       logout: true,
     };
+  }
+
+  @UseInterceptors(GrpcToHttpInterceptor)
+  @Post('/register')
+  private async register(
+    @Body() payload: RegisterRequestDto,
+  ): Promise<Observable<RegisterResponseDto>> {
+    return this.authServiceClient.register(payload);
   }
 
   @UseGuards(IsAuthenticatedGuard)

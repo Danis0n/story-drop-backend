@@ -1,9 +1,11 @@
 import {
   FindOneUserIdBySessionRequest,
   LoginRequest,
+  RegisterResponse,
   ValidateRequest,
   ValidateResponse,
 } from '../../../auth/proto/auth.pb';
+import { UserDto } from '../user.dto';
 
 export class LoginRequestDto implements LoginRequest {
   ip: string;
@@ -29,4 +31,9 @@ export class FindOneUserIdBySessionRequestDto
   implements FindOneUserIdBySessionRequest
 {
   session: string;
+}
+
+export class RegisterResponseDto implements RegisterResponse {
+  success: boolean;
+  user: UserDto;
 }

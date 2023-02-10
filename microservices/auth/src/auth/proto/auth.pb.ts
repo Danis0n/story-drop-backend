@@ -4,6 +4,20 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "auth";
 
+export interface RegisterRequest {
+  username: string;
+  password: string;
+  email: string;
+  nickname: string;
+  text: string;
+  contact: string;
+}
+
+export interface RegisterResponse {
+  user: User | undefined;
+  success: boolean;
+}
+
 export interface FindOneUserIdBySessionRequest {
   session: string;
 }
@@ -78,6 +92,8 @@ export interface AuthServiceClient {
 
   logout(request: ValidateRequest): Observable<LogoutResponse>;
 
+  register(request: RegisterRequest): Observable<RegisterResponse>;
+
   validate(request: ValidateRequest): Observable<ValidateResponse>;
 
   findOneUserIdBySession(request: FindOneUserIdBySessionRequest): Observable<FindOneUserIdBySessionResponse>;
@@ -87,6 +103,8 @@ export interface AuthServiceController {
   login(request: LoginRequest): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
 
   logout(request: ValidateRequest): Promise<LogoutResponse> | Observable<LogoutResponse> | LogoutResponse;
+
+  register(request: RegisterRequest): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
 
   validate(request: ValidateRequest): Promise<ValidateResponse> | Observable<ValidateResponse> | ValidateResponse;
 
@@ -100,7 +118,7 @@ export interface AuthServiceController {
 
 export function AuthServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["login", "logout", "validate", "findOneUserIdBySession"];
+    const grpcMethods: string[] = ["login", "logout", "register", "validate", "findOneUserIdBySession"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AuthService", method)(constructor.prototype[method], method, descriptor);

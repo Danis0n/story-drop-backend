@@ -14,6 +14,9 @@ import {
   FIND_ONE_USER_ID_BY_SESSION_METHOD,
   FindOneUserIdBySessionResponseDto,
   FindOneUserIdBySessionRequestDto,
+  REGISTER_METHOD,
+  RegisterResponseDto,
+  RegisterRequestDto,
 } from '../common';
 
 @Controller()
@@ -26,18 +29,25 @@ export class AuthController {
     return this.service.login(payload);
   }
 
-  @GrpcMethod(AUTH_SERVICE_NAME, VALIDATE_METHOD)
-  private async validate(
-    payload: ValidateRequestDto,
-  ): Promise<ValidateResponseDto> {
-    return this.service.validate(payload);
-  }
-
   @GrpcMethod(AUTH_SERVICE_NAME, LOGOUT_METHOD)
   private async logout(
     payload: ValidateRequestDto,
   ): Promise<LogoutResponseDto> {
     return this.service.logout(payload);
+  }
+
+  @GrpcMethod(AUTH_SERVICE_NAME, REGISTER_METHOD)
+  private async register(
+    payload: RegisterRequestDto,
+  ): Promise<RegisterResponseDto> {
+    return this.service.register(payload);
+  }
+
+  @GrpcMethod(AUTH_SERVICE_NAME, VALIDATE_METHOD)
+  private async validate(
+    payload: ValidateRequestDto,
+  ): Promise<ValidateResponseDto> {
+    return this.service.validate(payload);
   }
 
   @GrpcMethod(AUTH_SERVICE_NAME, FIND_ONE_USER_ID_BY_SESSION_METHOD)
