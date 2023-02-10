@@ -1,7 +1,9 @@
 import * as bcrypt from 'bcryptjs';
 
+const SALT = 'FDS-sdsadawwdsxzca.KSD49KFDS9KFkfds.f9k49k49fkdsk-f49kfs';
+
 export const hashPassword = (password: string): string => {
-  return bcrypt.hash(password, 5);
+  return bcrypt.hash(password, SALT);
 };
 
 export const validatePassword = (

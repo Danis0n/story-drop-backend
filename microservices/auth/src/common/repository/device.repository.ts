@@ -18,4 +18,24 @@ export class DeviceRepository {
       },
     });
   }
+
+  public async delete(deviceId: string) {
+    return await this.prisma.device.delete({
+      where: { device_id: deviceId },
+    });
+  }
+
+  public async findOneNameType(
+    deviceName: string,
+    deviceType: string,
+    ipAddress: string,
+  ): Promise<Device> {
+    return await this.prisma.device.findFirst({
+      where: {
+        device_type: deviceType,
+        device_name: deviceName,
+        ip_address: ipAddress,
+      },
+    });
+  }
 }

@@ -1,5 +1,9 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import {
+  hashPassword,
+  validatePassword,
+  handleCreateUserException,
+  handleRegisterExceptions,
   DeviceRepository,
   FindOneUserIdBySessionRequestDto,
   FindOneUserIdBySessionResponseDto,
@@ -10,14 +14,12 @@ import {
   SessionRepository,
   ValidateRequestDto,
   ValidateResponseDto,
-  validatePassword,
   RegisterRequestDto,
   RegisterResponseDto,
   FindAnyByResponseDto,
   FindOneResponseDto,
-  handleCreateUserException,
-  handleRegisterExceptions,
-  hashPassword,
+  SessionSuccessDto,
+  CreateNewSessionDto,
 } from '../common';
 import { USER_SERVICE_NAME, UserServiceClient } from './proto/user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -43,7 +45,6 @@ export class AuthService implements OnModuleInit {
   }
 
   public async login(payload: LoginRequestDto): Promise<LoginResponseDto> {
-    console.log(payload);
     const { hashedPassword, user, isFound }: FindOneUsernameResponseDto =
       await firstValueFrom(
         this.userServiceClient.findOneUsername({ username: payload.username }),
@@ -55,6 +56,38 @@ export class AuthService implements OnModuleInit {
     if (!isValidate)
       return { deviceId: null, isLogged: false, sessionId: null, user: null };
 
+    const { deviceId, sessionId }: SessionSuccessDto =
+      await this.updateLoginData({
+        ip: payload.ip,
+        userId: user.uuid,
+        deviceName: payload.deviceName,
+        deviceType: payload.deviceType,
+        sessionId: payload.sessionId,
+      });
+
+    const isSuccess = !!deviceId && !!sessionId;
+    if (!isSuccess)
+      return { deviceId: null, isLogged: false, sessionId: null, user: null };
+
+    return {
+      deviceId: deviceId,
+      isLogged: true,
+      sessionId: sessionId,
+      user: user,
+    };
+  }
+
+  private async updateLoginData(
+    payload: CreateNewSessionDto,
+  ): Promise<SessionSuccessDto> {
+    const oldDevice = await this.deviceRepository.findOneNameType(
+      payload.deviceName,
+      payload.deviceType,
+      payload.ip,
+    );
+
+    if (oldDevice) await this.deviceRepository.delete(oldDevice.device_id);
+
     const device = await this.deviceRepository.create({
       deviceName: payload.deviceName,
       deviceType: payload.deviceType,
@@ -62,24 +95,15 @@ export class AuthService implements OnModuleInit {
       ipAddress: payload.ip,
     });
 
-    if (!device)
-      return { deviceId: null, isLogged: false, sessionId: null, user: null };
+    if (!device) return { deviceId: null, sessionId: null };
 
     const session = await this.sessionRepository.create({
       sessionId: payload.sessionId,
-      userId: user.uuid,
+      userId: payload.userId,
       deviceId: device.device_id,
     });
 
-    if (!session)
-      return { deviceId: null, isLogged: false, sessionId: null, user: null };
-
-    return {
-      deviceId: device.device_id,
-      isLogged: true,
-      sessionId: session.session_id,
-      user: user,
-    };
+    return { deviceId: device.device_id, sessionId: session.session_id };
   }
 
   public async logout(payload: ValidateRequestDto): Promise<LogoutResponseDto> {

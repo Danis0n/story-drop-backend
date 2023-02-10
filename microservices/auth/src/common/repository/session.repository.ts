@@ -29,4 +29,20 @@ export class SessionRepository {
       },
     });
   }
+
+  public async findOneDevice(deviceId: string) {
+    return await this.prisma.session.findFirst({
+      where: {
+        device_id: deviceId,
+      },
+    });
+  }
+
+  public async delete(userId: string) {
+    return await this.prisma.session.delete({
+      where: {
+        session_id: userId,
+      },
+    });
+  }
 }
