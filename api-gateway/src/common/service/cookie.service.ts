@@ -6,8 +6,6 @@ import {
 } from '../config';
 import { LoginResponse } from '../../auth/auth.pb';
 
-// TODO : set folders for auth & user requests & responses
-
 export const setLoginCookieSuccess = (
   response: any,
   loginResponse: LoginResponse,
@@ -25,7 +23,7 @@ export const setLoginCookieSuccess = (
   });
 };
 
-export const setLoginCookieFail = (response: any) => {
+export const cleanCookie = (response: any) => {
   response.user = null;
 
   response.cookie(COOKIE_DEVICE, '', {
@@ -39,10 +37,10 @@ export const setLoginCookieFail = (response: any) => {
   });
 };
 
-export const cookieSerializer = (request: any) => {
+export const getCookieValidate = (request: any) => {
   const device = request.cookies[COOKIE_DEVICE];
-  const logged = request.cookies[COOKIE_LOGGED_IN];
   const session = request.cookies[COOKIE_SESSION];
+  const logged = request.cookies[COOKIE_LOGGED_IN];
   const ip = request.socket.remoteAddress;
 
   return { device, logged, session, ip };

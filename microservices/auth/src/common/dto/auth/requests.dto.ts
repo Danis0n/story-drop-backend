@@ -1,11 +1,17 @@
 import {
   FindOneUserIdBySessionRequest,
   LoginRequest,
+  LogoutRequest,
   RegisterResponse,
   ValidateRequest,
   ValidateResponse,
 } from '../../../auth/proto/auth.pb';
 import { UserDto } from '../user.dto';
+
+export class LogoutRequestDto implements LogoutRequest {
+  deviceId: string;
+  sessionId: string;
+}
 
 export class LoginRequestDto implements LoginRequest {
   ip: string;

@@ -9,7 +9,7 @@ import {
   Body,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard } from '../common';
+import { AuthGuard, LogoutGuard } from '../common';
 import { IsAuthenticatedGuard } from '../common';
 import { User } from '../common';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
@@ -40,7 +40,7 @@ export class AuthController implements OnModuleInit {
     return { sessionId: session.id, session: session.user };
   }
 
-  @UseGuards(IsAuthenticatedGuard)
+  @UseGuards(IsAuthenticatedGuard, LogoutGuard)
   @Post('logout')
   private async logout() {
     return {

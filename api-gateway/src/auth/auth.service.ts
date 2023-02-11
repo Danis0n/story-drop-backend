@@ -4,6 +4,9 @@ import {
   AuthServiceClient,
   LoginRequest,
   LoginResponse,
+  LogoutRequest,
+  LogoutResponse,
+  ValidateRequest,
   ValidateResponse,
 } from './auth.pb';
 import { firstValueFrom } from 'rxjs';
@@ -34,6 +37,10 @@ export class AuthService implements OnModuleInit {
 
   public async login(login: LoginRequest): Promise<LoginResponse> {
     return await firstValueFrom(this.authServiceClient.login(login));
+  }
+
+  public async logout(logout: LogoutRequest): Promise<LogoutResponse> {
+    return await firstValueFrom(this.authServiceClient.logout(logout));
   }
 
   async findOneUserIdBySession(session: string) {

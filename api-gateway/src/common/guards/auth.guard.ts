@@ -8,7 +8,7 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { LoginRequest, LoginResponse } from '../../auth/auth.pb';
 import { serializeUserAgentToString } from '../mapper';
-import { setLoginCookieFail, setLoginCookieSuccess } from '../service';
+import { cleanCookie, setLoginCookieSuccess } from '../service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -50,7 +50,7 @@ export class AuthGuard implements CanActivate {
     );
 
     if (!loginResponse.isLogged) {
-      setLoginCookieFail(response);
+      cleanCookie(response);
       throw new UnauthorizedException('Неверный логин или пароль');
     }
 

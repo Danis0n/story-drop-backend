@@ -4,6 +4,11 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "auth";
 
+export interface LogoutRequest {
+  sessionId: string;
+  deviceId: string;
+}
+
 export interface RegisterRequest {
   username: string;
   password: string;
@@ -90,7 +95,7 @@ export const AUTH_PACKAGE_NAME = "auth";
 export interface AuthServiceClient {
   login(request: LoginRequest): Observable<LoginResponse>;
 
-  logout(request: ValidateRequest): Observable<LogoutResponse>;
+  logout(request: LogoutRequest): Observable<LogoutResponse>;
 
   register(request: RegisterRequest): Observable<RegisterResponse>;
 
@@ -102,7 +107,7 @@ export interface AuthServiceClient {
 export interface AuthServiceController {
   login(request: LoginRequest): Promise<LoginResponse> | Observable<LoginResponse> | LoginResponse;
 
-  logout(request: ValidateRequest): Promise<LogoutResponse> | Observable<LogoutResponse> | LogoutResponse;
+  logout(request: LogoutRequest): Promise<LogoutResponse> | Observable<LogoutResponse> | LogoutResponse;
 
   register(request: RegisterRequest): Promise<RegisterResponse> | Observable<RegisterResponse> | RegisterResponse;
 

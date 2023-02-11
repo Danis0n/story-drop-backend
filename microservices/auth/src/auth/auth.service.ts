@@ -20,11 +20,14 @@ import {
   FindOneResponseDto,
   SessionSuccessDto,
   CreateNewSessionDto,
+  LogoutRequestDto,
 } from '../common';
 import { USER_SERVICE_NAME, UserServiceClient } from './proto/user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { randomUUID } from 'crypto';
+
+// TODO: implement schedule microservice, which have control over expire sessions
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -63,6 +66,7 @@ export class AuthService implements OnModuleInit {
         deviceName: payload.deviceName,
         deviceType: payload.deviceType,
         sessionId: payload.sessionId,
+        sessionExpire: payload.sessionExpire,
       });
 
     const isSuccess = !!deviceId && !!sessionId;
@@ -77,37 +81,14 @@ export class AuthService implements OnModuleInit {
     };
   }
 
-  private async updateLoginData(
-    payload: CreateNewSessionDto,
-  ): Promise<SessionSuccessDto> {
-    const oldDevice = await this.deviceRepository.findOneNameType(
-      payload.deviceName,
-      payload.deviceType,
-      payload.ip,
-    );
+  public async logout(payload: LogoutRequestDto): Promise<LogoutResponseDto> {
+    const session = await this.sessionRepository.findOneId(payload.sessionId);
+    if (!session) return { isLoggedOut: false };
 
-    if (oldDevice) await this.deviceRepository.delete(oldDevice.device_id);
+    await this.sessionRepository.delete(session.session_id);
+    await this.deviceRepository.delete(session.device_id);
 
-    const device = await this.deviceRepository.create({
-      deviceName: payload.deviceName,
-      deviceType: payload.deviceType,
-      uuid: randomUUID(),
-      ipAddress: payload.ip,
-    });
-
-    if (!device) return { deviceId: null, sessionId: null };
-
-    const session = await this.sessionRepository.create({
-      sessionId: payload.sessionId,
-      userId: payload.userId,
-      deviceId: device.device_id,
-    });
-
-    return { deviceId: device.device_id, sessionId: session.session_id };
-  }
-
-  public async logout(payload: ValidateRequestDto): Promise<LogoutResponseDto> {
-    return { isLoggedOut: false };
+    return { isLoggedOut: true };
   }
 
   public async register(
@@ -135,12 +116,42 @@ export class AuthService implements OnModuleInit {
   public async validate(
     payload: ValidateRequestDto,
   ): Promise<ValidateResponseDto> {
-    return { permission: false };
+    return { permission: true };
   }
 
   public async findOneUserIdBySession(
     payload: FindOneUserIdBySessionRequestDto,
   ): Promise<FindOneUserIdBySessionResponseDto> {
     return { uuid: '' };
+  }
+
+  private async updateLoginData(
+    payload: CreateNewSessionDto,
+  ): Promise<SessionSuccessDto> {
+    const oldDevice = await this.deviceRepository.findOneNameType(
+      payload.deviceName,
+      payload.deviceType,
+      payload.ip,
+    );
+
+    if (oldDevice) await this.deviceRepository.delete(oldDevice.device_id);
+
+    const device = await this.deviceRepository.create({
+      deviceName: payload.deviceName,
+      deviceType: payload.deviceType,
+      uuid: randomUUID(),
+      ipAddress: payload.ip,
+    });
+
+    if (!device) return { deviceId: null, sessionId: null };
+
+    const session = await this.sessionRepository.create({
+      sessionId: payload.sessionId,
+      userId: payload.userId,
+      deviceId: device.device_id,
+      sessionExpire: payload.sessionExpire,
+    });
+
+    return { deviceId: device.device_id, sessionId: session.session_id };
   }
 }

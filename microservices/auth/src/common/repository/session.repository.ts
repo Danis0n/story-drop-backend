@@ -14,12 +14,15 @@ export class SessionRepository {
     userId,
     deviceId,
   }: CreateSessionDto): Promise<SessionWithRelationData> {
+    const signIn = new Date();
+    const expireAt = new Date(signIn.getTime() + SESSION_LIVE_TIME);
+
     return await this.prisma.session.create({
       data: {
         session_id: sessionId,
         user_id: userId,
-        sing_in: new Date(),
-        expire_at: new Date(SESSION_LIVE_TIME),
+        sing_in: signIn,
+        expire_at: expireAt,
         device: {
           connect: { device_id: deviceId },
         },
@@ -38,10 +41,18 @@ export class SessionRepository {
     });
   }
 
-  public async delete(userId: string) {
+  public async delete(sessionId: string) {
     return await this.prisma.session.delete({
       where: {
-        session_id: userId,
+        session_id: sessionId,
+      },
+    });
+  }
+
+  public async findOneId(sessionId: string) {
+    return await this.prisma.session.findUnique({
+      where: {
+        session_id: sessionId,
       },
     });
   }

@@ -1,6 +1,6 @@
 import { Controller, Inject } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { AUTH_SERVICE_NAME } from './proto/auth.pb';
+import { AUTH_SERVICE_NAME, LogoutRequest } from './proto/auth.pb';
 import { AuthService } from './auth.service';
 import {
   LOGIN_METHOD,
@@ -17,6 +17,7 @@ import {
   REGISTER_METHOD,
   RegisterResponseDto,
   RegisterRequestDto,
+  LogoutRequestDto,
 } from '../common';
 
 @Controller()
@@ -30,9 +31,7 @@ export class AuthController {
   }
 
   @GrpcMethod(AUTH_SERVICE_NAME, LOGOUT_METHOD)
-  private async logout(
-    payload: ValidateRequestDto,
-  ): Promise<LogoutResponseDto> {
+  private async logout(payload: LogoutRequestDto): Promise<LogoutResponseDto> {
     return this.service.logout(payload);
   }
 

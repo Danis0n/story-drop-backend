@@ -6,9 +6,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { ValidateResponse } from '../../auth/auth.pb';
-import { COOKIE_LOGGED_IN, COOKIE_MAX_AGE } from '../config';
 import {
-  cookieSerializer,
+  getCookieValidate,
   setCookieLoginTrue,
   setCookieValidationFail,
 } from '../service';
@@ -23,7 +22,7 @@ export class IsAuthenticatedGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
 
-    const { device, logged, session, ip } = cookieSerializer(request);
+    const { device, logged, session, ip } = getCookieValidate(request);
 
     if (!session) {
       setCookieValidationFail(response);
