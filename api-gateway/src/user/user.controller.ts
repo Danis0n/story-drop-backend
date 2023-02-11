@@ -7,7 +7,6 @@ import {
   OnModuleInit,
   Param,
   Patch,
-  Post,
   Put,
   Query,
   UploadedFile,
@@ -17,7 +16,6 @@ import { USER_SERVICE_NAME, UserServiceClient } from './user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import {
-  CreateUserDto,
   DeleteResponseDto,
   FindAllResponseDto,
   FindAnyByRequestDto,
@@ -25,12 +23,12 @@ import {
   FindOneResponseDto,
   RoleGuard,
   Roles,
-  UpdateAvatarDto,
   UpdateAvatarResponseDto,
-  UpdateDto,
   IsAuthenticatedGuard,
   mapToUpdateUser,
   mapToUpdateImage,
+  UpdateAvatarDto,
+  UpdateDto,
 } from '../common';
 
 @Controller('api/users')
@@ -55,16 +53,6 @@ export class UserController implements OnModuleInit {
     @Query() params: FindAnyByRequestDto,
   ): Promise<Observable<FindAnyByResponseDto>> {
     return this.userServiceClient.findAnyExistBy(params);
-  }
-
-  // test
-  // use register in auth module instead
-  // delete it, not for direct use by frontend
-  @Post()
-  private async create(
-    @Body() createUser: CreateUserDto,
-  ): Promise<Observable<FindOneResponseDto>> {
-    return this.userServiceClient.create(createUser);
   }
 
   @Get('/:id')

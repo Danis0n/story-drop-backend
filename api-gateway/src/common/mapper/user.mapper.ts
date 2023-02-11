@@ -1,5 +1,5 @@
-import { UpdateDto, UpdateRequestDto } from '../dto/user.dto';
 import { Builder } from 'builder-pattern';
+import { UpdateDto, UpdateRequestDto } from '../dto';
 
 export const mapToUpdateUser = (
   id: string,

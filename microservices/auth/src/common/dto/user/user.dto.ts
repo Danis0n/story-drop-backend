@@ -4,7 +4,7 @@ import {
   Image,
   User,
   UserInfo,
-} from '../../auth/proto/user.pb';
+} from '../../../auth/proto/user.pb';
 import { IsOptional } from 'class-validator';
 
 export class CreateImageDto implements CreateImage {

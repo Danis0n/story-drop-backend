@@ -8,8 +8,9 @@ import {
   FindOneUsernameResponse,
   UpdateAvatarResponse,
   UpdateResponse,
-} from '../../../auth/proto/user.pb';
-import { ImageDto, UserDto } from './user.dto';
+} from '../../../user/user.pb';
+import { UserDto } from './user.dto';
+import { ImageDto } from './user.dto';
 
 export class FindOneRolesResponseDto implements FindOneRolesResponse {
   roles: string[];

@@ -1,10 +1,22 @@
 import {
   FindOneUserIdBySessionResponse,
+  LoginResponse,
+  LogoutResponse,
   RegisterRequest,
-  RegisterResponse,
-} from '../../auth/auth.pb';
-import { UserDto } from './user.dto';
+  User,
+} from '../../../auth/auth.pb';
 import { IsOptional } from 'class-validator';
+
+export class LoginResponseDto implements LoginResponse {
+  deviceId: string;
+  isLogged: boolean;
+  sessionId: string;
+  user: User;
+}
+
+export class LogoutResponseDto implements LogoutResponse {
+  isLoggedOut: boolean;
+}
 
 export class FindOneUserIdBySessionResponseDto
   implements FindOneUserIdBySessionResponse
@@ -21,9 +33,4 @@ export class RegisterRequestDto implements RegisterRequest {
   text: string;
   @IsOptional()
   username: string;
-}
-
-export class RegisterResponseDto implements RegisterResponse {
-  success: boolean;
-  user: UserDto;
 }

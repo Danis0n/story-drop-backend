@@ -1,9 +1,9 @@
+import { Builder } from 'builder-pattern';
 import {
   CreateImageDto,
   UpdateAvatarDto,
   UpdateAvatarRequestDto,
-} from '../dto/user.dto';
-import { Builder } from 'builder-pattern';
+} from '../dto';
 
 export const mapToCreateImage = (file: Express.Multer.File): CreateImageDto => {
   return !!file

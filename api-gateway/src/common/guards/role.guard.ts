@@ -10,8 +10,10 @@ import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators';
 import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../config';
 import { UserService } from '../../user/user.service';
-import { FindOneRolesResponseDto } from '../dto';
-import { FindOneUserIdBySessionResponseDto } from '../dto/auth.dto';
+import {
+  FindOneRolesResponseDto,
+  FindOneUserIdBySessionResponseDto,
+} from '../dto';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

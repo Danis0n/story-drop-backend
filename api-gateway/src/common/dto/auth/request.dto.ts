@@ -5,8 +5,8 @@ import {
   RegisterResponse,
   ValidateRequest,
   ValidateResponse,
-} from '../../../auth/proto/auth.pb';
-import { UserDto } from '../user/user.dto';
+} from '../../../auth/auth.pb';
+import { UserDto } from '../user';
 
 export class LogoutRequestDto implements LogoutRequest {
   deviceId: string;

@@ -9,15 +9,17 @@ import {
   Body,
   UseInterceptors,
 } from '@nestjs/common';
-import { AuthGuard, LogoutGuard } from '../common';
-import { IsAuthenticatedGuard } from '../common';
-import { User } from '../common';
-import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
-import { ClientGrpc } from '@nestjs/microservices';
 import {
+  User,
+  IsAuthenticatedGuard,
+  AuthGuard,
+  LogoutGuard,
   RegisterRequestDto,
   RegisterResponseDto,
-} from '../common/dto/auth.dto';
+} from '../common';
+import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
+import { ClientGrpc } from '@nestjs/microservices';
+
 import { Observable } from 'rxjs';
 import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
