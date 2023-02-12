@@ -40,7 +40,7 @@ export const cleanCookie = (response: any) => {
 export const getCookieValidate = (request: any) => {
   const device = request.cookies[COOKIE_DEVICE];
   const session = request.cookies[COOKIE_SESSION];
-  const logged = request.cookies[COOKIE_LOGGED_IN];
+  const logged = Boolean(request.cookies[COOKIE_LOGGED_IN]);
   const ip = request.socket.remoteAddress;
 
   return { device, logged, session, ip };

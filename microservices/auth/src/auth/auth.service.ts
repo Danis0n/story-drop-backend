@@ -112,10 +112,20 @@ export class AuthService implements OnModuleInit {
     return { success: true, user: user };
   }
 
-  // change ip-address in db if it's new
-  public async validate(
-    payload: ValidateRequestDto,
-  ): Promise<ValidateResponseDto> {
+  public async validate({
+    deviceId,
+    sessionId,
+    ip,
+  }: ValidateRequestDto): Promise<ValidateResponseDto> {
+    const session = await this.sessionRepository.findOneIdWithRelations(
+      sessionId,
+    );
+    if (!session || deviceId !== session.device_id)
+      return { permission: false };
+
+    const ipChanged = session.device.ip_address !== ip;
+    if (ipChanged) await this.deviceRepository.updateIp(deviceId, ip);
+
     return { permission: true };
   }
 

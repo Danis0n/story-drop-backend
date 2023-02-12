@@ -49,6 +49,17 @@ export class SessionRepository {
     });
   }
 
+  public async findOneIdWithRelations(
+    sessionId: string,
+  ): Promise<SessionWithRelationData> {
+    return await this.prisma.session.findUnique({
+      where: {
+        session_id: sessionId,
+      },
+      include: { device: true },
+    });
+  }
+
   public async findOneId(sessionId: string) {
     return await this.prisma.session.findUnique({
       where: {

@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { ValidateResponse } from '../../auth/auth.pb';
@@ -12,8 +13,6 @@ import {
   setCookieValidationFail,
 } from '../service';
 
-// for authenticated requests only.
-// checks if request have a session, logged and device status. Updates it if necessary.
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {
   @Inject(AuthService) public readonly authService: AuthService;
@@ -26,7 +25,7 @@ export class IsAuthenticatedGuard implements CanActivate {
 
     if (!session) {
       setCookieValidationFail(response);
-      return false;
+      throw new UnauthorizedException('Сессия не была найдена!');
     }
 
     if (!!session && !logged) {

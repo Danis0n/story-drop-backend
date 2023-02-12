@@ -25,6 +25,15 @@ export class DeviceRepository {
     });
   }
 
+  public async updateIp(deviceId: string, ip: string) {
+    return await this.prisma.device.update({
+      where: { device_id: deviceId },
+      data: {
+        ip_address: ip,
+      },
+    });
+  }
+
   public async findOneNameType(
     deviceName: string,
     deviceType: string,
