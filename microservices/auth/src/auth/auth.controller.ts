@@ -1,6 +1,6 @@
 import { Controller, Inject } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { AUTH_SERVICE_NAME, LogoutRequest } from './proto/auth.pb';
+import { AUTH_SERVICE_NAME } from './proto/auth.pb';
 import { AuthService } from './auth.service';
 import {
   LOGIN_METHOD,
