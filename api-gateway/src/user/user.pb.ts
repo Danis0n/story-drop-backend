@@ -4,6 +4,24 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface SetEnabledRequest {
+  uuid: string;
+  state: boolean;
+}
+
+export interface SetEnabledResponse {
+  success: boolean;
+}
+
+export interface SetBannedRequest {
+  uuid: string;
+  state: boolean;
+}
+
+export interface SetBannedResponse {
+  success: boolean;
+}
+
 export interface FindOneUsernameResponse {
   user: User | undefined;
   hashedPassword: string;
@@ -153,6 +171,10 @@ export interface UserServiceClient {
   findOneRoles(request: FindOneIdRequest): Observable<FindOneRolesResponse>;
 
   findOneUsername(request: FindOneUsernameRequest): Observable<FindOneUsernameResponse>;
+
+  setBanned(request: SetBannedRequest): Observable<SetBannedResponse>;
+
+  setEnabled(request: SetEnabledRequest): Observable<SetEnabledResponse>;
 }
 
 export interface UserServiceController {
@@ -189,6 +211,12 @@ export interface UserServiceController {
   findOneUsername(
     request: FindOneUsernameRequest,
   ): Promise<FindOneUsernameResponse> | Observable<FindOneUsernameResponse> | FindOneUsernameResponse;
+
+  setBanned(request: SetBannedRequest): Promise<SetBannedResponse> | Observable<SetBannedResponse> | SetBannedResponse;
+
+  setEnabled(
+    request: SetEnabledRequest,
+  ): Promise<SetEnabledResponse> | Observable<SetEnabledResponse> | SetEnabledResponse;
 }
 
 export function UserServiceControllerMethods() {
@@ -205,6 +233,8 @@ export function UserServiceControllerMethods() {
       "delete",
       "findOneRoles",
       "findOneUsername",
+      "setBanned",
+      "setEnabled",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

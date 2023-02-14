@@ -6,6 +6,8 @@ import {
   FindOneResponse,
   FindOneRolesResponse,
   FindOneUsernameResponse,
+  SetBannedResponse,
+  SetEnabledResponse,
   UpdateAvatarResponse,
   UpdateResponse,
   User,
@@ -49,4 +51,12 @@ export class FindAvatarResponseDto implements FindAvatarResponse {
 export class FindAnyByResponseDto implements FindAnyByResponse {
   foundByEmail: boolean;
   foundByUsername: boolean;
+}
+
+export class SetBannedResponseDto implements SetBannedResponse {
+  success: boolean;
+}
+
+export class SetEnabledResponseDto implements SetEnabledResponse {
+  success: boolean;
 }

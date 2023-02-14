@@ -55,7 +55,7 @@ export class AuthService implements OnModuleInit {
     if (!isFound)
       return { deviceId: null, isLogged: false, sessionId: null, user: null };
 
-    const isValidate = validatePassword(hashedPassword, payload.password);
+    const isValidate = await validatePassword(hashedPassword, payload.password);
     if (!isValidate)
       return { deviceId: null, isLogged: false, sessionId: null, user: null };
 
@@ -103,7 +103,7 @@ export class AuthService implements OnModuleInit {
       );
     handleRegisterExceptions(foundByEmail, foundByUsername);
 
-    payload.password = hashPassword(payload.password);
+    payload.password = await hashPassword(payload.password);
     const { user }: FindOneResponseDto = await firstValueFrom(
       this.userServiceClient.create(payload),
     );

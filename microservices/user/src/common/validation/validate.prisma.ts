@@ -11,12 +11,20 @@ export const userIncludeRelations = Prisma.validator<Prisma.sd_userInclude>()({
   },
 });
 
+export const userIncludeAvatar = Prisma.validator<Prisma.sd_userInclude>()({
+  image: true,
+});
+
 export const userIncludeRoleRelation =
   Prisma.validator<Prisma.sd_userInclude>()({
     sd_role_user: {
       include: { role: true },
     },
   });
+
+export type UserWithImage = Prisma.sd_userGetPayload<{
+  include: typeof userIncludeAvatar;
+}>;
 
 export type roleWithRelationData = Prisma.sd_role_userGetPayload<{
   include: typeof roleInclude;

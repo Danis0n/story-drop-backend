@@ -21,37 +21,45 @@ import {
   UserWithRoleRelationData,
   FindOneUsernameRequestDto,
   FindOneUsernameResponseDto,
+  SetBannedRequestDto,
+  SetEnabledRequestDto,
+  SetBannedResponseDto,
+  SetEnabledResponseDto,
+  ImageMapper,
 } from '../common';
 
 @Injectable()
 export class UserService {
   @Inject(UserMapper)
-  private readonly mapper: UserMapper;
+  private readonly userMapper: UserMapper;
+
+  @Inject(ImageMapper)
+  public readonly imageMapper: ImageMapper;
 
   @Inject(UserRepository)
-  private readonly repository: UserRepository;
+  private readonly userRepository: UserRepository;
 
   public async create(createUser: CreateUserDto): Promise<FindOneResponseDto> {
-    const user: UserWithRelationData = await this.repository.createUser(
+    const user: UserWithRelationData = await this.userRepository.createUser(
       createUser,
     );
 
-    return { user: this.mapper.mapToUserDto(user) };
+    return { user: this.userMapper.mapToUserDto(user) };
   }
 
   public async findAll(): Promise<FindAllResponseDto> {
-    const users: UserWithRelationData[] = await this.repository.findAll();
-    return { users: this.mapper.mapArrayToUserDto(users) };
+    const users: UserWithRelationData[] = await this.userRepository.findAll();
+    return { users: this.userMapper.mapArrayToUserDto(users) };
   }
 
   public async findAnyExist(
     payload: FindAnyByRequestDto,
   ): Promise<FindAnyByResponseDto> {
     const foundEmail = !!payload.email
-      ? await this.repository.isExistByEmail(payload.email)
+      ? await this.userRepository.isExistByEmail(payload.email)
       : false;
     const foundUsername = !!payload.username
-      ? await this.repository.isExistByUsername(payload.username)
+      ? await this.userRepository.isExistByUsername(payload.username)
       : false;
 
     return { foundByEmail: foundEmail, foundByUsername: foundUsername };
@@ -60,17 +68,18 @@ export class UserService {
   public async findOneId({
     uuid,
   }: FindOneIdRequestDto): Promise<FindOneResponseDto> {
-    const user: UserWithRelationData = await this.repository.findOneId(uuid);
+    const user: UserWithRelationData = await this.userRepository.findOneId(
+      uuid,
+    );
 
-    return { user: this.mapper.mapToUserDto(user) };
+    return { user: this.userMapper.mapToUserDto(user) };
   }
 
   public async findOneRoles({
     uuid,
   }: FindOneIdRequestDto): Promise<FindOneRolesResponseDto> {
-    const user: UserWithRoleRelationData = await this.repository.findRolesId(
-      uuid,
-    );
+    const user: UserWithRoleRelationData =
+      await this.userRepository.findRolesId(uuid);
 
     const roles: string[] = user.sd_role_user.map((role) => {
       return role.role.role_name;
@@ -88,11 +97,16 @@ export class UserService {
   public async findAvatar({
     uuid,
   }: FindAvatarByUserRequestDto): Promise<FindAvatarResponseDto> {
-    return { avatar: null };
+    const user = await this.userRepository.findOneIdWithAvatar(uuid);
+    if (!user.image) return { avatar: null };
+
+    const imageDto = this.imageMapper.mapToImageDto(user.image);
+    return { avatar: imageDto };
   }
 
   public async delete({ uuid }: DeleteRequestDto): Promise<DeleteResponseDto> {
-    return { success: false };
+    const success = await this.userRepository.delete(uuid);
+    return { success: success };
   }
 
   public async update(payload: UpdateRequestDto): Promise<UpdateResponseDto> {
@@ -102,15 +116,34 @@ export class UserService {
   public async findOneUsername({
     username,
   }: FindOneUsernameRequestDto): Promise<FindOneUsernameResponseDto> {
-    const user: UserWithRelationData = await this.repository.findOneUsername(
-      username,
-    );
+    const user: UserWithRelationData =
+      await this.userRepository.findOneUsername(username);
     if (!user) return { hashedPassword: null, isFound: false, user: null };
 
     return {
       isFound: true,
       hashedPassword: user.password,
-      user: this.mapper.mapToUserDto(user),
+      user: this.userMapper.mapToUserDto(user),
     };
+  }
+
+  public async setBanned({
+    state,
+    uuid,
+  }: SetBannedRequestDto): Promise<SetBannedResponseDto> {
+    const user = await this.userRepository.updateBlocked(state, uuid);
+    const success = user.is_blocked === state;
+
+    return { success: success };
+  }
+
+  public async setEnabled({
+    state,
+    uuid,
+  }: SetEnabledRequestDto): Promise<SetEnabledResponseDto> {
+    const user = await this.userRepository.updateEnabled(state, uuid);
+    const success = user.is_enabled === state;
+
+    return { success: success };
   }
 }

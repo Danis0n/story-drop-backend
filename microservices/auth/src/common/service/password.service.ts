@@ -1,14 +1,14 @@
 import * as bcrypt from 'bcryptjs';
 
-const SALT = 'FDS-sdsadawwdsxzca.KSD49KFDS9KFkfds.f9k49k49fkdsk-f49kfs';
-
-export const hashPassword = (password: string): string => {
-  return bcrypt.hash(password, SALT);
+const SALT = 12312312;
+// TODO: learn about bcrypt
+export const hashPassword = async (password: string): Promise<string> => {
+  return bcrypt.hash(password, 5);
 };
 
-export const validatePassword = (
+export const validatePassword = async (
   hashedPassword: string,
   password: string,
-): boolean => {
-  return bcrypt.compare(hashedPassword, password);
+): Promise<boolean> => {
+  return bcrypt.compare(password, hashedPassword);
 };

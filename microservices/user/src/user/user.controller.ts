@@ -24,6 +24,12 @@ import {
   FindOneRolesResponseDto,
   FindOneUsernameRequestDto,
   FindOneUsernameResponseDto,
+  SET_BANNED_METHOD,
+  SET_ENABLED_METHOD,
+  SetBannedRequestDto,
+  SetBannedResponseDto,
+  SetEnabledRequestDto,
+  SetEnabledResponseDto,
   UPDATE_AVATAR_METHOD,
   UPDATE_METHOD,
   UpdateAvatarRequestDto,
@@ -97,5 +103,19 @@ export class UserController {
     payload: FindOneIdRequestDto,
   ): Promise<FindOneRolesResponseDto> {
     return this.service.findOneRoles(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, SET_BANNED_METHOD)
+  private async setBanned(
+    payload: SetBannedRequestDto,
+  ): Promise<SetBannedResponseDto> {
+    return this.service.setBanned(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, SET_ENABLED_METHOD)
+  private async setEnabled(
+    payload: SetEnabledRequestDto,
+  ): Promise<SetEnabledResponseDto> {
+    return this.service.setEnabled(payload);
   }
 }

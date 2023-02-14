@@ -4,6 +4,8 @@ import {
   FindAvatarByUserRequest,
   FindOneIdRequest,
   FindOneUsernameRequest,
+  SetBannedRequest,
+  SetEnabledRequest,
   UpdateAvatarRequest,
   UpdateRequest,
 } from '../../user/proto/user.pb';
@@ -46,4 +48,14 @@ export class FindOneIdRequestDto implements FindOneIdRequest {
 
 export class FindOneUsernameRequestDto implements FindOneUsernameRequest {
   username: string;
+}
+
+export class SetBannedRequestDto implements SetBannedRequest {
+  state: boolean;
+  uuid: string;
+}
+
+export class SetEnabledRequestDto implements SetEnabledRequest {
+  state: boolean;
+  uuid: string;
 }
