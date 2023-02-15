@@ -24,6 +24,8 @@ import {
   UpdateDto,
 } from '../common';
 
+// TODO: make search by nicknames
+
 @Controller('api/users')
 export class UserController implements OnModuleInit {
   private userServiceClient: UserServiceClient;
