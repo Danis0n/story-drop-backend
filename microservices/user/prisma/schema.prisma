@@ -42,7 +42,7 @@ model sd_user {
   info_id      Int?
   avatar_id    String?        @db.Uuid
   sd_role_user sd_role_user[]
-  image        image?         @relation(fields: [avatar_id], references: [image_id], onDelete: Cascade)
+  image        image?         @relation(fields: [avatar_id], references: [image_id])
   sd_user_info sd_user_info?  @relation(fields: [info_id], references: [info_id], onDelete: Cascade)
 }
 

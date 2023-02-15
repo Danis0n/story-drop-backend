@@ -4,7 +4,7 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { USER_SERVICE_NAME } from './proto/user.pb';
 import {
   CREATE_USER_METHOD,
-  CreateUserDto,
+  CreateUserRequestDto,
   DELETE_METHOD,
   DeleteRequestDto,
   DeleteResponseDto,
@@ -27,12 +27,12 @@ import {
   FindOneUsernameResponseDto,
   FindPasswordIdRequestDto,
   FindPasswordIdResponseDto,
-  SET_BANNED_METHOD,
-  SET_ENABLED_METHOD,
-  SetBannedRequestDto,
-  SetBannedResponseDto,
-  SetEnabledRequestDto,
-  SetEnabledResponseDto,
+  UPDATE_BANNED_METHOD,
+  UPDATE_ENABLED_METHOD,
+  UpdateBannedRequestDto,
+  UpdateBannedResponseDto,
+  UpdateEnabledRequestDto,
+  UpdateEnabledResponseDto,
   UPDATE_AVATAR_METHOD,
   UPDATE_METHOD,
   UPDATE_PASSWORD_METHOD,
@@ -50,7 +50,9 @@ export class UserController {
   private readonly service: UserService;
 
   @GrpcMethod(USER_SERVICE_NAME, CREATE_USER_METHOD)
-  private async create(payload: CreateUserDto): Promise<FindOneResponseDto> {
+  private async create(
+    payload: CreateUserRequestDto,
+  ): Promise<FindOneResponseDto> {
     return this.service.create(payload);
   }
 
@@ -81,10 +83,24 @@ export class UserController {
   }
 
   @GrpcMethod(USER_SERVICE_NAME, FIND_AVATAR_BY_USER_METHOD)
-  private async findAvatar(
+  private async findAvatarId(
     payload: FindAvatarByUserRequestDto,
   ): Promise<FindAvatarResponseDto> {
-    return this.service.findAvatar(payload);
+    return this.service.findAvatarId(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, FIND_ONE_ROLES_METHOD)
+  private async findOneRoles(
+    payload: FindOneIdRequestDto,
+  ): Promise<FindOneRolesResponseDto> {
+    return this.service.findOneRoles(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, FIND_PASSWORD_ID_METHOD)
+  private async findPasswordId(
+    payload: FindPasswordIdRequestDto,
+  ): Promise<FindPasswordIdResponseDto> {
+    return this.service.findPasswordId(payload);
   }
 
   @GrpcMethod(USER_SERVICE_NAME, UPDATE_AVATAR_METHOD)
@@ -104,25 +120,18 @@ export class UserController {
     return this.service.delete(payload);
   }
 
-  @GrpcMethod(USER_SERVICE_NAME, FIND_ONE_ROLES_METHOD)
-  private async findOneRoles(
-    payload: FindOneIdRequestDto,
-  ): Promise<FindOneRolesResponseDto> {
-    return this.service.findOneRoles(payload);
+  @GrpcMethod(USER_SERVICE_NAME, UPDATE_BANNED_METHOD)
+  private async updateBanned(
+    payload: UpdateBannedRequestDto,
+  ): Promise<UpdateBannedResponseDto> {
+    return this.service.updateBanned(payload);
   }
 
-  @GrpcMethod(USER_SERVICE_NAME, SET_BANNED_METHOD)
-  private async setBanned(
-    payload: SetBannedRequestDto,
-  ): Promise<SetBannedResponseDto> {
-    return this.service.setBanned(payload);
-  }
-
-  @GrpcMethod(USER_SERVICE_NAME, SET_ENABLED_METHOD)
-  private async setEnabled(
-    payload: SetEnabledRequestDto,
-  ): Promise<SetEnabledResponseDto> {
-    return this.service.setEnabled(payload);
+  @GrpcMethod(USER_SERVICE_NAME, UPDATE_ENABLED_METHOD)
+  private async updateEnabled(
+    payload: UpdateEnabledRequestDto,
+  ): Promise<UpdateEnabledResponseDto> {
+    return this.service.updateEnabled(payload);
   }
 
   @GrpcMethod(USER_SERVICE_NAME, UPDATE_PASSWORD_METHOD)
@@ -130,12 +139,5 @@ export class UserController {
     payload: UpdatePasswordRequestDto,
   ): Promise<UpdatePasswordResponseDto> {
     return this.service.updatePassword(payload);
-  }
-
-  @GrpcMethod(USER_SERVICE_NAME, FIND_PASSWORD_ID_METHOD)
-  private async findPasswordId(
-    payload: FindPasswordIdRequestDto,
-  ): Promise<FindPasswordIdResponseDto> {
-    return this.service.findPasswordId(payload);
   }
 }

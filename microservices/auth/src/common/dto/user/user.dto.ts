@@ -1,6 +1,6 @@
 import {
   CreateImage,
-  CreateUser,
+  CreateUserRequest,
   Image,
   User,
   UserInfo,
@@ -39,7 +39,7 @@ export class UserInfoDto implements UserInfo {
   text: string;
 }
 
-export class CreateUserDto implements CreateUser {
+export class CreateUserDto implements CreateUserRequest {
   contact: string;
   email: string;
   nickname: string;

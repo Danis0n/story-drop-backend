@@ -1,11 +1,9 @@
 import {
-  BadRequestException,
   CanActivate,
   ExecutionContext,
   Inject,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { LogoutResponse } from '../../auth/auth.pb';

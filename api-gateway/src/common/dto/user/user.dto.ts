@@ -4,7 +4,7 @@ import {
   Image,
   UserInfo,
   User,
-  CreateUser,
+  CreateUserRequest,
 } from '../../../user/user.pb';
 
 export class CreateImageDto implements CreateImage {
@@ -39,7 +39,7 @@ export class UserInfoDto implements UserInfo {
   text: string;
 }
 
-export class CreateUserDto implements CreateUser {
+export class CreateUserDto implements CreateUserRequest {
   contact: string;
   email: string;
   nickname: string;

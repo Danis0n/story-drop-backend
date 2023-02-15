@@ -1,14 +1,14 @@
 import { IsOptional } from 'class-validator';
 import {
   CreateImage,
-  CreateUser,
+  CreateUserRequest,
   Image,
   User,
   UserInfo,
 } from '../../user/proto/user.pb';
 
 export class CreateImageDto implements CreateImage {
-  buffer: Uint8Array;
+  buffer: Buffer;
   fieldName: string;
   mimetype: string;
   originalName: string;
@@ -44,7 +44,7 @@ export class UserInfoDto implements UserInfo {
   text: string;
 }
 
-export class CreateUserDto implements CreateUser {
+export class CreateUserRequestDto implements CreateUserRequest {
   contact: string;
   email: string;
   nickname: string;

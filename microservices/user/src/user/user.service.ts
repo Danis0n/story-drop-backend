@@ -5,7 +5,7 @@ import {
   UpdateAvatarRequestDto,
   UpdateRequestDto,
   UserMapper,
-  CreateUserDto,
+  CreateUserRequestDto,
   FindAllResponseDto,
   FindAnyByRequestDto,
   FindAnyByResponseDto,
@@ -21,10 +21,10 @@ import {
   UserWithRoleRelationData,
   FindOneUsernameRequestDto,
   FindOneUsernameResponseDto,
-  SetBannedRequestDto,
-  SetEnabledRequestDto,
-  SetBannedResponseDto,
-  SetEnabledResponseDto,
+  UpdateBannedRequestDto,
+  UpdateEnabledRequestDto,
+  UpdateBannedResponseDto,
+  UpdateEnabledResponseDto,
   ImageMapper,
   UpdatePasswordRequestDto,
   FindPasswordIdRequestDto,
@@ -43,7 +43,9 @@ export class UserService {
   @Inject(UserRepository)
   private readonly userRepository: UserRepository;
 
-  public async create(createUser: CreateUserDto): Promise<FindOneResponseDto> {
+  public async create(
+    createUser: CreateUserRequestDto,
+  ): Promise<FindOneResponseDto> {
     const user: UserWithRelationData = await this.userRepository.createUser(
       createUser,
     );
@@ -95,29 +97,14 @@ export class UserService {
     return { roles: roles };
   }
 
-  public async updateAvatar(
-    payload: UpdateAvatarRequestDto,
-  ): Promise<UpdateAvatarResponseDto> {
-    return { success: false };
-  }
-
-  public async findAvatar({
+  public async findAvatarId({
     uuid,
   }: FindAvatarByUserRequestDto): Promise<FindAvatarResponseDto> {
-    const user = await this.userRepository.findOneIdWithAvatar(uuid);
-    if (!user.image) return { avatar: null };
+    const { image } = await this.userRepository.findIdAvatar(uuid);
+    if (!image) return { avatar: null };
 
-    const imageDto = this.imageMapper.mapToImageDto(user.image);
+    const imageDto = this.imageMapper.mapToImageDto(image);
     return { avatar: imageDto };
-  }
-
-  public async delete({ uuid }: DeleteRequestDto): Promise<DeleteResponseDto> {
-    const success = await this.userRepository.delete(uuid);
-    return { success: success };
-  }
-
-  public async update(payload: UpdateRequestDto): Promise<UpdateResponseDto> {
-    return { user: null };
   }
 
   public async findOneUsername({
@@ -134,20 +121,57 @@ export class UserService {
     };
   }
 
-  public async setBanned({
+  public async findPasswordId({
+    uuid,
+  }: FindPasswordIdRequestDto): Promise<FindPasswordIdResponseDto> {
+    const { password } = await this.userRepository.findOneIdPassword(uuid);
+    if (!password) return { hashedPassword: null, success: false };
+
+    return { hashedPassword: password, success: true };
+  }
+
+  public async update(payload: UpdateRequestDto): Promise<UpdateResponseDto> {
+    const user = await this.userRepository.update(payload);
+    if (!user) return { user: null, success: false };
+
+    return { success: true, user: this.userMapper.mapToUserDto(user) };
+  }
+
+  public async updateAvatar(
+    payload: UpdateAvatarRequestDto,
+  ): Promise<UpdateAvatarResponseDto> {
+    const { image } = await this.userRepository.findIdAvatar(payload.uuid);
+    if (!image && payload.delete) return { success: false };
+
+    await this.userRepository.deleteAvatar(payload.uuid);
+
+    if (payload.delete) {
+      return { success: true };
+    }
+
+    const { image: createdImage } = await this.userRepository.updateAvatar(
+      payload.uuid,
+      payload.image,
+    );
+
+    const success = !!createdImage;
+    return { success: !!success };
+  }
+
+  public async updateBanned({
     state,
     uuid,
-  }: SetBannedRequestDto): Promise<SetBannedResponseDto> {
+  }: UpdateBannedRequestDto): Promise<UpdateBannedResponseDto> {
     const { is_blocked } = await this.userRepository.updateBlocked(state, uuid);
     const success = is_blocked === state;
 
     return { success: success };
   }
 
-  public async setEnabled({
+  public async updateEnabled({
     state,
     uuid,
-  }: SetEnabledRequestDto): Promise<SetEnabledResponseDto> {
+  }: UpdateEnabledRequestDto): Promise<UpdateEnabledResponseDto> {
     const { is_enabled } = await this.userRepository.updateEnabled(state, uuid);
     const success = is_enabled && is_enabled === state;
 
@@ -167,12 +191,8 @@ export class UserService {
     return { success: true };
   }
 
-  public async findPasswordId({
-    uuid,
-  }: FindPasswordIdRequestDto): Promise<FindPasswordIdResponseDto> {
-    const { password } = await this.userRepository.findOneIdPassword(uuid);
-    if (!password) return { hashedPassword: null, success: false };
-
-    return { hashedPassword: password, success: true };
+  public async delete({ uuid }: DeleteRequestDto): Promise<DeleteResponseDto> {
+    const success = await this.userRepository.delete(uuid);
+    return { success: success };
   }
 }

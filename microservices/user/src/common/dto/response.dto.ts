@@ -7,8 +7,8 @@ import {
   FindOneRolesResponse,
   FindOneUsernameResponse,
   FindPasswordIdResponse,
-  SetBannedResponse,
-  SetEnabledResponse,
+  UpdateBannedResponse,
+  UpdateEnabledResponse,
   UpdateAvatarResponse,
   UpdatePasswordResponse,
   UpdateResponse,
@@ -26,6 +26,7 @@ export class UpdateAvatarResponseDto implements UpdateAvatarResponse {
 
 export class UpdateResponseDto implements UpdateResponse {
   user: UserDto;
+  success: boolean;
 }
 
 export class DeleteResponseDto implements DeleteResponse {
@@ -55,11 +56,11 @@ export class FindAnyByResponseDto implements FindAnyByResponse {
   foundByUsername: boolean;
 }
 
-export class SetBannedResponseDto implements SetBannedResponse {
+export class UpdateBannedResponseDto implements UpdateBannedResponse {
   success: boolean;
 }
 
-export class SetEnabledResponseDto implements SetEnabledResponse {
+export class UpdateEnabledResponseDto implements UpdateEnabledResponse {
   success: boolean;
 }
 

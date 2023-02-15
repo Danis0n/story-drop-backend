@@ -22,6 +22,7 @@ export class UpdateAvatarResponseDto implements UpdateAvatarResponse {
 
 export class UpdateResponseDto implements UpdateResponse {
   user: UserDto;
+  success: boolean;
 }
 
 export class DeleteResponseDto implements DeleteResponse {

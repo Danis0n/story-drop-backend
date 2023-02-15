@@ -22,21 +22,21 @@ export interface UpdatePasswordResponse {
   success: boolean;
 }
 
-export interface SetEnabledRequest {
+export interface UpdateEnabledRequest {
   uuid: string;
   state: boolean;
 }
 
-export interface SetEnabledResponse {
+export interface UpdateEnabledResponse {
   success: boolean;
 }
 
-export interface SetBannedRequest {
+export interface UpdateBannedRequest {
   uuid: string;
   state: boolean;
 }
 
-export interface SetBannedResponse {
+export interface UpdateBannedResponse {
   success: boolean;
 }
 
@@ -105,6 +105,7 @@ export interface UpdateRequest {
 
 export interface UpdateResponse {
   user: User | undefined;
+  success: boolean;
 }
 
 export interface FindOneIdRequest {
@@ -128,7 +129,7 @@ export interface FindAllResponse {
   users: User[];
 }
 
-export interface CreateUser {
+export interface CreateUserRequest {
   username: string;
   password: string;
   email: string;
@@ -168,7 +169,7 @@ export interface Image {
 export const USER_PACKAGE_NAME = "user";
 
 export interface UserServiceClient {
-  create(request: CreateUser): Observable<FindOneResponse>;
+  create(request: CreateUserRequest): Observable<FindOneResponse>;
 
   findAll(request: FindAllRequest): Observable<FindAllResponse>;
 
@@ -194,13 +195,13 @@ export interface UserServiceClient {
 
   findOneUsername(request: FindOneUsernameRequest): Observable<FindOneUsernameResponse>;
 
-  setBanned(request: SetBannedRequest): Observable<SetBannedResponse>;
+  updateBanned(request: UpdateBannedRequest): Observable<UpdateBannedResponse>;
 
-  setEnabled(request: SetEnabledRequest): Observable<SetEnabledResponse>;
+  updateEnabled(request: UpdateEnabledRequest): Observable<UpdateEnabledResponse>;
 }
 
 export interface UserServiceController {
-  create(request: CreateUser): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  create(request: CreateUserRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
   findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
@@ -242,11 +243,13 @@ export interface UserServiceController {
     request: FindOneUsernameRequest,
   ): Promise<FindOneUsernameResponse> | Observable<FindOneUsernameResponse> | FindOneUsernameResponse;
 
-  setBanned(request: SetBannedRequest): Promise<SetBannedResponse> | Observable<SetBannedResponse> | SetBannedResponse;
+  updateBanned(
+    request: UpdateBannedRequest,
+  ): Promise<UpdateBannedResponse> | Observable<UpdateBannedResponse> | UpdateBannedResponse;
 
-  setEnabled(
-    request: SetEnabledRequest,
-  ): Promise<SetEnabledResponse> | Observable<SetEnabledResponse> | SetEnabledResponse;
+  updateEnabled(
+    request: UpdateEnabledRequest,
+  ): Promise<UpdateEnabledResponse> | Observable<UpdateEnabledResponse> | UpdateEnabledResponse;
 }
 
 export function UserServiceControllerMethods() {
@@ -265,8 +268,8 @@ export function UserServiceControllerMethods() {
       "delete",
       "findOneRoles",
       "findOneUsername",
-      "setBanned",
-      "setEnabled",
+      "updateBanned",
+      "updateEnabled",
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);

@@ -1,14 +1,12 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
   OnModuleInit,
   Param,
   Patch,
   Put,
-  Query,
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
@@ -16,13 +14,8 @@ import { USER_SERVICE_NAME, UserServiceClient } from './user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import {
-  DeleteResponseDto,
   FindAllResponseDto,
-  FindAnyByRequestDto,
-  FindAnyByResponseDto,
   FindOneResponseDto,
-  RoleGuard,
-  Roles,
   UpdateAvatarResponseDto,
   IsAuthenticatedGuard,
   mapToUpdateUser,

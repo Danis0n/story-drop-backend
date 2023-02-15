@@ -5,8 +5,8 @@ import {
   FindOneIdRequest,
   FindOneUsernameRequest,
   FindPasswordIdRequest,
-  SetBannedRequest,
-  SetEnabledRequest,
+  UpdateBannedRequest,
+  UpdateEnabledRequest,
   UpdateAvatarRequest,
   UpdatePasswordRequest,
   UpdateRequest,
@@ -34,10 +34,13 @@ export class FindAvatarByUserRequestDto implements FindAvatarByUserRequest {
 }
 
 export class UpdateRequestDto implements UpdateRequest {
-  contact: string;
-  nickname: string;
-  text: string;
   uuid: string;
+  @IsOptional()
+  contact: string;
+  @IsOptional()
+  nickname: string;
+  @IsOptional()
+  text: string;
 }
 
 export class DeleteRequestDto implements DeleteRequest {
@@ -52,12 +55,12 @@ export class FindOneUsernameRequestDto implements FindOneUsernameRequest {
   username: string;
 }
 
-export class SetBannedRequestDto implements SetBannedRequest {
+export class UpdateBannedRequestDto implements UpdateBannedRequest {
   state: boolean;
   uuid: string;
 }
 
-export class SetEnabledRequestDto implements SetEnabledRequest {
+export class UpdateEnabledRequestDto implements UpdateEnabledRequest {
   state: boolean;
   uuid: string;
 }

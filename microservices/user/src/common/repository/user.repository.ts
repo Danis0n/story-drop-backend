@@ -1,17 +1,18 @@
 import { Inject } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
-import {
-  UserWithImage,
-  UserWithRelationData,
-  UserWithRoleRelationData,
-} from '../validation';
+import { UserWithRelationData, UserWithRoleRelationData } from '../validation';
 import {
   PRISMA_USER_CREATE_BASE_ROLE,
   PRISMA_USER_INCLUDE,
   PRISMA_USER_INCLUDE_ROLE,
 } from '../constant';
-import { CreateUserDto } from '../dto';
+import {
+  CreateImageDto,
+  CreateUserRequestDto,
+  PrismaImageDto,
+  UpdateRequestDto,
+} from '../dto';
 import { Logger } from '@nestjs/common';
 
 export class UserRepository {
@@ -19,7 +20,7 @@ export class UserRepository {
   private readonly prisma: PrismaService;
 
   public async createUser(
-    payload: CreateUserDto,
+    payload: CreateUserRequestDto,
   ): Promise<UserWithRelationData> {
     try {
       return await this.prisma.sd_user.create({
@@ -65,9 +66,7 @@ export class UserRepository {
   public async findOneId(uuid: string): Promise<UserWithRelationData> {
     try {
       return await this.prisma.sd_user.findUnique({
-        where: {
-          user_id: uuid,
-        },
+        where: { user_id: uuid },
         include: PRISMA_USER_INCLUDE,
       });
     } catch (e) {
@@ -81,9 +80,7 @@ export class UserRepository {
   public async findRolesId(uuid: string): Promise<UserWithRoleRelationData> {
     try {
       return await this.prisma.sd_user.findUnique({
-        where: {
-          user_id: uuid,
-        },
+        where: { user_id: uuid },
         include: PRISMA_USER_INCLUDE_ROLE,
       });
     } catch (e) {
@@ -99,9 +96,7 @@ export class UserRepository {
   ): Promise<UserWithRelationData> {
     try {
       return await this.prisma.sd_user.findUnique({
-        where: {
-          username: username,
-        },
+        where: { username: username },
         include: PRISMA_USER_INCLUDE,
       });
     } catch (e) {
@@ -111,12 +106,40 @@ export class UserRepository {
     }
   }
 
+  public async findOneIdPassword(uuid: string): Promise<{
+    password: string;
+  }> {
+    try {
+      return await this.prisma.sd_user.findUnique({
+        where: { user_id: uuid },
+        select: { password: true },
+      });
+    } catch (e) {
+      Logger.error(
+        `Ошибка во время поиска хешированного пароля по uuid: ${uuid}`,
+      );
+      return null;
+    }
+  }
+
+  public async findIdAvatar(uuid: string): Promise<{
+    image: PrismaImageDto;
+  }> {
+    try {
+      return await this.prisma.sd_user.findUnique({
+        where: { user_id: uuid },
+        select: { image: true },
+      });
+    } catch (e) {
+      Logger.error(`Ошибка во время поиска аватара по uuid: ${uuid}`);
+      return null;
+    }
+  }
+
   public async isExistByUsername(username: string): Promise<boolean> {
     try {
       return !!(await this.prisma.sd_user.findUnique({
-        where: {
-          username: username,
-        },
+        where: { username: username },
       }));
     } catch (e) {
       Logger.error(`Ошибка во время поиска по username: ${username}`);
@@ -127,9 +150,7 @@ export class UserRepository {
   public async isExistByEmail(email: string): Promise<boolean> {
     try {
       return !!(await this.prisma.sd_user.findUnique({
-        where: {
-          email: email,
-        },
+        where: { email: email },
       }));
     } catch (e) {
       Logger.error(`Ошибка во время поиска по email: ${email}`);
@@ -137,16 +158,25 @@ export class UserRepository {
     }
   }
 
-  public async delete(uuid: string): Promise<boolean> {
+  public async update(
+    payload: UpdateRequestDto,
+  ): Promise<UserWithRelationData> {
     try {
-      const user = await this.prisma.sd_user.delete({
-        where: { user_id: uuid },
+      return await this.prisma.sd_user.update({
+        where: { user_id: payload.uuid },
+        data: {
+          nickname: payload.nickname || undefined,
+          sd_user_info: {
+            update: {
+              text: payload.text || undefined,
+              contact: payload.contact || undefined,
+            },
+          },
+        },
+        include: PRISMA_USER_INCLUDE,
       });
-      return !!(await this.prisma.sd_user_info.delete({
-        where: { info_id: user.info_id },
-      }));
     } catch (e) {
-      Logger.error(`Ошибка во время удаления по uuid: ${uuid}`);
+      Logger.error(`Ошибка во время обновления пользователя: ${payload.uuid}`);
       return null;
     }
   }
@@ -191,38 +221,6 @@ export class UserRepository {
     }
   }
 
-  public async findOneIdWithAvatar(uuid: string): Promise<UserWithImage> {
-    try {
-      return await this.prisma.sd_user.findUnique({
-        where: { user_id: uuid },
-        include: {
-          image: true,
-        },
-      });
-    } catch (e) {
-      Logger.error(
-        `Ошибка во время выполнения поиска аватара по uuid: ${uuid}`,
-      );
-      return null;
-    }
-  }
-
-  public async findOneIdPassword(uuid: string): Promise<{
-    password: string;
-  }> {
-    try {
-      return await this.prisma.sd_user.findUnique({
-        where: { user_id: uuid },
-        select: { password: true },
-      });
-    } catch (e) {
-      Logger.error(
-        `Ошибка во время поиска хешированного пароля по uuid: ${uuid}`,
-      );
-      return null;
-    }
-  }
-
   public async updatePassword(
     uuid: string,
     hashedPassword: string,
@@ -239,6 +237,60 @@ export class UserRepository {
       Logger.error(
         `Ошибка во время смены хешированного пароля по uuid: ${uuid}`,
       );
+      return null;
+    }
+  }
+
+  public async updateAvatar(
+    uuid: string,
+    image: CreateImageDto,
+  ): Promise<{
+    image: PrismaImageDto;
+  }> {
+    try {
+      return await this.prisma.sd_user.update({
+        where: { user_id: uuid },
+        data: {
+          image: {
+            create: {
+              image_id: randomUUID(),
+              image_size: image.size,
+              image_name: image.originalName,
+              content_type: image.mimetype,
+              data: image.buffer,
+            },
+          },
+        },
+        select: { image: true },
+      });
+    } catch (e) {
+      Logger.error(`Ошибка во время обновления аватара по uuid: ${uuid}`);
+      return null;
+    }
+  }
+
+  public async delete(uuid: string): Promise<boolean> {
+    try {
+      const user = await this.prisma.sd_user.delete({
+        where: { user_id: uuid },
+      });
+      return !!(await this.prisma.sd_user_info.delete({
+        where: { info_id: user.info_id },
+      }));
+    } catch (e) {
+      Logger.error(`Ошибка во время удаления по uuid: ${uuid}`);
+      return null;
+    }
+  }
+
+  public async deleteAvatar(uuid: string): Promise<void> {
+    try {
+      await this.prisma.sd_user.update({
+        where: { user_id: uuid },
+        data: { image: { delete: true } },
+      });
+    } catch (e) {
+      Logger.error(`Ошибка во время удаления аватара по uuid: ${uuid}`);
       return null;
     }
   }

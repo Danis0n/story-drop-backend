@@ -1,8 +1,8 @@
 export const CREATE_USER_METHOD = 'Create';
 export const UPDATE_METHOD = 'Update';
 export const DELETE_METHOD = 'Delete';
-export const SET_BANNED_METHOD = 'SetBanned';
-export const SET_ENABLED_METHOD = 'SetEnabled';
+export const UPDATE_BANNED_METHOD = 'UpdateBanned';
+export const UPDATE_ENABLED_METHOD = 'UpdateEnabled';
 export const FIND_ALL_METHOD = 'FindAll';
 export const FIND_ANY_EXIST_BY_METHOD = 'FindAnyExistBy';
 export const FIND_ONE_ID_METHOD = 'FindOneId';
