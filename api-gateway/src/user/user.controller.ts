@@ -48,13 +48,6 @@ export class UserController implements OnModuleInit {
     return this.userServiceClient.findAll({});
   }
 
-  @Put('validate')
-  private async findOneBy(
-    @Query() params: FindAnyByRequestDto,
-  ): Promise<Observable<FindAnyByResponseDto>> {
-    return this.userServiceClient.findAnyExistBy(params);
-  }
-
   @Get('/:id')
   private async findOneId(
     @Param('id') id: string,
@@ -81,14 +74,5 @@ export class UserController implements OnModuleInit {
     return this.userServiceClient.updateAvatar(
       mapToUpdateImage(id, file, payload),
     );
-  }
-
-  @Roles('Admin')
-  @UseGuards(RoleGuard)
-  @Delete('/:id')
-  private async delete(
-    @Param('id') id: string,
-  ): Promise<Observable<DeleteResponseDto>> {
-    return this.userServiceClient.delete({ uuid: id });
   }
 }
