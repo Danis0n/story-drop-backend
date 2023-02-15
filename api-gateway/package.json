@@ -22,7 +22,8 @@
     "proto:install": "npm i git+https://github.com/Danis0n/story-drop-proto.git",
     "proto:user": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/user node_modules/story-drop-proto/proto/user.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
     "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/auth node_modules/story-drop-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:all": "npm run proto:user && npm run proto:auth"
+    "proto:admin": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/admin node_modules/story-drop-proto/proto/admin.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:all": "npm run proto:user && npm run proto:auth && npm run proto:admin"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.4",
