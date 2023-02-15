@@ -8,7 +8,7 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators';
-import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../config';
+import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../../config';
 import { UserService } from '../../user/user.service';
 import {
   FindOneRolesResponseDto,

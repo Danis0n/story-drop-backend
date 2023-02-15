@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { LogoutResponse } from '../../auth/auth.pb';
-import { COOKIE_DEVICE, COOKIE_SESSION } from '../config';
+import { COOKIE_DEVICE, COOKIE_SESSION } from '../../config';
 import { cleanCookie } from '../service';
 
 @Injectable()

@@ -3,7 +3,7 @@ import {
   COOKIE_LOGGED_IN,
   COOKIE_MAX_AGE,
   COOKIE_SESSION,
-} from '../config';
+} from '../../config';
 import { LoginResponse } from '../../auth/auth.pb';
 
 export const setLoginCookieSuccess = (
