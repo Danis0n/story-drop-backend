@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { FRONTEND_URL, PORT } from './common';
 import { AdminModule } from './admin/admin.module';
+import { PostModule } from './post/post.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AdminModule } from './admin/admin.module';
     AuthModule,
     UserModule,
     AdminModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],
