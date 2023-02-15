@@ -22,3 +22,11 @@ export class UpdateBannedRequestDto implements UpdateBannedRequest {
   state: boolean;
   uuid: string;
 }
+
+export class UpdateBannedDto {
+  state: boolean;
+}
+
+export class UpdateEnabledDto {
+  state: boolean;
+}
