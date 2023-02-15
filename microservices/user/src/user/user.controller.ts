@@ -14,6 +14,7 @@ import {
   FIND_ONE_ID_METHOD,
   FIND_ONE_ROLES_METHOD,
   FIND_ONE_USERNAME_METHOD,
+  FIND_PASSWORD_ID_METHOD,
   FindAllResponseDto,
   FindAnyByRequestDto,
   FindAnyByResponseDto,
@@ -24,6 +25,8 @@ import {
   FindOneRolesResponseDto,
   FindOneUsernameRequestDto,
   FindOneUsernameResponseDto,
+  FindPasswordIdRequestDto,
+  FindPasswordIdResponseDto,
   SET_BANNED_METHOD,
   SET_ENABLED_METHOD,
   SetBannedRequestDto,
@@ -32,8 +35,11 @@ import {
   SetEnabledResponseDto,
   UPDATE_AVATAR_METHOD,
   UPDATE_METHOD,
+  UPDATE_PASSWORD_METHOD,
   UpdateAvatarRequestDto,
   UpdateAvatarResponseDto,
+  UpdatePasswordRequestDto,
+  UpdatePasswordResponseDto,
   UpdateRequestDto,
   UpdateResponseDto,
 } from '../common';
@@ -117,5 +123,19 @@ export class UserController {
     payload: SetEnabledRequestDto,
   ): Promise<SetEnabledResponseDto> {
     return this.service.setEnabled(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, UPDATE_PASSWORD_METHOD)
+  private async updatePassword(
+    payload: UpdatePasswordRequestDto,
+  ): Promise<UpdatePasswordResponseDto> {
+    return this.service.updatePassword(payload);
+  }
+
+  @GrpcMethod(USER_SERVICE_NAME, FIND_PASSWORD_ID_METHOD)
+  private async findPasswordId(
+    payload: FindPasswordIdRequestDto,
+  ): Promise<FindPasswordIdResponseDto> {
+    return this.service.findPasswordId(payload);
   }
 }

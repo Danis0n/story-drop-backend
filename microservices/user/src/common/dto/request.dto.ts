@@ -4,9 +4,11 @@ import {
   FindAvatarByUserRequest,
   FindOneIdRequest,
   FindOneUsernameRequest,
+  FindPasswordIdRequest,
   SetBannedRequest,
   SetEnabledRequest,
   UpdateAvatarRequest,
+  UpdatePasswordRequest,
   UpdateRequest,
 } from '../../user/proto/user.pb';
 import { IsOptional } from 'class-validator';
@@ -57,5 +59,14 @@ export class SetBannedRequestDto implements SetBannedRequest {
 
 export class SetEnabledRequestDto implements SetEnabledRequest {
   state: boolean;
+  uuid: string;
+}
+
+export class UpdatePasswordRequestDto implements UpdatePasswordRequest {
+  hashedPassword: string;
+  uuid: string;
+}
+
+export class FindPasswordIdRequestDto implements FindPasswordIdRequest {
   uuid: string;
 }

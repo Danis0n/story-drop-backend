@@ -6,9 +6,11 @@ import {
   FindOneResponse,
   FindOneRolesResponse,
   FindOneUsernameResponse,
+  FindPasswordIdResponse,
   SetBannedResponse,
   SetEnabledResponse,
   UpdateAvatarResponse,
+  UpdatePasswordResponse,
   UpdateResponse,
   User,
 } from '../../user/proto/user.pb';
@@ -58,5 +60,14 @@ export class SetBannedResponseDto implements SetBannedResponse {
 }
 
 export class SetEnabledResponseDto implements SetEnabledResponse {
+  success: boolean;
+}
+
+export class FindPasswordIdResponseDto implements FindPasswordIdResponse {
+  hashedPassword: string;
+  success: boolean;
+}
+
+export class UpdatePasswordResponseDto implements UpdatePasswordResponse {
   success: boolean;
 }

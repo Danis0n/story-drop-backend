@@ -4,6 +4,24 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "user";
 
+export interface FindPasswordIdRequest {
+  uuid: string;
+}
+
+export interface FindPasswordIdResponse {
+  hashedPassword: string;
+  success: boolean;
+}
+
+export interface UpdatePasswordRequest {
+  uuid: string;
+  hashedPassword: string;
+}
+
+export interface UpdatePasswordResponse {
+  success: boolean;
+}
+
 export interface SetEnabledRequest {
   uuid: string;
   state: boolean;
@@ -162,6 +180,10 @@ export interface UserServiceClient {
 
   update(request: UpdateRequest): Observable<UpdateResponse>;
 
+  findPasswordId(request: FindPasswordIdRequest): Observable<FindPasswordIdResponse>;
+
+  updatePassword(request: UpdatePasswordRequest): Observable<UpdatePasswordResponse>;
+
   updateAvatar(request: UpdateAvatarRequest): Observable<UpdateAvatarResponse>;
 
   findAvatarByUser(request: FindAvatarByUserRequest): Observable<FindAvatarResponse>;
@@ -193,6 +215,14 @@ export interface UserServiceController {
   ): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
 
   update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
+
+  findPasswordId(
+    request: FindPasswordIdRequest,
+  ): Promise<FindPasswordIdResponse> | Observable<FindPasswordIdResponse> | FindPasswordIdResponse;
+
+  updatePassword(
+    request: UpdatePasswordRequest,
+  ): Promise<UpdatePasswordResponse> | Observable<UpdatePasswordResponse> | UpdatePasswordResponse;
 
   updateAvatar(
     request: UpdateAvatarRequest,
@@ -228,6 +258,8 @@ export function UserServiceControllerMethods() {
       "findOneId",
       "findOneSession",
       "update",
+      "findPasswordId",
+      "updatePassword",
       "updateAvatar",
       "findAvatarByUser",
       "delete",

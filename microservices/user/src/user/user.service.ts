@@ -26,6 +26,10 @@ import {
   SetBannedResponseDto,
   SetEnabledResponseDto,
   ImageMapper,
+  UpdatePasswordRequestDto,
+  FindPasswordIdRequestDto,
+  UpdatePasswordResponseDto,
+  FindPasswordIdResponseDto,
 } from '../common';
 
 @Injectable()
@@ -43,12 +47,15 @@ export class UserService {
     const user: UserWithRelationData = await this.userRepository.createUser(
       createUser,
     );
+    if (!user) return { user: null };
 
     return { user: this.userMapper.mapToUserDto(user) };
   }
 
   public async findAll(): Promise<FindAllResponseDto> {
     const users: UserWithRelationData[] = await this.userRepository.findAll();
+    if (!users) return { users: null };
+
     return { users: this.userMapper.mapArrayToUserDto(users) };
   }
 
@@ -131,8 +138,8 @@ export class UserService {
     state,
     uuid,
   }: SetBannedRequestDto): Promise<SetBannedResponseDto> {
-    const user = await this.userRepository.updateBlocked(state, uuid);
-    const success = user.is_blocked === state;
+    const { is_blocked } = await this.userRepository.updateBlocked(state, uuid);
+    const success = is_blocked === state;
 
     return { success: success };
   }
@@ -141,9 +148,31 @@ export class UserService {
     state,
     uuid,
   }: SetEnabledRequestDto): Promise<SetEnabledResponseDto> {
-    const user = await this.userRepository.updateEnabled(state, uuid);
-    const success = user.is_enabled === state;
+    const { is_enabled } = await this.userRepository.updateEnabled(state, uuid);
+    const success = is_enabled && is_enabled === state;
 
     return { success: success };
+  }
+
+  public async updatePassword({
+    uuid,
+    hashedPassword,
+  }: UpdatePasswordRequestDto): Promise<UpdatePasswordResponseDto> {
+    const { password } = await this.userRepository.updatePassword(
+      uuid,
+      hashedPassword,
+    );
+    if (!password || password !== hashedPassword) return { success: false };
+
+    return { success: true };
+  }
+
+  public async findPasswordId({
+    uuid,
+  }: FindPasswordIdRequestDto): Promise<FindPasswordIdResponseDto> {
+    const { password } = await this.userRepository.findOneIdPassword(uuid);
+    if (!password) return { hashedPassword: null, success: false };
+
+    return { hashedPassword: password, success: true };
   }
 }
