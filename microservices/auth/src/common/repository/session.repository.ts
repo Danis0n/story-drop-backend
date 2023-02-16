@@ -28,9 +28,7 @@ export class SessionRepository {
             connect: { device_id: deviceId },
           },
         },
-        include: {
-          device: true,
-        },
+        include: { device: true },
       });
     } catch (e) {
       Logger.error(
@@ -43,9 +41,7 @@ export class SessionRepository {
   public async findOneDevice(deviceId: string) {
     try {
       return await this.prisma.session.findFirst({
-        where: {
-          device_id: deviceId,
-        },
+        where: { device_id: deviceId },
       });
     } catch (e) {
       Logger.error(`Ошибка при поиске сессии с параметром: ${deviceId}`);
@@ -56,9 +52,7 @@ export class SessionRepository {
   public async delete(sessionId: string) {
     try {
       return await this.prisma.session.delete({
-        where: {
-          session_id: sessionId,
-        },
+        where: { session_id: sessionId },
       });
     } catch (e) {
       Logger.error(`Ошибка при удалении сессии с параметрами: ${sessionId}`);
@@ -71,9 +65,7 @@ export class SessionRepository {
   ): Promise<SessionWithRelationData> {
     try {
       return await this.prisma.session.findUnique({
-        where: {
-          session_id: sessionId,
-        },
+        where: { session_id: sessionId },
         include: { device: true },
       });
     } catch (e) {
@@ -85,9 +77,7 @@ export class SessionRepository {
   public async findOneId(sessionId: string) {
     try {
       return await this.prisma.session.findUnique({
-        where: {
-          session_id: sessionId,
-        },
+        where: { session_id: sessionId },
       });
     } catch (e) {
       Logger.error(`Ошибка при поиске сессии с параметром: ${sessionId}`);
