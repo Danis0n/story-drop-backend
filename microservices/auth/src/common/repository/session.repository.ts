@@ -22,7 +22,7 @@ export class SessionRepository {
         data: {
           session_id: sessionId,
           user_id: userId,
-          sing_in: signIn,
+          sign_in: signIn,
           expire_at: expireAt,
           device: {
             connect: { device_id: deviceId },

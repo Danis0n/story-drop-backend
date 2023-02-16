@@ -35,7 +35,7 @@ model session {
   session_id String   @id @db.VarChar(100)
   device_id  String   @db.VarChar(100)
   user_id    String   @db.Uuid
-  sing_in    DateTime @db.Date
+  sign_in    DateTime @db.Date
   expire_at  DateTime @db.Date
   device     device   @relation(fields: [device_id], references: [device_id], onDelete: Cascade)
 }
