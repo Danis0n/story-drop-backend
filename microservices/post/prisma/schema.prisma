@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model age {
+  age_id   String @id @db.Uuid
+  age_name String @db.VarChar(100)
+  color    String @db.VarChar(20)
+  tag      tag[]
+}
+
+model chapter {
+  chapter_id String  @id @db.Uuid
+  post_id    String  @db.Uuid
+  notes      String?
+  text       String
+  number     Int
+  post       post    @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model character {
+  character_id     String             @id @db.Uuid
+  character_name   String             @db.VarChar(100)
+  character_paring character_paring[]
+  character_post   character_post[]
+}
+
+model character_paring {
+  character_id String    @db.Uuid
+  paring_id    String    @db.Uuid
+  character    character @relation(fields: [character_id], references: [character_id], onDelete: Cascade)
+  paring       paring    @relation(fields: [paring_id], references: [paring_id], onDelete: Cascade)
+
+  @@id([character_id, paring_id])
+}
+
+model character_post {
+  character_id String    @db.Uuid
+  post_id      String    @db.Uuid
+  character    character @relation(fields: [character_id], references: [character_id], onDelete: Cascade)
+  post         post      @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([character_id, post_id])
+}
+
+model collection {
+  collection_id   String            @id @db.Uuid
+  user_id         String            @db.Uuid
+  collection_name String            @db.VarChar(100)
+  is_hidden       Boolean
+  collection_post collection_post[]
+}
+
+model collection_post {
+  collection_id String     @db.Uuid
+  post_id       String     @db.Uuid
+  collection    collection @relation(fields: [collection_id], references: [collection_id], onDelete: Cascade)
+  post          post       @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([collection_id, post_id], map: "post_collection_pkey")
+}
+
+model fandom {
+  fandom_id   String        @id @db.Uuid
+  fandom_name String        @db.VarChar(100)
+  fandom_post fandom_post[]
+}
+
+model fandom_post {
+  fandom_id String @db.Uuid
+  post_id   String @db.Uuid
+  fandom    fandom @relation(fields: [fandom_id], references: [fandom_id], onDelete: Cascade)
+  post      post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([fandom_id, post_id])
+}
+
+model genre {
+  genre_id   String @id @db.Uuid
+  genre_name String @db.VarChar(100)
+  post       post[]
+}
+
+model mark {
+  mark_id   String @id @db.Uuid
+  mark_name String @db.VarChar(100)
+  post      post[]
+}
+
+model paring {
+  paring_id        String             @id @db.Uuid
+  paring_name      String             @db.VarChar(100)
+  character_paring character_paring[]
+  paring_post      paring_post[]
+}
+
+model paring_post {
+  post_id   String @db.Uuid
+  paring_id String @db.Uuid
+  paring    paring @relation(fields: [paring_id], references: [paring_id], onDelete: Cascade)
+  post      post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([post_id, paring_id], map: "post_paring_pkey")
+}
+
+model post {
+  post_id         String            @id @db.Uuid
+  post_name       String            @db.VarChar(100)
+  description     String?
+  dedication      String?           @db.VarChar(255)
+  is_hidden       Boolean
+  is_hidden_admin Boolean
+  status_id       String            @db.Uuid
+  mark_id         String            @db.Uuid
+  genre_id        String            @db.Uuid
+  rate_id         String            @db.Uuid
+  chapter         chapter[]
+  character_post  character_post[]
+  collection_post collection_post[]
+  fandom_post     fandom_post[]
+  paring_post     paring_post[]
+  genre           genre             @relation(fields: [genre_id], references: [genre_id], onDelete: Cascade, onUpdate: NoAction)
+  mark            mark              @relation(fields: [mark_id], references: [mark_id], onDelete: Cascade, onUpdate: NoAction)
+  rate            rate              @relation(fields: [rate_id], references: [rate_id], onDelete: Cascade, onUpdate: NoAction)
+  status          status            @relation(fields: [status_id], references: [status_id], onDelete: Cascade, onUpdate: NoAction)
+  post_tag        post_tag[]
+}
+
+model post_tag {
+  tag_id  String @db.Uuid
+  post_id String @db.Uuid
+  post    post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+  tag     tag    @relation(fields: [tag_id], references: [tag_id], onDelete: Cascade)
+
+  @@id([tag_id, post_id], map: "tag_post_pkey")
+}
+
+model rate {
+  rate_id   String @id @db.Uuid
+  rate_name String @db.VarChar(50)
+  post      post[]
+}
+
+model status {
+  status_id   String @id @db.Uuid
+  status_name String @db.VarChar(100)
+  post        post[]
+}
+
+model tag {
+  tag_id   String     @id @db.Uuid
+  tag_name String     @db.VarChar(50)
+  age_id   String     @db.Uuid
+  post_tag post_tag[]
+  age      age        @relation(fields: [age_id], references: [age_id], onDelete: NoAction, onUpdate: NoAction)
+}

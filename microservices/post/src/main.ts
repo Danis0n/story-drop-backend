@@ -1,8 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { INestMicroservice } from '@nestjs/common';
+import { postServiceProto } from './config';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+async function run() {
+  const app: INestMicroservice = await NestFactory.createMicroservice(
+    AppModule,
+    postServiceProto,
+  );
+  await app.listen();
 }
-bootstrap();
+run();
