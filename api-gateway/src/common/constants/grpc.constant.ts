@@ -1,8 +1,8 @@
-import { USER_PACKAGE_NAME, USER_SERVICE_NAME } from '../user/user.pb';
+import { USER_PACKAGE_NAME, USER_SERVICE_NAME } from '../../user/user.pb';
 import { ClientProviderOptions, Transport } from '@nestjs/microservices';
-import { AUTH_SERVICE_NAME, AUTH_PACKAGE_NAME } from '../auth/auth.pb';
-import { ADMIN_PACKAGE_NAME, ADMIN_SERVICE_NAME } from '../admin/admin.pb';
-import { POST_PACKAGE_NAME, POST_SERVICE_NAME } from '../post/post.pb';
+import { AUTH_SERVICE_NAME, AUTH_PACKAGE_NAME } from '../../auth/auth.pb';
+import { ADMIN_PACKAGE_NAME, ADMIN_SERVICE_NAME } from '../../admin/admin.pb';
+import { POST_PACKAGE_NAME, POST_SERVICE_NAME } from '../../post/post.pb';
 
 export const UserServiceProto: ClientProviderOptions = {
   name: USER_SERVICE_NAME,

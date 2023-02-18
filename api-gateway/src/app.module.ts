@@ -4,9 +4,9 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { FRONTEND_URL, PORT } from './common';
 import { AdminModule } from './admin/admin.module';
 import { PostModule } from './post/post.module';
+import { FRONTEND_URL, PORT } from './config';
 
 @Module({
   imports: [

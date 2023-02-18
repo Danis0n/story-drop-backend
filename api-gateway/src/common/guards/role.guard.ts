@@ -8,12 +8,13 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators';
-import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../../config';
+
 import { UserService } from '../../user/user.service';
 import {
   FindOneRolesResponseDto,
   FindOneUserIdBySessionResponseDto,
 } from '../dto';
+import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../constants';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

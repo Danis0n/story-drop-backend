@@ -4,4 +4,4 @@ export * from './validation';
 export * from './constant';
 export * from './repository';
 export * from './exception';
-export * from './service';
+export * from './providers';

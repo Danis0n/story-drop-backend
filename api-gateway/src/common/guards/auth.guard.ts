@@ -8,7 +8,7 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { LoginRequest, LoginResponse } from '../../auth/auth.pb';
 import { serializeUserAgentToString } from '../mapper';
-import { cleanCookie, setLoginCookieSuccess } from '../service';
+import { cleanCookie, setLoginCookieSuccess } from '../providers';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

@@ -1,10 +1,10 @@
+import { LoginResponse } from '../../auth/auth.pb';
 import {
   COOKIE_DEVICE,
   COOKIE_LOGGED_IN,
   COOKIE_MAX_AGE,
   COOKIE_SESSION,
-} from '../../config';
-import { LoginResponse } from '../../auth/auth.pb';
+} from '../constants';
 
 export const setLoginCookieSuccess = (
   response: any,

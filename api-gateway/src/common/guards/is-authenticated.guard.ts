@@ -11,7 +11,7 @@ import {
   getCookieValidate,
   setCookieLoginTrue,
   setCookieValidationFail,
-} from '../service';
+} from '../providers';
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {

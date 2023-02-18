@@ -1,4 +1,4 @@
-import { COOKIE_MAX_AGE } from './constants';
+import { COOKIE_MAX_AGE } from './cookie.constant';
 
 export const sessionSettings = {
   name: 'user-session',

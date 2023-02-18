@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { ClientsModule } from '@nestjs/microservices';
 import { AuthModule } from '../auth/auth.module';
-import { UserServiceProto } from '../config';
+import { UserServiceProto } from '../common';
 
 @Module({
   imports: [ClientsModule.register([UserServiceProto]), AuthModule],

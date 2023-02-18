@@ -7,8 +7,9 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { LogoutResponse } from '../../auth/auth.pb';
-import { COOKIE_DEVICE, COOKIE_SESSION } from '../../config';
-import { cleanCookie } from '../service';
+
+import { cleanCookie } from '../providers';
+import { COOKIE_DEVICE, COOKIE_SESSION } from '../constants';
 
 @Injectable()
 export class LogoutGuard implements CanActivate {
