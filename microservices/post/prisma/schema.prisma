@@ -15,12 +15,13 @@ model age {
 }
 
 model chapter {
-  chapter_id String  @id @db.Uuid
-  post_id    String  @db.Uuid
-  notes      String?
-  text       String
-  number     Int
-  post       post    @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: NoAction)
+  chapter_id   String         @id @db.Uuid
+  post_id      String         @db.Uuid
+  notes        String?
+  text         String
+  number       Int
+  post         post           @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: NoAction)
+  read_chapter read_chapter[]
 }
 
 model character {
@@ -86,12 +87,6 @@ model genre {
   post       post[]
 }
 
-model mark {
-  mark_id   String @id @db.Uuid
-  mark_name String @db.VarChar(100)
-  post      post[]
-}
-
 model paring {
   paring_id        String             @id @db.Uuid
   paring_name      String             @db.VarChar(100)
@@ -116,7 +111,6 @@ model post {
   is_hidden       Boolean
   is_hidden_admin Boolean
   status_id       String            @db.Uuid
-  mark_id         String            @db.Uuid
   genre_id        String            @db.Uuid
   rate_id         String            @db.Uuid
   chapter         chapter[]
@@ -125,10 +119,10 @@ model post {
   fandom_post     fandom_post[]
   paring_post     paring_post[]
   genre           genre             @relation(fields: [genre_id], references: [genre_id], onDelete: Cascade, onUpdate: NoAction)
-  mark            mark              @relation(fields: [mark_id], references: [mark_id], onDelete: Cascade, onUpdate: NoAction)
   rate            rate              @relation(fields: [rate_id], references: [rate_id], onDelete: Cascade, onUpdate: NoAction)
   status          status            @relation(fields: [status_id], references: [status_id], onDelete: Cascade, onUpdate: NoAction)
   post_tag        post_tag[]
+  read_post       read_post[]
 }
 
 model post_tag {
@@ -158,4 +152,20 @@ model tag {
   age_id   String     @db.Uuid
   post_tag post_tag[]
   age      age        @relation(fields: [age_id], references: [age_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model read_chapter {
+  reader_id  String  @db.Uuid
+  chapter_id String  @db.Uuid
+  chapter    chapter @relation(fields: [chapter_id], references: [chapter_id], onDelete: Cascade)
+
+  @@id([reader_id, chapter_id])
+}
+
+model read_post {
+  reader_id String @db.Uuid
+  post_id   String @db.Uuid
+  post      post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([reader_id, post_id])
 }

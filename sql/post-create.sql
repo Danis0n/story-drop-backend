@@ -36,12 +36,6 @@ CREATE TABLE genre
     genre_name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE mark
-(
-    mark_id UUID UNIQUE  NOT NULL PRIMARY KEY,
-    mark_name VARCHAR(100) NOT NULL
-);
-
 CREATE TABLE rate
 (
     rate_id UUID NOT NULL PRIMARY KEY,
@@ -57,7 +51,6 @@ CREATE TABLE post
     is_hidden BOOLEAN NOT NULL,
     is_hidden_admin BOOLEAN NOT NULL,
     status_id UUID NOT NULL REFERENCES status(status_id) ON DELETE CASCADE,
-    mark_id UUID NOT NULL REFERENCES mark(mark_id) ON DELETE CASCADE,
     genre_id UUID NOT NULL REFERENCES genre(genre_id) ON DELETE CASCADE,
     rate_id UUID NOT NULL REFERENCES rate(rate_id) ON DELETE CASCADE
 );
@@ -125,4 +118,18 @@ CREATE TABLE post_tag
     tag_id UUID NOT NULL REFERENCES tag(tag_id) ON DELETE CASCADE ON UPDATE CASCADE,
     post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT tag_post_pkey PRIMARY KEY(tag_id, post_id)
+);
+
+CREATE TABLE read_post
+(
+    reader_id UUID NOT NULL,
+    post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT read_post_pkey PRIMARY KEY(reader_id, post_id)
+);
+
+CREATE TABLE read_chapter
+(
+    reader_id UUID NOT NULL,
+    chapter_id UUID NOT NULL REFERENCES chapter(chapter_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT read_chapter_pkey PRIMARY KEY(reader_id, chapter_id)
 );
