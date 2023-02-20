@@ -9,5 +9,6 @@ import { UserServiceProto } from '../common';
   imports: [ClientsModule.register([UserServiceProto]), AuthModule],
   providers: [UserService],
   controllers: [UserController],
+  exports: [UserService],
 })
 export class UserModule {}

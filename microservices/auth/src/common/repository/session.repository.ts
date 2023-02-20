@@ -84,4 +84,20 @@ export class SessionRepository {
       return null;
     }
   }
+
+  public async findOneUserIdBySession(sessionId: string): Promise<{
+    user_id: string;
+  }> {
+    try {
+      return await this.prisma.session.findUnique({
+        where: { session_id: sessionId },
+        select: { user_id: true },
+      });
+    } catch (e) {
+      Logger.error(
+        `Ошибка при поиске сессии-userId с параметром: ${sessionId}`,
+      );
+      return null;
+    }
+  }
 }

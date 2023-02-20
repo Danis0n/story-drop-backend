@@ -1,17 +1,15 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
-import {
-  AUTH_SERVICE_NAME,
-  AuthServiceClient,
-  LoginRequest,
-  LoginResponse,
-  LogoutRequest,
-  LogoutResponse,
-  ValidateRequest,
-  ValidateResponse,
-} from './auth.pb';
+import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { firstValueFrom } from 'rxjs';
 import { ClientGrpc } from '@nestjs/microservices';
-import { FindOneRolesResponseDto } from '../common';
+import {
+  FindOneUserIdBySessionResponseDto,
+  LoginRequestDto,
+  LoginResponseDto,
+  LogoutRequestDto,
+  LogoutResponseDto,
+  ValidateResponseDto,
+} from '../common';
 
 @Injectable()
 export class AuthService implements OnModuleInit {
@@ -29,21 +27,25 @@ export class AuthService implements OnModuleInit {
     sessionId: string,
     deviceId: string,
     ip: string,
-  ): Promise<ValidateResponse> {
+  ): Promise<ValidateResponseDto> {
     return await firstValueFrom(
       this.authServiceClient.validate({ sessionId, deviceId, ip }),
     );
   }
 
-  public async login(login: LoginRequest): Promise<LoginResponse> {
+  public async login(login: LoginRequestDto): Promise<LoginResponseDto> {
     return await firstValueFrom(this.authServiceClient.login(login));
   }
 
-  public async logout(logout: LogoutRequest): Promise<LogoutResponse> {
+  public async logout(logout: LogoutRequestDto): Promise<LogoutResponseDto> {
     return await firstValueFrom(this.authServiceClient.logout(logout));
   }
 
-  async findOneUserIdBySession(session: string) {
-    return undefined;
+  async findOneUserIdBySession(
+    session: string,
+  ): Promise<FindOneUserIdBySessionResponseDto> {
+    return await firstValueFrom(
+      this.authServiceClient.findOneUserIdBySession({ session }),
+    );
   }
 }

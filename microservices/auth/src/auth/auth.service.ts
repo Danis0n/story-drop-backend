@@ -129,10 +129,16 @@ export class AuthService implements OnModuleInit {
     return { permission: true };
   }
 
-  public async findOneUserIdBySession(
-    payload: FindOneUserIdBySessionRequestDto,
-  ): Promise<FindOneUserIdBySessionResponseDto> {
-    return { uuid: '' };
+  public async findOneUserIdBySession({
+    session,
+  }: FindOneUserIdBySessionRequestDto): Promise<FindOneUserIdBySessionResponseDto> {
+    const { user_id } = await this.sessionRepository.findOneUserIdBySession(
+      session,
+    );
+
+    if (!user_id) return { uuid: null };
+
+    return { uuid: user_id };
   }
 
   private async updateLoginData(

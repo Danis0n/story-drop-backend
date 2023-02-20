@@ -8,8 +8,8 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { ValidateResponse } from '../../auth/auth.pb';
 import {
-  getCookieValidate,
-  setCookieLoginTrue,
+  getRequestAuthData,
+  setCookieValidationSuccess,
   setCookieValidationFail,
 } from '../providers';
 
@@ -21,7 +21,7 @@ export class IsAuthenticatedGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const response = context.switchToHttp().getResponse();
 
-    const { device, logged, session, ip } = getCookieValidate(request);
+    const { device, logged, session, ip } = getRequestAuthData(request);
 
     if (!session) {
       setCookieValidationFail(response);
@@ -29,15 +29,12 @@ export class IsAuthenticatedGuard implements CanActivate {
     }
 
     if (!!session && !logged) {
-      setCookieLoginTrue(response);
+      setCookieValidationSuccess(response);
     }
-    // if device_id is null, nothing changes
-    const validate: ValidateResponse = await this.authService.validateUser(
-      session,
-      device,
-      ip,
-    );
 
-    return validate.permission;
+    const { permission }: ValidateResponse =
+      await this.authService.validateUser(session, device, ip);
+
+    return permission;
   }
 }

@@ -6,7 +6,7 @@ import {
   COOKIE_SESSION,
 } from '../constants';
 
-export const setLoginCookieSuccess = (
+export const setCookieLoginSuccess = (
   response: any,
   loginResponse: LoginResponse,
 ) => {
@@ -23,7 +23,7 @@ export const setLoginCookieSuccess = (
   });
 };
 
-export const cleanCookie = (response: any) => {
+export const cleanResponseData = (response: any) => {
   response.user = null;
 
   response.cookie(COOKIE_DEVICE, '', {
@@ -37,7 +37,7 @@ export const cleanCookie = (response: any) => {
   });
 };
 
-export const getCookieValidate = (request: any) => {
+export const getRequestAuthData = (request: any) => {
   const device = request.cookies[COOKIE_DEVICE];
   const session = request.cookies[COOKIE_SESSION];
   const logged = Boolean(request.cookies[COOKIE_LOGGED_IN]);
@@ -55,7 +55,7 @@ export const setCookieValidationFail = (response: any) => {
   });
 };
 
-export const setCookieLoginTrue = (response: any) => {
+export const setCookieValidationSuccess = (response: any) => {
   response.cookie(COOKIE_LOGGED_IN, true, {
     maxAge: COOKIE_MAX_AGE,
   });

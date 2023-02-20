@@ -8,7 +8,7 @@ import {
 import { AuthService } from '../../auth/auth.service';
 import { LogoutResponse } from '../../auth/auth.pb';
 
-import { cleanCookie } from '../providers';
+import { cleanResponseData } from '../providers';
 import { COOKIE_DEVICE, COOKIE_SESSION } from '../constants';
 
 @Injectable()
@@ -35,7 +35,7 @@ export class LogoutGuard implements CanActivate {
 
     if (!isLoggedOut) throw new NotFoundException('сессия не найдена');
 
-    cleanCookie(response);
+    cleanResponseData(response);
     return true;
   }
 }

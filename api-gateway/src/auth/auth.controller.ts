@@ -16,6 +16,7 @@ import {
   LogoutGuard,
   RegisterRequestDto,
   RegisterResponseDto,
+  UserIdValidateGuard,
 } from '../common';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -57,7 +58,7 @@ export class AuthController implements OnModuleInit {
     return this.authServiceClient.register(payload);
   }
 
-  @UseGuards(IsAuthenticatedGuard)
+  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Get('protected')
   private protected() {
     return {
