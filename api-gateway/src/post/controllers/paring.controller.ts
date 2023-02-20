@@ -2,15 +2,15 @@ import { Controller, Inject, OnModuleInit } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 
-@Controller('paring')
+@Controller('paring ')
 export class ParingController implements OnModuleInit {
-  private postServiceClient: PostServiceClient;
+  private serviceClient: PostServiceClient;
 
   @Inject(POST_SERVICE_NAME)
-  private readonly postClient: ClientGrpc;
+  private readonly client: ClientGrpc;
 
   public onModuleInit(): void {
-    this.postServiceClient =
-      this.postClient.getService<PostServiceClient>(POST_SERVICE_NAME);
+    this.serviceClient =
+      this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 }

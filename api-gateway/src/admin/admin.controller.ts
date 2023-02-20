@@ -24,14 +24,14 @@ import { Observable } from 'rxjs';
 
 @Controller('api/admin')
 export class AdminController implements OnModuleInit {
-  private adminServiceClient: AdminServiceClient;
+  private serviceClient: AdminServiceClient;
 
   @Inject(ADMIN_SERVICE_NAME)
-  private readonly adminClient: ClientGrpc;
+  private readonly client: ClientGrpc;
 
   public onModuleInit(): void {
-    this.adminServiceClient =
-      this.adminClient.getService<AdminServiceClient>(ADMIN_SERVICE_NAME);
+    this.serviceClient =
+      this.client.getService<AdminServiceClient>(ADMIN_SERVICE_NAME);
   }
 
   @Roles('Admin')
@@ -41,7 +41,7 @@ export class AdminController implements OnModuleInit {
     @Param('id') uuid: string,
     @Body() { state }: UpdateBannedDto,
   ): Promise<Observable<UpdateBannedResponseDto>> {
-    return this.adminServiceClient.updateBanned({
+    return this.serviceClient.updateBanned({
       uuid: uuid,
       state: state,
     });
@@ -54,7 +54,7 @@ export class AdminController implements OnModuleInit {
     @Param('id') uuid: string,
     @Body() { state }: UpdateEnabledDto,
   ): Promise<Observable<UpdateEnabledResponseDto>> {
-    return this.adminServiceClient.updateEnabled({
+    return this.serviceClient.updateEnabled({
       uuid: uuid,
       state: state,
     });
@@ -66,7 +66,7 @@ export class AdminController implements OnModuleInit {
   private async deleteUser(
     @Param('id') uuid: string,
   ): Promise<Observable<DeleteUserResponseDto>> {
-    return this.adminServiceClient.deleteUser({ uuid: uuid });
+    return this.serviceClient.deleteUser({ uuid: uuid });
   }
 
   @Roles('Admin')
@@ -75,6 +75,6 @@ export class AdminController implements OnModuleInit {
   private async deletePost(
     @Param('id') uuid: string,
   ): Promise<Observable<DeletePostResponseDto>> {
-    return this.adminServiceClient.deletePost({ uuid: uuid });
+    return this.serviceClient.deletePost({ uuid: uuid });
   }
 }

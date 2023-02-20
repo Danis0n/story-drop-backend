@@ -25,14 +25,14 @@ import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/auth')
 export class AuthController implements OnModuleInit {
-  private authServiceClient: AuthServiceClient;
+  private serviceClient: AuthServiceClient;
 
   @Inject(AUTH_SERVICE_NAME)
-  private readonly authClient: ClientGrpc;
+  private readonly client: ClientGrpc;
 
   public onModuleInit(): void {
-    this.authServiceClient =
-      this.authClient.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
+    this.serviceClient =
+      this.client.getService<AuthServiceClient>(AUTH_SERVICE_NAME);
   }
 
   @UseGuards(AuthGuard)
@@ -55,7 +55,7 @@ export class AuthController implements OnModuleInit {
   private async register(
     @Body() payload: RegisterRequestDto,
   ): Promise<Observable<RegisterResponseDto>> {
-    return this.authServiceClient.register(payload);
+    return this.serviceClient.register(payload);
   }
 
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
