@@ -36,23 +36,17 @@ CREATE TABLE genre
     genre_name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE rate
-(
-    rate_id UUID NOT NULL PRIMARY KEY,
-    rate_name VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE post
 (
     post_id UUID UNIQUE NOT NULL PRIMARY KEY,
+    user_id UUID NOT NULL,
     post_name VARCHAR(100) NOT NULL,
     description TEXT,
     dedication VARCHAR(255),
+    date_of_creation TIMESTAMP NOT NULL,
     is_hidden BOOLEAN NOT NULL,
     is_hidden_admin BOOLEAN NOT NULL,
-    status_id UUID NOT NULL REFERENCES status(status_id) ON DELETE CASCADE,
-    genre_id UUID NOT NULL REFERENCES genre(genre_id) ON DELETE CASCADE,
-    rate_id UUID NOT NULL REFERENCES rate(rate_id) ON DELETE CASCADE
+    status_id UUID NOT NULL REFERENCES status(status_id) ON DELETE CASCADE
 );
 
 CREATE TABLE chapter
@@ -61,7 +55,8 @@ CREATE TABLE chapter
     post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE,
     notes TEXT,
     text TEXT NOT NULL,
-    number INT NOT NULL
+    number INT NOT NULL,
+    date_of_creation TIMESTAMP NOT NULL
 );
 
 CREATE TABLE fandom_post
@@ -132,4 +127,19 @@ CREATE TABLE read_chapter
     reader_id UUID NOT NULL,
     chapter_id UUID NOT NULL REFERENCES chapter(chapter_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT read_chapter_pkey PRIMARY KEY(reader_id, chapter_id)
+);
+
+CREATE TABLE likes
+(
+    user_id UUID NOT NULL,
+    post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT user_post_pkey PRIMARY KEY(user_id, post_id)
+);
+
+
+CREATE TABLE post_genre
+(
+    genre_id UUID NOT NULL REFERENCES genre(genre_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT genre_post_pkey PRIMARY KEY(genre_id, post_id)
 );

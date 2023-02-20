@@ -15,13 +15,14 @@ model age {
 }
 
 model chapter {
-  chapter_id   String         @id @db.Uuid
-  post_id      String         @db.Uuid
-  notes        String?
-  text         String
-  number       Int
-  post         post           @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: NoAction)
-  read_chapter read_chapter[]
+  chapter_id       String         @id @db.Uuid
+  post_id          String         @db.Uuid
+  notes            String?
+  text             String
+  number           Int
+  date_of_creation DateTime       @db.Timestamp(6)
+  post             post           @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: NoAction)
+  read_chapter     read_chapter[]
 }
 
 model character {
@@ -82,9 +83,9 @@ model fandom_post {
 }
 
 model genre {
-  genre_id   String @id @db.Uuid
-  genre_name String @db.VarChar(100)
-  post       post[]
+  genre_id   String       @id @db.Uuid
+  genre_name String       @db.VarChar(100)
+  post_genre post_genre[]
 }
 
 model paring {
@@ -104,25 +105,25 @@ model paring_post {
 }
 
 model post {
-  post_id         String            @id @db.Uuid
-  post_name       String            @db.VarChar(100)
-  description     String?
-  dedication      String?           @db.VarChar(255)
-  is_hidden       Boolean
-  is_hidden_admin Boolean
-  status_id       String            @db.Uuid
-  genre_id        String            @db.Uuid
-  rate_id         String            @db.Uuid
-  chapter         chapter[]
-  character_post  character_post[]
-  collection_post collection_post[]
-  fandom_post     fandom_post[]
-  paring_post     paring_post[]
-  genre           genre             @relation(fields: [genre_id], references: [genre_id], onDelete: Cascade, onUpdate: NoAction)
-  rate            rate              @relation(fields: [rate_id], references: [rate_id], onDelete: Cascade, onUpdate: NoAction)
-  status          status            @relation(fields: [status_id], references: [status_id], onDelete: Cascade, onUpdate: NoAction)
-  post_tag        post_tag[]
-  read_post       read_post[]
+  post_id          String            @id @db.Uuid
+  user_id          String            @db.Uuid
+  post_name        String            @db.VarChar(100)
+  description      String?
+  dedication       String?           @db.VarChar(255)
+  date_of_creation DateTime          @db.Timestamp(6)
+  is_hidden        Boolean
+  is_hidden_admin  Boolean
+  status_id        String            @db.Uuid
+  chapter          chapter[]
+  character_post   character_post[]
+  collection_post  collection_post[]
+  fandom_post      fandom_post[]
+  likes            likes[]
+  paring_post      paring_post[]
+  status           status            @relation(fields: [status_id], references: [status_id], onDelete: Cascade, onUpdate: NoAction)
+  post_genre       post_genre[]
+  post_tag         post_tag[]
+  read_post        read_post[]
 }
 
 model post_tag {
@@ -132,12 +133,6 @@ model post_tag {
   tag     tag    @relation(fields: [tag_id], references: [tag_id], onDelete: Cascade)
 
   @@id([tag_id, post_id], map: "tag_post_pkey")
-}
-
-model rate {
-  rate_id   String @id @db.Uuid
-  rate_name String @db.VarChar(50)
-  post      post[]
 }
 
 model status {
@@ -168,4 +163,21 @@ model read_post {
   post      post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
 
   @@id([reader_id, post_id])
+}
+
+model likes {
+  user_id String @db.Uuid
+  post_id String @db.Uuid
+  post    post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([user_id, post_id], map: "user_post_pkey")
+}
+
+model post_genre {
+  genre_id String @db.Uuid
+  post_id  String @db.Uuid
+  genre    genre  @relation(fields: [genre_id], references: [genre_id], onDelete: Cascade)
+  post     post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
+
+  @@id([genre_id, post_id], map: "genre_post_pkey")
 }

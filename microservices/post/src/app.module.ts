@@ -7,9 +7,10 @@ import { CharacterModule } from './character/character.module';
 import { CollectionModule } from './collection/collection.module';
 import { FandomModule } from './fandom/fandom.module';
 import { ParingModule } from './paring/paring.module';
+import { ReadModule } from './read/read.module';
 
 @Module({
-  imports: [PostModule, TagModule, CharacterModule, CollectionModule, FandomModule, ParingModule],
+  imports: [PostModule, TagModule, CharacterModule, CollectionModule, FandomModule, ParingModule, ReadModule],
   controllers: [AppController],
   providers: [AppService],
 })
