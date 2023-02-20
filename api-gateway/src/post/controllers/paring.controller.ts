@@ -1,9 +1,9 @@
 import { Controller, Inject, OnModuleInit } from '@nestjs/common';
+import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
-import { POST_SERVICE_NAME, PostServiceClient } from './post.pb';
 
-@Controller('post')
-export class PostController implements OnModuleInit {
+@Controller('paring')
+export class ParingController implements OnModuleInit {
   private postServiceClient: PostServiceClient;
 
   @Inject(POST_SERVICE_NAME)

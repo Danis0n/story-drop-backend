@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PostController } from './post.controller';
+import { PostController } from './controllers/post.controller';
 import { ClientsModule } from '@nestjs/microservices';
 import { PostServiceProto } from '../common';
 import { AuthModule } from '../auth/auth.module';
