@@ -62,7 +62,7 @@ export interface DeleteResponse {
   success: boolean;
 }
 
-export interface FindOneResponse {
+export interface FindOneUserResponse {
   user: User | undefined;
 }
 
@@ -108,7 +108,7 @@ export interface UpdateResponse {
   success: boolean;
 }
 
-export interface FindOneIdRequest {
+export interface FindOneUserIdRequest {
   uuid: string;
 }
 
@@ -169,15 +169,15 @@ export interface Image {
 export const USER_PACKAGE_NAME = "user";
 
 export interface UserServiceClient {
-  create(request: CreateUserRequest): Observable<FindOneResponse>;
+  create(request: CreateUserRequest): Observable<FindOneUserResponse>;
 
   findAll(request: FindAllRequest): Observable<FindAllResponse>;
 
   findAnyExistBy(request: FindAnyByRequest): Observable<FindAnyByResponse>;
 
-  findOneId(request: FindOneIdRequest): Observable<FindOneResponse>;
+  findOneId(request: FindOneUserIdRequest): Observable<FindOneUserResponse>;
 
-  findOneSession(request: FindOneSessionRequest): Observable<FindOneResponse>;
+  findOneSession(request: FindOneSessionRequest): Observable<FindOneUserResponse>;
 
   update(request: UpdateRequest): Observable<UpdateResponse>;
 
@@ -191,7 +191,7 @@ export interface UserServiceClient {
 
   delete(request: DeleteRequest): Observable<DeleteResponse>;
 
-  findOneRoles(request: FindOneIdRequest): Observable<FindOneRolesResponse>;
+  findOneRoles(request: FindOneUserIdRequest): Observable<FindOneRolesResponse>;
 
   findOneUsername(request: FindOneUsernameRequest): Observable<FindOneUsernameResponse>;
 
@@ -201,7 +201,9 @@ export interface UserServiceClient {
 }
 
 export interface UserServiceController {
-  create(request: CreateUserRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  create(
+    request: CreateUserRequest,
+  ): Promise<FindOneUserResponse> | Observable<FindOneUserResponse> | FindOneUserResponse;
 
   findAll(request: FindAllRequest): Promise<FindAllResponse> | Observable<FindAllResponse> | FindAllResponse;
 
@@ -209,11 +211,13 @@ export interface UserServiceController {
     request: FindAnyByRequest,
   ): Promise<FindAnyByResponse> | Observable<FindAnyByResponse> | FindAnyByResponse;
 
-  findOneId(request: FindOneIdRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  findOneId(
+    request: FindOneUserIdRequest,
+  ): Promise<FindOneUserResponse> | Observable<FindOneUserResponse> | FindOneUserResponse;
 
   findOneSession(
     request: FindOneSessionRequest,
-  ): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  ): Promise<FindOneUserResponse> | Observable<FindOneUserResponse> | FindOneUserResponse;
 
   update(request: UpdateRequest): Promise<UpdateResponse> | Observable<UpdateResponse> | UpdateResponse;
 
@@ -236,7 +240,7 @@ export interface UserServiceController {
   delete(request: DeleteRequest): Promise<DeleteResponse> | Observable<DeleteResponse> | DeleteResponse;
 
   findOneRoles(
-    request: FindOneIdRequest,
+    request: FindOneUserIdRequest,
   ): Promise<FindOneRolesResponse> | Observable<FindOneRolesResponse> | FindOneRolesResponse;
 
   findOneUsername(

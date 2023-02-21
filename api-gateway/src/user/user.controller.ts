@@ -15,7 +15,7 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import {
   FindAllResponseDto,
-  FindOneResponseDto,
+  FindOneUserResponseDto,
   UpdateAvatarResponseDto,
   IsAuthenticatedGuard,
   mapToUpdateUser,
@@ -46,7 +46,7 @@ export class UserController implements OnModuleInit {
   @Get('/:id')
   private async findOneId(
     @Param('id') id: string,
-  ): Promise<Observable<FindOneResponseDto>> {
+  ): Promise<Observable<FindOneUserResponseDto>> {
     return this.serviceClient.findOneId({ uuid: id });
   }
 
@@ -55,7 +55,7 @@ export class UserController implements OnModuleInit {
   private async update(
     @Param('id') id: string,
     @Body() payload: UpdateDto,
-  ): Promise<Observable<FindOneResponseDto>> {
+  ): Promise<Observable<FindOneUserResponseDto>> {
     return this.serviceClient.update(mapToUpdateUser(id, payload));
   }
 

@@ -11,14 +11,14 @@ import {
 import { ADMIN_SERVICE_NAME, AdminServiceClient } from './admin.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
-  DeletePostResponseDto,
-  DeleteUserResponseDto,
+  DeletePostAdminResponseDto,
+  DeleteUserAdminResponseDto,
   RoleGuard,
   Roles,
   UpdateBannedDto,
-  UpdateBannedResponseDto,
+  UpdateBannedAdminResponseDto,
   UpdateEnabledDto,
-  UpdateEnabledResponseDto,
+  UpdateEnabledAdminResponseDto,
 } from '../common';
 import { Observable } from 'rxjs';
 
@@ -40,7 +40,7 @@ export class AdminController implements OnModuleInit {
   private async updateBan(
     @Param('id') uuid: string,
     @Body() { state }: UpdateBannedDto,
-  ): Promise<Observable<UpdateBannedResponseDto>> {
+  ): Promise<Observable<UpdateBannedAdminResponseDto>> {
     return this.serviceClient.updateBanned({
       uuid: uuid,
       state: state,
@@ -53,7 +53,7 @@ export class AdminController implements OnModuleInit {
   private async updateEnable(
     @Param('id') uuid: string,
     @Body() { state }: UpdateEnabledDto,
-  ): Promise<Observable<UpdateEnabledResponseDto>> {
+  ): Promise<Observable<UpdateEnabledAdminResponseDto>> {
     return this.serviceClient.updateEnabled({
       uuid: uuid,
       state: state,
@@ -65,7 +65,7 @@ export class AdminController implements OnModuleInit {
   @Delete('user/:id')
   private async deleteUser(
     @Param('id') uuid: string,
-  ): Promise<Observable<DeleteUserResponseDto>> {
+  ): Promise<Observable<DeleteUserAdminResponseDto>> {
     return this.serviceClient.deleteUser({ uuid: uuid });
   }
 
@@ -74,7 +74,7 @@ export class AdminController implements OnModuleInit {
   @Delete('post/:id')
   private async deletePost(
     @Param('id') uuid: string,
-  ): Promise<Observable<DeletePostResponseDto>> {
+  ): Promise<Observable<DeletePostAdminResponseDto>> {
     return this.serviceClient.deletePost({ uuid: uuid });
   }
 }

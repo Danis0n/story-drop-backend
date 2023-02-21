@@ -5,18 +5,18 @@ import {
   UpdateEnabledResponse,
 } from '../../../admin/admin.pb';
 
-export class DeletePostResponseDto implements DeletePostResponse {
+export class DeletePostAdminResponseDto implements DeletePostResponse {
   success: boolean;
 }
 
-export class DeleteUserResponseDto implements DeleteUserResponse {
+export class DeleteUserAdminResponseDto implements DeleteUserResponse {
   success: boolean;
 }
 
-export class UpdateBannedResponseDto implements UpdateBannedResponse {
+export class UpdateBannedAdminResponseDto implements UpdateBannedResponse {
   success: boolean;
 }
 
-export class UpdateEnabledResponseDto implements UpdateEnabledResponse {
+export class UpdateEnabledAdminResponseDto implements UpdateEnabledResponse {
   success: boolean;
 }

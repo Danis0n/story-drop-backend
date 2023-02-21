@@ -3,7 +3,7 @@ import {
   FindAllResponse,
   FindAnyByResponse,
   FindAvatarResponse,
-  FindOneResponse,
+  FindOneUserResponse,
   FindOneRolesResponse,
   FindOneUsernameResponse,
   UpdateAvatarResponse,
@@ -33,7 +33,7 @@ export class FindAllResponseDto implements FindAllResponse {
   users: UserDto[];
 }
 
-export class FindOneResponseDto implements FindOneResponse {
+export class FindOneUserResponseDto implements FindOneUserResponse {
   user: UserDto;
 }
 

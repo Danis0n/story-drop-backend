@@ -3,7 +3,7 @@ import {
   DeleteRequest,
   FindAnyByRequest,
   FindAvatarByUserRequest,
-  FindOneIdRequest,
+  FindOneUserIdRequest,
   FindOneUsernameRequest,
   UpdateAvatarRequest,
   UpdateRequest,
@@ -40,7 +40,7 @@ export class DeleteRequestDto implements DeleteRequest {
   uuid: string;
 }
 
-export class FindOneIdRequestDto implements FindOneIdRequest {
+export class FindOneUserIdRequestDto implements FindOneUserIdRequest {
   uuid: string;
 }
 

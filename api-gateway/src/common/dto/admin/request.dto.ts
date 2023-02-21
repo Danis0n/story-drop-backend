@@ -5,11 +5,11 @@ import {
   UpdateEnabledRequest,
 } from '../../../admin/admin.pb';
 
-export class DeleteUserRequestDto implements DeleteUserRequest {
+export class DeleteUserAdminRequestDto implements DeleteUserRequest {
   uuid: string;
 }
 
-export class DeletePostRequestDto implements DeletePostRequest {
+export class DeletePostAdminRequestDto implements DeletePostRequest {
   uuid: string;
 }
 
