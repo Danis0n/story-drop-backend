@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
 import { UserWithRelationData, UserWithRoleRelationData } from '../validation';
@@ -13,8 +13,8 @@ import {
   PrismaImageDto,
   UpdateRequestDto,
 } from '../dto';
-import { Logger } from '@nestjs/common';
 
+@Injectable()
 export class UserRepository {
   @Inject(PrismaService)
   private readonly prisma: PrismaService;

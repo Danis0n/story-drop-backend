@@ -10,7 +10,15 @@ import { ParingModule } from './paring/paring.module';
 import { ReadModule } from './read/read.module';
 
 @Module({
-  imports: [PostModule, TagModule, CharacterModule, CollectionModule, FandomModule, ParingModule, ReadModule],
+  imports: [
+    PostModule,
+    TagModule,
+    CharacterModule,
+    CollectionModule,
+    FandomModule,
+    ParingModule,
+    ReadModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

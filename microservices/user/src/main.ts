@@ -1,7 +1,7 @@
-import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { INestMicroservice } from '@nestjs/common';
 import { userServiceProto } from './config';
+import { INestMicroservice } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
 async function run() {
   const app: INestMicroservice = await NestFactory.createMicroservice(

@@ -1,10 +1,10 @@
-import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { sessionSettings } from './common';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as session from 'express-session';
-import { sessionSettings } from './common';
+import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
+import * as session from 'express-session';
 
 async function run() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +19,8 @@ async function run() {
 
   app.use(session(sessionSettings));
   app.use(cookieParser());
+
   await app.listen(PORT);
 }
+
 run();
