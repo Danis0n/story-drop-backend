@@ -18,6 +18,8 @@ import {
   DeleteCharacterResponseDto,
   FindOneCharacterByIdResponseDto,
   IsAuthenticatedGuard,
+  RoleGuard,
+  Roles,
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
 } from '../../common';
@@ -50,7 +52,8 @@ export class CharacterController implements OnModuleInit {
     return this.serviceClient.findOneCharacterById({ characterId: uuid });
   }
 
-  @UseGuards(IsAuthenticatedGuard)
+  @Roles('Admin')
+  @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
   private async update(
     @Param('id') uuid: string,
@@ -60,7 +63,8 @@ export class CharacterController implements OnModuleInit {
     return this.serviceClient.updateCharacter(payload);
   }
 
-  @UseGuards(IsAuthenticatedGuard)
+  @Roles('Admin')
+  @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')
   private async delete(
     @Param('id') uuid: string,
