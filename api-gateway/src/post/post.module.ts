@@ -11,9 +11,10 @@ import {
   PostController,
   TagController,
 } from './controllers';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [ClientsModule.register([PostServiceProto]), AuthModule],
+  imports: [ClientsModule.register([PostServiceProto]), AuthModule, UserModule],
   controllers: [
     PostController,
     FandomController,

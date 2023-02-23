@@ -4,6 +4,7 @@ import {
   COOKIE_LOGGED_IN,
   COOKIE_MAX_AGE,
   COOKIE_SESSION,
+  COOKIE_UID,
 } from '../constants';
 
 export const setCookieLoginSuccess = (
@@ -21,6 +22,9 @@ export const setCookieLoginSuccess = (
   response.cookie(COOKIE_SESSION, loginResponse.sessionId, {
     maxAge: COOKIE_MAX_AGE,
   });
+  response.cookie(COOKIE_UID, loginResponse.user.uuid, {
+    maxAge: COOKIE_MAX_AGE,
+  });
 };
 
 export const cleanResponseData = (response: any) => {
@@ -33,6 +37,9 @@ export const cleanResponseData = (response: any) => {
     maxAge: 0,
   });
   response.cookie(COOKIE_SESSION, '', {
+    maxAge: 0,
+  });
+  response.cookie(COOKIE_UID, '', {
     maxAge: 0,
   });
 };
@@ -52,6 +59,9 @@ export const setCookieValidationFail = (response: any) => {
   });
   response.cookie(COOKIE_LOGGED_IN, false, {
     maxAge: COOKIE_MAX_AGE,
+  });
+  response.cookie(COOKIE_UID, '', {
+    maxAge: 0,
   });
 };
 

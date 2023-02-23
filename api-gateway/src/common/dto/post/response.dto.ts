@@ -1,8 +1,8 @@
 import {
   CreatePostResponse,
-  UpdatePostResponse,
   DeletePostResponse,
   FindOnePostResponse,
+  UpdatePostResponse,
 } from '../../../post/post.pb';
 import { PostDto } from './post.dto';
 
@@ -20,7 +20,7 @@ export class DeletePostResponseDto implements DeletePostResponse {
   success: boolean;
 }
 
-export class FindOneResponseDto implements FindOnePostResponse {
+export class FindOnePostResponseDto implements FindOnePostResponse {
   post: PostDto;
   success: boolean;
 }

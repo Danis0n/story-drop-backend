@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     const sessionID: string = req.sessionID;
 
     return {
-      ip: 'localhost', // for local ip
+      ip: '::1', // for local ip
       password: password,
       username: username,
       deviceName: deviceName,

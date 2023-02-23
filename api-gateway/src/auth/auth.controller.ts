@@ -1,21 +1,22 @@
 import {
+  Body,
   Controller,
   Get,
-  Post,
-  UseGuards,
-  Session,
   Inject,
   OnModuleInit,
-  Body,
+  Post,
+  Session,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
-  User,
-  IsAuthenticatedGuard,
   AuthGuard,
+  IsAuthenticatedGuard,
   LogoutGuard,
   RegisterRequestDto,
   RegisterResponseDto,
+  User,
+  UserId,
   UserIdValidateGuard,
 } from '../common';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
@@ -60,7 +61,8 @@ export class AuthController implements OnModuleInit {
 
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Get('protected')
-  private protected() {
+  private protected(@UserId() uuid: string) {
+    console.log(uuid);
     return {
       message: 'This route is protected against unauthenticated users!',
     };
