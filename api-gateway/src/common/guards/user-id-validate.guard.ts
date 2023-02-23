@@ -26,7 +26,7 @@ export class UserIdValidateGuard implements CanActivate {
     response.cookie(COOKIE_UID, uuid, {
       maxAge: COOKIE_MAX_AGE,
     });
-    console.log(uuid);
+
     return uuid;
   }
 
