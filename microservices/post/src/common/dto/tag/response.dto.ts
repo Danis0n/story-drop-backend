@@ -1,9 +1,9 @@
 import {
   CreateTagResponse,
-  UpdateTagResponse,
   DeleteTagResponse,
   FindOneTagByIdResponse,
-} from '../../../post/post.pb';
+  UpdateTagResponse,
+} from '../../../post/proto/post.pb';
 import { TagDto } from './tag.dto';
 
 export class CreateTagResponseDto implements CreateTagResponse {

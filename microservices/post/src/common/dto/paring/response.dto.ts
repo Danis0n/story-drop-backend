@@ -1,9 +1,9 @@
 import {
   CreateParingResponse,
-  UpdateParingResponse,
   DeleteParingResponse,
   FindOneParingByIdResponse,
-} from '../../../post/post.pb';
+  UpdateParingResponse,
+} from '../../../post/proto/post.pb';
 import { ParingDto } from './paring.dto';
 
 export class CreateParingResponseDto implements CreateParingResponse {

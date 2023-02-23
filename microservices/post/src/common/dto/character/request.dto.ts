@@ -3,7 +3,7 @@ import {
   DeleteCharacterRequest,
   FindOneCharacterByIdRequest,
   UpdateCharacterRequest,
-} from '../../../post/post.pb';
+} from '../../../post/proto/post.pb';
 
 export class CreateCharacterRequestDto implements CreateCharacterRequest {
   name: string;

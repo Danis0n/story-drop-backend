@@ -1,9 +1,9 @@
 import {
   CreateTagRequest,
-  UpdateTagRequest,
   DeleteTagRequest,
   FindOneTagByIdRequest,
-} from '../../../post/post.pb';
+  UpdateTagRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreateTagRequestDto implements CreateTagRequest {
   name: string;

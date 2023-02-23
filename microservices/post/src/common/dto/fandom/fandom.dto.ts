@@ -1,4 +1,4 @@
-import { Fandom } from '../../../post/post.pb';
+import { Fandom } from '../../../post/proto/post.pb';
 
 export class FandomDto implements Fandom {
   fandomId: string;

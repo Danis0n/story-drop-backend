@@ -1,9 +1,9 @@
 import {
   CreatePostRequest,
-  UpdatePostRequest,
   DeletePostRequest,
-  FindOnePostIdRequest,
-} from '../../../post/post.pb';
+  FindOneIdRequest,
+  UpdatePostRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreatePostRequestDto implements CreatePostRequest {
   characterIds: string;
@@ -32,6 +32,6 @@ export class DeletePostRequestDto implements DeletePostRequest {
   userId: string;
 }
 
-export class FindOneIdRequestDto implements FindOnePostIdRequest {
+export class FindOneIdRequestDto implements FindOneIdRequest {
   uuid: string;
 }

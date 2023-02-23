@@ -1,9 +1,9 @@
 import {
   CreateGenreResponse,
-  UpdateGenreResponse,
   DeleteGenreResponse,
   FindOneGenreByIdResponse,
-} from '../../../post/post.pb';
+  UpdateGenreResponse,
+} from '../../../post/proto/post.pb';
 import { GenreDto } from './genre.dto';
 
 export class CreateGenreResponseDto implements CreateGenreResponse {

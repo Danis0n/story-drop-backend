@@ -1,9 +1,9 @@
 import {
   CreateChapterResponse,
-  UpdateChapterResponse,
   DeleteChapterResponse,
   FindOneChapterByIdResponse,
-} from '../../../post/post.pb';
+  UpdateChapterResponse,
+} from '../../../post/proto/post.pb';
 import { ChapterDto } from './chapter.dto';
 
 export class CreateChapterResponseDto implements CreateChapterResponse {

@@ -1,9 +1,9 @@
 import {
   CreateFandomRequest,
-  UpdateFandomRequest,
   DeleteFandomRequest,
   FindOneFandomByIdRequest,
-} from '../../../post/post.pb';
+  UpdateFandomRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreateFandomRequestDto implements CreateFandomRequest {
   name: string;

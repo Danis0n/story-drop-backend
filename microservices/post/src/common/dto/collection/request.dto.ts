@@ -1,9 +1,9 @@
 import {
   CreateCollectionRequest,
-  UpdateCollectionRequest,
   DeleteCollectionRequest,
   FindOneCollectionByIdRequest,
-} from '../../../post/post.pb';
+  UpdateCollectionRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreateCollectionRequestDto implements CreateCollectionRequest {
   name: string;

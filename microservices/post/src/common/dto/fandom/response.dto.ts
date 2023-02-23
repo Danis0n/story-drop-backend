@@ -1,9 +1,9 @@
 import {
   CreateFandomResponse,
-  UpdateFandomResponse,
   DeleteFandomResponse,
   FindOneFandomByIdResponse,
-} from '../../../post/post.pb';
+  UpdateFandomResponse,
+} from '../../../post/proto/post.pb';
 import { FandomDto } from './fandom.dto';
 
 export class CreateFandomResponseDto implements CreateFandomResponse {

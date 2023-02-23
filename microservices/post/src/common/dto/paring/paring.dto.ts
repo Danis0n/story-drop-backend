@@ -1,4 +1,4 @@
-import { Paring } from '../../../post/post.pb';
+import { Paring } from '../../../post/proto/post.pb';
 
 export class ParingDto implements Paring {
   name: string;

@@ -1,9 +1,9 @@
 import {
   CreateChapterRequest,
-  UpdateChapterRequest,
   DeleteChapterRequest,
   FindOneChapterByIdRequest,
-} from '../../../post/post.pb';
+  UpdateChapterRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreateChapterRequestDto implements CreateChapterRequest {
   name: string;

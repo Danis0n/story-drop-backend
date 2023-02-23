@@ -1,9 +1,9 @@
 import {
   CreateParingRequest,
-  UpdateParingRequest,
   DeleteParingRequest,
   FindOneParingByIdRequest,
-} from '../../../post/post.pb';
+  UpdateParingRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreateParingRequestDto implements CreateParingRequest {
   name: string;

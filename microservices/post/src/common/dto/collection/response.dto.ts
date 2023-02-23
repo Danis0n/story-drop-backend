@@ -1,9 +1,9 @@
 import {
   CreateCollectionResponse,
-  UpdateCollectionResponse,
   DeleteCollectionResponse,
   FindOneCollectionByIdResponse,
-} from '../../../post/post.pb';
+  UpdateCollectionResponse,
+} from '../../../post/proto/post.pb';
 import { CollectionDto } from './collection.dto';
 
 export class CreateCollectionResponseDto implements CreateCollectionResponse {

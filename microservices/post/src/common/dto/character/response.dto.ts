@@ -3,7 +3,7 @@ import {
   DeleteCharacterResponse,
   FindOneCharacterByIdResponse,
   UpdateCharacterResponse,
-} from '../../../post/post.pb';
+} from '../../../post/proto/post.pb';
 import { CharacterDto } from './character.dto';
 
 export class CreateCharacterResponseDto implements CreateCharacterResponse {

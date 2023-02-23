@@ -1,9 +1,9 @@
 import {
   CreateGenreRequest,
-  UpdateGenreRequest,
   DeleteGenreRequest,
   FindOneGenreByIdRequest,
-} from '../../../post/post.pb';
+  UpdateGenreRequest,
+} from '../../../post/proto/post.pb';
 
 export class CreateGenreRequestDto implements CreateGenreRequest {
   name: string;
