@@ -14,7 +14,7 @@ import { setCookieValidationFail } from '../providers';
 export class UserIdValidateGuard implements CanActivate {
   @Inject(AuthService) public readonly authService: AuthService;
 
-  private async updateUID(request: any, response: any) {
+  private async updateUIDWithCookie(request: any, response: any) {
     const session = request.cookies[COOKIE_SESSION];
     if (!session) return null;
 
@@ -35,19 +35,17 @@ export class UserIdValidateGuard implements CanActivate {
     const response = context.switchToHttp().getResponse();
 
     const UID = request.cookies[COOKIE_UID];
-    let uuid;
 
-    if (!UID) uuid = await this.updateUID(request, response);
-    else uuid = UID;
+    const uid = UID ? UID : await this.updateUIDWithCookie(request, response);
 
-    if (!uuid) {
+    if (!uid) {
       setCookieValidationFail(response);
       throw new UnauthorizedException(
         'Идентификатор пользователя не был найден!',
       );
     }
 
-    request.UID = uuid;
+    request.UID = uid;
     return true;
   }
 }
