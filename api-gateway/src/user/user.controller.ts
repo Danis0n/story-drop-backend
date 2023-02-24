@@ -8,11 +8,11 @@ import {
   Patch,
   Put,
   UploadedFile,
-  UseGuards
-} from "@nestjs/common";
-import { USER_SERVICE_NAME, UserServiceClient } from "./user.pb";
-import { ClientGrpc } from "@nestjs/microservices";
-import { Observable } from "rxjs";
+  UseGuards,
+} from '@nestjs/common';
+import { USER_SERVICE_NAME, UserServiceClient } from './user.pb';
+import { ClientGrpc } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
 import {
   FindAllResponseDto,
   FindOneUserResponseDto,
@@ -21,8 +21,8 @@ import {
   mapToUpdateUser,
   UpdateAvatarDto,
   UpdateAvatarResponseDto,
-  UpdateDto
-} from "../common";
+  UpdateDto,
+} from '../common';
 
 // TODO: make search by nicknames
 

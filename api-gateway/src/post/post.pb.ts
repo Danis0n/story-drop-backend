@@ -251,6 +251,7 @@ export interface FindOneCharacterByIdResponse {
 
 export interface CreateCharacterRequest {
   name: string;
+  fandomId: string;
 }
 
 export interface CreateCharacterResponse {
@@ -261,6 +262,7 @@ export interface CreateCharacterResponse {
 export interface UpdateCharacterRequest {
   characterId: string;
   name: string;
+  fandomId: string;
 }
 
 export interface UpdateCharacterResponse {
