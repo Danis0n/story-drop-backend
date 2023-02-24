@@ -14,6 +14,7 @@ import { PrismaModule } from './prisma/prisma.module';
   imports: [
     PostModule,
     TagModule,
+    ReadModule,
     CharacterModule,
     CollectionModule,
     FandomModule,

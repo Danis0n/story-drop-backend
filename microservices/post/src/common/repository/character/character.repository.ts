@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
-import { CharacterPrismaDto } from '../../dto';
+import { CharacterPrisma } from '../../dto';
 
 @Injectable()
 export class CharacterRepository {
@@ -11,7 +11,7 @@ export class CharacterRepository {
   public async create(
     name: string,
     fandomId: string,
-  ): Promise<CharacterPrismaDto> {
+  ): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.create({
         data: {
@@ -28,7 +28,7 @@ export class CharacterRepository {
     }
   }
 
-  public async findName(name: string): Promise<CharacterPrismaDto> {
+  public async findName(name: string): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.findUnique({
         where: { character_name: name },
@@ -39,7 +39,7 @@ export class CharacterRepository {
     }
   }
 
-  public async findNameMany(name: string): Promise<CharacterPrismaDto[]> {
+  public async findNameMany(name: string): Promise<CharacterPrisma[]> {
     try {
       return await this.prisma.character.findMany({
         where: { character_name: { contains: name } },
@@ -50,7 +50,7 @@ export class CharacterRepository {
     }
   }
 
-  public async findId(characterId: string): Promise<CharacterPrismaDto> {
+  public async findId(characterId: string): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.findUnique({
         where: { character_id: characterId },
@@ -68,7 +68,7 @@ export class CharacterRepository {
     characterId: string,
     name: string,
     fandomId: string,
-  ): Promise<CharacterPrismaDto> {
+  ): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.update({
         where: { character_id: characterId },
@@ -85,7 +85,7 @@ export class CharacterRepository {
     }
   }
 
-  public async delete(characterId: string): Promise<CharacterPrismaDto> {
+  public async delete(characterId: string): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.delete({
         where: { character_id: characterId },
