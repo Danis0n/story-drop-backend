@@ -4,11 +4,11 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "post";
 
-export interface FindOneIdRequest {
+export interface FindOnePostIdRequest {
   uuid: string;
 }
 
-export interface FindOneResponse {
+export interface FindOnePostResponse {
   success: boolean;
   post: Post | undefined;
 }
@@ -251,6 +251,7 @@ export interface FindOneCharacterByIdResponse {
 
 export interface CreateCharacterRequest {
   name: string;
+  fandomId: string;
 }
 
 export interface CreateCharacterResponse {
@@ -261,6 +262,7 @@ export interface CreateCharacterResponse {
 export interface UpdateCharacterRequest {
   characterId: string;
   name: string;
+  fandomId: string;
 }
 
 export interface UpdateCharacterResponse {
@@ -390,7 +392,7 @@ export interface Genre {
 export const POST_PACKAGE_NAME = "post";
 
 export interface PostServiceClient {
-  findOnePostById(request: FindOneIdRequest): Observable<FindOneResponse>;
+  findOnePostById(request: FindOnePostIdRequest): Observable<FindOnePostResponse>;
 
   createPost(request: CreatePostRequest): Observable<CreatePostResponse>;
 
@@ -456,7 +458,9 @@ export interface PostServiceClient {
 }
 
 export interface PostServiceController {
-  findOnePostById(request: FindOneIdRequest): Promise<FindOneResponse> | Observable<FindOneResponse> | FindOneResponse;
+  findOnePostById(
+    request: FindOnePostIdRequest,
+  ): Promise<FindOnePostResponse> | Observable<FindOnePostResponse> | FindOnePostResponse;
 
   createPost(
     request: CreatePostRequest,

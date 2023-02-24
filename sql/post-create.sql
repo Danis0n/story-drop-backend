@@ -1,7 +1,7 @@
 CREATE TABLE fandom
 (
     fandom_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    fandom_name VARCHAR(100) NOT NULL
+    fandom_name VARCHAR(100) UNIQUE  NOT NULL
 );
 
 CREATE TABLE collection
@@ -21,19 +21,19 @@ CREATE TABLE paring
 CREATE TABLE character
 (
     character_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    character_name VARCHAR(100) NOT NULL
+    character_name VARCHAR(100) UNIQUE NOT NULL
 );
 
 CREATE TABLE status
 (
     status_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    status_name VARCHAR(100) NOT NULL
+    status_name VARCHAR(100) UNIQUE  NOT NULL
 );
 
 CREATE TABLE genre
 (
     genre_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    genre_name VARCHAR(100) NOT NULL
+    genre_name VARCHAR(100) UNIQUE  NOT NULL
 );
 
 CREATE TABLE post
@@ -97,14 +97,14 @@ CREATE TABLE character_post
 CREATE TABLE age
 (
     age_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    age_name VARCHAR(100) NOT NULL,
+    age_name VARCHAR(100) UNIQUE NOT NULL,
     color VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE tag
 (
     tag_id UUID NOT NULL PRIMARY KEY,
-    tag_name VARCHAR(50) NOT NULL,
+    tag_name VARCHAR(50) UNIQUE NOT NULL,
     age_id UUID NOT NULL REFERENCES age(age_id)
 );
 

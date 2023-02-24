@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
+  CharacterMapper,
+  CharacterRepository,
   CreateCharacterRequestDto,
   CreateCharacterResponseDto,
   DeleteCharacterRequestDto,
@@ -9,34 +11,75 @@ import {
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
 } from '../common';
+import {
+  GrpcAlreadyExistsException,
+  GrpcNotFoundException,
+} from 'nestjs-grpc-exceptions';
 
-//TODO: make relation fandom-characters
-
+// TODO : add logger
+// TODO : add exceptions to api-gateway
 @Injectable()
 export class CharacterService {
-  // name, fandomId
+  @Inject(CharacterRepository)
+  private readonly repository: CharacterRepository;
+
+  @Inject(CharacterMapper)
+  private readonly mapper: CharacterMapper;
+
   public async create({
     name,
+    fandomId,
   }: CreateCharacterRequestDto): Promise<CreateCharacterResponseDto> {
-    return { character: null, success: false };
+    const isExist = !!(await this.repository.findName(name));
+
+    if (isExist)
+      throw new GrpcAlreadyExistsException(
+        'Персонаж с таким именем уже сущесвтует!',
+      );
+
+    const character = await this.repository.create(name, fandomId);
+    if (!character) return { character: null, success: false };
+
+    return {
+      character: this.mapper.mapToCharacterDto(character),
+      success: true,
+    };
   }
 
   public async update({
     name,
     characterId,
+    fandomId,
   }: UpdateCharacterRequestDto): Promise<UpdateCharacterResponseDto> {
-    return { character: null, success: false };
+    const character = await this.repository.update(characterId, name, fandomId);
+    if (!character)
+      throw new GrpcNotFoundException('Персонаж с таким id не найден!');
+
+    return {
+      character: this.mapper.mapToCharacterDto(character),
+      success: true,
+    };
   }
 
   public async delete({
     characterId,
   }: DeleteCharacterRequestDto): Promise<DeleteCharacterResponseDto> {
-    return { success: false };
+    const character = await this.repository.delete(characterId);
+    if (!character) return { success: false };
+
+    return { success: true };
   }
 
-  public async find({
+  public async findId({
     characterId,
   }: FindOneCharacterByIdRequestDto): Promise<FindOneCharacterByIdResponseDto> {
-    return { character: null, success: false };
+    const character = await this.repository.findId(characterId);
+    if (!character)
+      throw new GrpcNotFoundException('Персонаж с таким id не найден!');
+
+    return {
+      character: this.mapper.mapToCharacterDto(character),
+      success: true,
+    };
   }
 }

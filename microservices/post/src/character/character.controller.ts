@@ -26,10 +26,10 @@ export class CharacterController {
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'FindOneCharacterById')
-  private async find(
+  private async findId(
     payload: FindOneCharacterByIdRequestDto,
   ): Promise<FindOneCharacterByIdResponseDto> {
-    return this.service.find(payload);
+    return this.service.findId(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateCharacter')
