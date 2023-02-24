@@ -136,10 +136,16 @@ CREATE TABLE likes
     CONSTRAINT user_post_pkey PRIMARY KEY(user_id, post_id)
 );
 
-
 CREATE TABLE post_genre
 (
     genre_id UUID NOT NULL REFERENCES genre(genre_id) ON DELETE CASCADE ON UPDATE CASCADE,
     post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT genre_post_pkey PRIMARY KEY(genre_id, post_id)
+);
+
+CREATE TABLE fandom_character
+(
+    fandom_id UUID NOT NULL REFERENCES fandom(fandom_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    character_id UUID NOT NULL REFERENCES character(character_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fandom_character_pkey PRIMARY KEY(fandom_id, character_id)
 );
