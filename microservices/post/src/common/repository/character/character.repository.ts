@@ -22,7 +22,7 @@ export class CharacterRepository {
       });
     } catch (e) {
       Logger.error(
-        `Ошибка во время создания персонажа: ${name}, ${fandomId}. ${e}`,
+        `create: Ошибка во время создания персонажа: ${name}, ${fandomId}. ${e?.message}`,
       );
       return null;
     }
@@ -34,7 +34,9 @@ export class CharacterRepository {
         where: { character_name: name },
       });
     } catch (e) {
-      Logger.error(`Ошибка во время поиска персонажа по name: ${name}. ${e}`);
+      Logger.error(
+        `findName: Ошибка во время поиска персонажа по name: ${name}. ${e?.message}`,
+      );
       return null;
     }
   }
@@ -42,10 +44,12 @@ export class CharacterRepository {
   public async findNameMany(name: string): Promise<CharacterPrisma[]> {
     try {
       return await this.prisma.character.findMany({
-        where: { character_name: { contains: name } },
+        where: { character_name: { contains: name, mode: 'insensitive' } },
       });
     } catch (e) {
-      Logger.error(`Ошибка во время поиска персонажей по name: ${name}. ${e}`);
+      Logger.error(
+        `findNameMany: Ошибка во время поиска персонажей по name: ${name}. ${e?.message}`,
+      );
       return null;
     }
   }
@@ -57,7 +61,7 @@ export class CharacterRepository {
       });
     } catch (e) {
       Logger.error(
-        `Ошибка во время поиска персонажа по id: ${characterId}. ${e}`,
+        `findId: Ошибка во время поиска персонажа по id: ${characterId}. ${e?.message}`,
       );
       return null;
     }
@@ -79,7 +83,7 @@ export class CharacterRepository {
       });
     } catch (e) {
       Logger.error(
-        `Ошибка во время обновления персонажа: ${characterId}, ${name}, ${fandomId}. ${e}`,
+        `update: Ошибка во время обновления персонажа: ${characterId}, ${name}, ${fandomId}. ${e?.message}`,
       );
       return null;
     }
@@ -91,7 +95,7 @@ export class CharacterRepository {
         where: { character_id: characterId },
       });
     } catch (e) {
-      Logger.error(`Ошибка во время удаления персонажа. ${e}`);
+      Logger.error(`delete: Ошибка во время удаления персонажа. ${e?.message}`);
       return null;
     }
   }
