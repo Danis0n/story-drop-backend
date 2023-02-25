@@ -18,6 +18,7 @@ import {
 
 // TODO : add logger
 // TODO : add exceptions to api-gateway
+// TODO : add findByParing
 @Injectable()
 export class CharacterService {
   @Inject(CharacterRepository)
