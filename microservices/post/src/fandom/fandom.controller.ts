@@ -13,7 +13,7 @@ import {
   UpdateFandomResponseDto,
 } from '../common';
 
-@Controller('fandom')
+@Controller()
 export class FandomController {
   @Inject(FandomService)
   private readonly service: FandomService;

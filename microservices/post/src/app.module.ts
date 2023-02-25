@@ -9,6 +9,7 @@ import { FandomModule } from './fandom/fandom.module';
 import { ParingModule } from './paring/paring.module';
 import { ReadModule } from './read/read.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { GenreModule } from './genre/genre.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PrismaModule } from './prisma/prisma.module';
     ParingModule,
     ReadModule,
     PrismaModule,
+    GenreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

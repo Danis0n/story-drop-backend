@@ -1,4 +1,4 @@
 import { Controller } from '@nestjs/common';
 
-@Controller('paring')
+@Controller()
 export class ParingController {}
