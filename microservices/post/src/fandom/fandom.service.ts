@@ -11,6 +11,10 @@ import {
   UpdateFandomRequestDto,
   UpdateFandomResponseDto,
 } from '../common';
+import {
+  GrpcAlreadyExistsException,
+  GrpcNotFoundException,
+} from 'nestjs-grpc-exceptions';
 
 @Injectable()
 export class FandomService {
@@ -23,25 +27,43 @@ export class FandomService {
   public async create({
     name,
   }: CreateFandomRequestDto): Promise<CreateFandomResponseDto> {
-    return { fandom: null, success: false };
+    const fandom = await this.repository.create(name);
+    if (!fandom)
+      throw new GrpcAlreadyExistsException(
+        'Фандом с таким именем уже сущесвтует!',
+      );
+
+    return { fandom: this.mapper.mapToFandomDto(fandom), success: true };
   }
 
   public async findId({
     fandomId,
   }: FindOneFandomByIdRequestDto): Promise<FindOneFandomByIdResponseDto> {
-    return { fandom: null, success: false };
+    const fandom = await this.repository.findId(fandomId);
+    if (!fandom)
+      throw new GrpcNotFoundException('Фандом с таким id не сущесвтует!');
+
+    return { fandom: this.mapper.mapToFandomDto(fandom), success: true };
   }
 
   public async update({
     fandomId,
     name,
   }: UpdateFandomRequestDto): Promise<UpdateFandomResponseDto> {
-    return { fandom: null, success: false };
+    const fandom = await this.repository.update(name, fandomId);
+    if (!fandom)
+      throw new GrpcNotFoundException('Фандом с таким id не сущесвтует!');
+
+    return { fandom: this.mapper.mapToFandomDto(fandom), success: true };
   }
 
   public async delete({
     fandomId,
   }: DeleteFandomRequestDto): Promise<DeleteFandomResponseDto> {
-    return { success: false };
+    const fandom = await this.repository.delete(fandomId);
+    if (!fandom)
+      throw new GrpcNotFoundException('Фандом с таким id не сущесвтует!');
+
+    return { success: true };
   }
 }
