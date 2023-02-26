@@ -4,14 +4,23 @@ import {
   FindOneCollectionByIdRequest,
   UpdateCollectionRequest,
 } from '../../../post/proto/post.pb';
+import { IsOptional } from 'class-validator';
 
 export class CreateCollectionRequestDto implements CreateCollectionRequest {
   name: string;
+  userId: string;
 }
 
 export class UpdateCollectionRequestDto implements UpdateCollectionRequest {
   collectionId: string;
+  @IsOptional()
   name: string;
+  @IsOptional()
+  isHidden: boolean;
+  @IsOptional()
+  postIdsDelete: string[];
+  @IsOptional()
+  postIdsInsert: string[];
 }
 
 export class DeleteCollectionRequestDto implements DeleteCollectionRequest {
