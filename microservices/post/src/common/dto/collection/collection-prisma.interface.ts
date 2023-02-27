@@ -4,3 +4,7 @@ export interface CollectionPrisma {
   user_id: string;
   is_hidden: boolean;
 }
+
+export interface CollectionPostPrisma {
+  post_id: string;
+}
