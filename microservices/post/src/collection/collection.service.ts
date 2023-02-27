@@ -28,10 +28,52 @@ export class CollectionService {
   @Inject(CollectionRepository)
   private readonly repository: CollectionRepository;
 
+  public async create({
+    name,
+    userId,
+    postIds,
+  }: CreateCollectionRequestDto): Promise<CreateCollectionResponseDto> {
+    const collection = await this.repository.create(
+      name,
+      userId,
+      this.mapper.mapToPrismaPostIds(postIds),
+    );
+    if (!collection)
+      throw new GrpcInternalException('Ошибка при создании коллекции!');
+
+    return {
+      collection: this.mapper.mapToCollectionDto(collection),
+      success: true,
+    };
+  }
+
   public async findId({
     collectionId,
   }: FindOneCollectionByIdRequestDto): Promise<FindOneCollectionByIdResponseDto> {
     const collection = await this.repository.findId(collectionId);
+    if (!collection)
+      throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
+
+    return {
+      collection: this.mapper.mapToCollectionDto(collection),
+      success: true,
+    };
+  }
+
+  public async update({
+    name,
+    collectionId,
+    postIdsInsert,
+    postIdsDelete,
+    isHidden,
+  }: UpdateCollectionRequestDto): Promise<UpdateCollectionResponseDto> {
+    const collection = await this.repository.update(
+      collectionId,
+      name,
+      isHidden,
+      this.mapper.mapToPrismaPostIds(postIdsInsert),
+      this.mapper.mapToPrismaPostIds(postIdsDelete),
+    );
     if (!collection)
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 
@@ -49,39 +91,5 @@ export class CollectionService {
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 
     return { success: true };
-  }
-
-  public async update({
-    name,
-    collectionId,
-  }: UpdateCollectionRequestDto): Promise<UpdateCollectionResponseDto> {
-    const collection = await this.repository.update(
-      collectionId,
-      name,
-      null,
-      null,
-      null,
-    );
-    if (!collection)
-      throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
-
-    return {
-      collection: this.mapper.mapToCollectionDto(collection),
-      success: true,
-    };
-  }
-
-  public async create({
-    name,
-    userId,
-  }: CreateCollectionRequestDto): Promise<CreateCollectionResponseDto> {
-    const collection = await this.repository.create(name, userId);
-    if (!collection)
-      throw new GrpcInternalException('Ошибка при создании коллекции!');
-
-    return {
-      collection: this.mapper.mapToCollectionDto(collection),
-      success: false,
-    };
   }
 }
