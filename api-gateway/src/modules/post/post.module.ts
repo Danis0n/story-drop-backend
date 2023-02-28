@@ -3,6 +3,7 @@ import { ClientsModule } from '@nestjs/microservices';
 import { PostServiceProto } from '../../common';
 import { AuthModule } from '../auth/auth.module';
 import {
+  ChapterController,
   CharacterController,
   CollectionController,
   FandomController,
@@ -23,6 +24,7 @@ import { UserModule } from '../user/user.module';
     TagController,
     ParingController,
     GenreController,
+    ChapterController,
   ],
 })
 export class PostModule {}

@@ -25,7 +25,7 @@ import {
 } from '../../../common';
 import { Observable } from 'rxjs';
 
-@Controller('post')
+@Controller('api/post')
 export class PostController implements OnModuleInit {
   private serviceClient: PostServiceClient;
 

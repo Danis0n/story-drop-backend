@@ -16,10 +16,6 @@ import {
   GrpcNotFoundException,
 } from 'nestjs-grpc-exceptions';
 
-// TODO: add create with posts
-// TODO: add add post to collection_post
-// TODO: add delete post from collection_post
-
 @Injectable()
 export class CollectionService {
   @Inject(CollectionMapper)

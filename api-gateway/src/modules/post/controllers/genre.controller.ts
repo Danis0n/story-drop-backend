@@ -25,7 +25,7 @@ import {
 } from '../../../common';
 import { Observable } from 'rxjs';
 
-@Controller('genre')
+@Controller('api/genre')
 export class GenreController implements OnModuleInit {
   private serviceClient: PostServiceClient;
 

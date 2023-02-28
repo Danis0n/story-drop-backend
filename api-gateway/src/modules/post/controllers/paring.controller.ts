@@ -25,7 +25,7 @@ import {
 } from '../../../common';
 import { Observable } from 'rxjs';
 
-@Controller('paring')
+@Controller('api/paring')
 export class ParingController implements OnModuleInit {
   private serviceClient: PostServiceClient;
 

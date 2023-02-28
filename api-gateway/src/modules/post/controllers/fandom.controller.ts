@@ -25,7 +25,7 @@ import {
 } from '../../../common';
 import { Observable } from 'rxjs';
 
-@Controller('fandom')
+@Controller('api/fandom')
 export class FandomController implements OnModuleInit {
   private serviceClient: PostServiceClient;
 

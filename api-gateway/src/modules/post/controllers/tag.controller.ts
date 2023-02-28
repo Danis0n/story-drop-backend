@@ -25,7 +25,7 @@ import {
 } from '../../../common';
 import { Observable } from 'rxjs';
 
-@Controller('tag')
+@Controller('api/tag')
 export class TagController implements OnModuleInit {
   private serviceClient: PostServiceClient;
 

@@ -17,9 +17,6 @@ import {
   GrpcNotFoundException,
 } from 'nestjs-grpc-exceptions';
 
-// TODO: add findByCharacter
-// TODO: add insertCharacter
-// TODO: add removeCharacter
 @Injectable()
 export class ParingService {
   @Inject(ParingRepository)
