@@ -36,7 +36,7 @@ export class CharacterService {
 
     if (isExist)
       throw new GrpcAlreadyExistsException(
-        'Персонаж с таким именем уже сущесвтует!',
+        'Персонаж с таким именем уже существует!',
       );
 
     const character = await this.repository.create(name, fandomId);

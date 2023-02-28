@@ -30,7 +30,7 @@ export class GenreService {
     const genre = await this.repository.create(name);
     if (!genre)
       throw new GrpcAlreadyExistsException(
-        'Жанр с таким именем уже сущесвтует!',
+        'Жанр с таким именем уже существует!',
       );
 
     return { genre: this.mapper.mapToGenreDto(genre), success: true };
@@ -41,7 +41,7 @@ export class GenreService {
   }: FindOneGenreByIdRequestDto): Promise<FindOneGenreByIdResponseDto> {
     const genre = await this.repository.findId(genreId);
     if (!genre)
-      throw new GrpcNotFoundException('Жанр с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
     return { genre: this.mapper.mapToGenreDto(genre), success: true };
   }
@@ -52,7 +52,7 @@ export class GenreService {
   }: UpdateGenreRequestDto): Promise<UpdateGenreResponseDto> {
     const genre = await this.repository.update(name, genreId);
     if (!genre)
-      throw new GrpcNotFoundException('Жанр с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
     return { genre: this.mapper.mapToGenreDto(genre), success: true };
   }
@@ -62,7 +62,7 @@ export class GenreService {
   }: DeleteGenreRequestDto): Promise<DeleteGenreResponseDto> {
     const genre = await this.repository.delete(genreId);
     if (!genre)
-      throw new GrpcNotFoundException('Жанр с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
     return { success: true };
   }

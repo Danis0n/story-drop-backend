@@ -31,7 +31,7 @@ export class FandomService {
     const fandom = await this.repository.create(name);
     if (!fandom)
       throw new GrpcAlreadyExistsException(
-        'Фандом с таким именем уже сущесвтует!',
+        'Фандом с таким именем уже существует!',
       );
 
     return { fandom: this.mapper.mapToFandomDto(fandom), success: true };
@@ -42,7 +42,7 @@ export class FandomService {
   }: FindOneFandomByIdRequestDto): Promise<FindOneFandomByIdResponseDto> {
     const fandom = await this.repository.findId(fandomId);
     if (!fandom)
-      throw new GrpcNotFoundException('Фандом с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Фандом с таким id не существует!');
 
     return { fandom: this.mapper.mapToFandomDto(fandom), success: true };
   }
@@ -53,7 +53,7 @@ export class FandomService {
   }: UpdateFandomRequestDto): Promise<UpdateFandomResponseDto> {
     const fandom = await this.repository.update(name, fandomId);
     if (!fandom)
-      throw new GrpcNotFoundException('Фандом с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Фандом с таким id не существует!');
 
     return { fandom: this.mapper.mapToFandomDto(fandom), success: true };
   }
@@ -63,7 +63,7 @@ export class FandomService {
   }: DeleteFandomRequestDto): Promise<DeleteFandomResponseDto> {
     const fandom = await this.repository.delete(fandomId);
     if (!fandom)
-      throw new GrpcNotFoundException('Фандом с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Фандом с таким id не существует!');
 
     return { success: true };
   }

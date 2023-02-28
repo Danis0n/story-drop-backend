@@ -53,7 +53,7 @@ export class ParingService {
   }: FindOneParingByIdRequestDto): Promise<FindOneParingByIdResponseDto> {
     const paring = await this.repository.findId(paringId);
     if (!paring)
-      throw new GrpcNotFoundException('Пейринг с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
     return { paring: this.mapper.mapToParingDto(paring), success: true };
   }
@@ -71,7 +71,7 @@ export class ParingService {
       this.mapper.mapToInsertCharacters(removeCharacterIds),
     );
     if (!paring)
-      throw new GrpcNotFoundException('Пейринг с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
     return { paring: this.mapper.mapToParingDto(paring), success: true };
   }
@@ -81,7 +81,7 @@ export class ParingService {
   }: DeleteParingRequestDto): Promise<DeleteParingResponseDto> {
     const paring = await this.repository.delete(paringId);
     if (!paring)
-      throw new GrpcNotFoundException('Пейринг с таким id не сущесвтует!');
+      throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
     return { success: true };
   }
