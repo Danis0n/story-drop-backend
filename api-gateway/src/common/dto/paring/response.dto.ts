@@ -3,7 +3,7 @@ import {
   UpdateParingResponse,
   DeleteParingResponse,
   FindOneParingByIdResponse,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 import { ParingDto } from './paring.dto';
 
 export class CreateParingResponseDto implements CreateParingResponse {

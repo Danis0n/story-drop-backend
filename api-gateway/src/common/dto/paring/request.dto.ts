@@ -3,7 +3,7 @@ import {
   DeleteParingRequest,
   FindOneParingByIdRequest,
   UpdateParingRequest,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 import { IsOptional } from 'class-validator';
 
 export class CreateParingRequestDto implements CreateParingRequest {

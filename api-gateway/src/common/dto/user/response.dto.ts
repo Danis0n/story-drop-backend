@@ -8,7 +8,7 @@ import {
   FindOneUsernameResponse,
   UpdateAvatarResponse,
   UpdateResponse,
-} from '../../../user/user.pb';
+} from '../../../modules/user/user.pb';
 import { UserDto } from './user.dto';
 import { ImageDto } from './user.dto';
 

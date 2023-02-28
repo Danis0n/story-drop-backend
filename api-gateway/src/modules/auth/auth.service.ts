@@ -9,7 +9,7 @@ import {
   LogoutRequestDto,
   LogoutResponseDto,
   ValidateResponseDto,
-} from '../common';
+} from '../../common';
 
 @Injectable()
 export class AuthService implements OnModuleInit {

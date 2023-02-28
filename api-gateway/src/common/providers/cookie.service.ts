@@ -1,4 +1,4 @@
-import { LoginResponse } from '../../auth/auth.pb';
+import { LoginResponse } from '../../modules/auth/auth.pb';
 import {
   COOKIE_DEVICE,
   COOKIE_LOGGED_IN,

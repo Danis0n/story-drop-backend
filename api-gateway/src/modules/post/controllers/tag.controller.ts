@@ -22,7 +22,7 @@ import {
   Roles,
   UpdateTagRequestDto,
   UpdateTagResponseDto,
-} from '../../common';
+} from '../../../common';
 import { Observable } from 'rxjs';
 
 @Controller('tag')

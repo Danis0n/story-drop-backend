@@ -3,7 +3,7 @@ import {
   UpdateChapterRequest,
   DeleteChapterRequest,
   FindOneChapterByIdRequest,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 
 export class CreateChapterRequestDto implements CreateChapterRequest {
   name: string;

@@ -3,7 +3,7 @@ import {
   DeleteUserRequest,
   UpdateBannedRequest,
   UpdateEnabledRequest,
-} from '../../../admin/admin.pb';
+} from '../../../modules/admin/admin.pb';
 
 export class DeleteUserAdminRequestDto implements DeleteUserRequest {
   uuid: string;

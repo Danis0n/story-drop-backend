@@ -1,4 +1,4 @@
-import { Age, Tag } from '../../../post/post.pb';
+import { Age, Tag } from '../../../modules/post/post.pb';
 
 export class AgeDto implements Age {
   ageId: string;

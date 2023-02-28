@@ -19,7 +19,7 @@ import {
   UpdateBannedAdminResponseDto,
   UpdateEnabledDto,
   UpdateEnabledAdminResponseDto,
-} from '../common';
+} from '../../common';
 import { Observable } from 'rxjs';
 
 @Controller('api/admin')

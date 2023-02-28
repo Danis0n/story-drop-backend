@@ -2,7 +2,7 @@ import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { USER_SERVICE_NAME, UserServiceClient } from './user.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { FindOneRolesResponseDto } from '../common';
+import { FindOneRolesResponseDto } from '../../common';
 
 @Injectable()
 export class UserService implements OnModuleInit {

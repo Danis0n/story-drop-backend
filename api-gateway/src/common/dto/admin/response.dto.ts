@@ -3,7 +3,7 @@ import {
   DeleteUserResponse,
   UpdateBannedResponse,
   UpdateEnabledResponse,
-} from '../../../admin/admin.pb';
+} from '../../../modules/admin/admin.pb';
 
 export class DeletePostAdminResponseDto implements DeletePostResponse {
   success: boolean;

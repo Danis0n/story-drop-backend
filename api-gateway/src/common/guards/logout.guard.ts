@@ -5,8 +5,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { AuthService } from '../../auth/auth.service';
-import { LogoutResponse } from '../../auth/auth.pb';
+import { AuthService } from '../../modules/auth/auth.service';
+import { LogoutResponse } from '../../modules/auth/auth.pb';
 
 import { cleanResponseData } from '../providers';
 import { COOKIE_DEVICE, COOKIE_SESSION } from '../constants';

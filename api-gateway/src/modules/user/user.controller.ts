@@ -22,7 +22,7 @@ import {
   UpdateAvatarDto,
   UpdateAvatarResponseDto,
   UpdateDto,
-} from '../common';
+} from '../../common';
 
 // TODO: make search by nicknames
 

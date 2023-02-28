@@ -5,7 +5,7 @@ import {
   RegisterResponse,
   ValidateRequest,
   ValidateResponse,
-} from '../../../auth/auth.pb';
+} from '../../../modules/auth/auth.pb';
 import { UserDto } from '../user';
 
 export class LogoutRequestDto implements LogoutRequest {

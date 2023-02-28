@@ -3,7 +3,7 @@ import {
   DeleteCharacterRequest,
   FindOneCharacterByIdRequest,
   UpdateCharacterRequest,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 import { IsOptional } from 'class-validator';
 
 export class CreateCharacterRequestDto implements CreateCharacterRequest {

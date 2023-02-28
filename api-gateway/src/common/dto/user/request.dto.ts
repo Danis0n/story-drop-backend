@@ -7,7 +7,7 @@ import {
   FindOneUsernameRequest,
   UpdateAvatarRequest,
   UpdateRequest,
-} from '../../../user/user.pb';
+} from '../../../modules/user/user.pb';
 import { CreateImageDto } from './user.dto';
 
 export class FindAnyByRequestDto implements FindAnyByRequest {

@@ -22,7 +22,7 @@ import {
   Roles,
   UpdateGenreRequestDto,
   UpdateGenreResponseDto,
-} from '../../common';
+} from '../../../common';
 import { Observable } from 'rxjs';
 
 @Controller('genre')

@@ -4,7 +4,7 @@ import {
   LogoutResponse,
   RegisterRequest,
   User,
-} from '../../../auth/auth.pb';
+} from '../../../modules/auth/auth.pb';
 import { IsOptional } from 'class-validator';
 
 export class LoginResponseDto implements LoginResponse {

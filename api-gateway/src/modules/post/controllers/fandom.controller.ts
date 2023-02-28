@@ -22,7 +22,7 @@ import {
   Roles,
   UpdateFandomRequestDto,
   UpdateFandomResponseDto,
-} from '../../common';
+} from '../../../common';
 import { Observable } from 'rxjs';
 
 @Controller('fandom')

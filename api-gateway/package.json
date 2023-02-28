@@ -20,10 +20,10 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/Danis0n/story-drop-proto.git",
-    "proto:user": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/user node_modules/story-drop-proto/proto/user.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/auth node_modules/story-drop-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:admin": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/admin node_modules/story-drop-proto/proto/admin.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
-    "proto:post": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/post node_modules/story-drop-proto/proto/post.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:user": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/modules/user node_modules/story-drop-proto/proto/user.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:auth": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/modules/auth node_modules/story-drop-proto/proto/auth.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:admin": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/modules/admin node_modules/story-drop-proto/proto/admin.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
+    "proto:post": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/modules/post node_modules/story-drop-proto/proto/post.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb",
     "proto:all": "npm run proto:user && npm run proto:auth && npm run proto:admin && npm run proto:post"
   },
   "dependencies": {

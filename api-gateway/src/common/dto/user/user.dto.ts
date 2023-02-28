@@ -5,7 +5,7 @@ import {
   UserInfo,
   User,
   CreateUserRequest,
-} from '../../../user/user.pb';
+} from '../../../modules/user/user.pb';
 
 export class CreateImageDto implements CreateImage {
   buffer: Uint8Array;

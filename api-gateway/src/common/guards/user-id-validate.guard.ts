@@ -5,7 +5,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../modules/auth/auth.service';
 import { FindOneUserIdBySessionResponseDto } from '../dto';
 import { COOKIE_MAX_AGE, COOKIE_SESSION, COOKIE_UID } from '../constants';
 import { setCookieValidationFail } from '../providers';

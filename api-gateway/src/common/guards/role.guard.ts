@@ -5,11 +5,11 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../modules/auth/auth.service';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators';
 
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../modules/user/user.service';
 import {
   FindOneRolesResponseDto,
   FindOneUserIdBySessionResponseDto,

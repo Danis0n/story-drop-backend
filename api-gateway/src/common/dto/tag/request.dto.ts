@@ -3,7 +3,7 @@ import {
   DeleteTagRequest,
   FindOneTagByIdRequest,
   UpdateTagRequest,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 
 export class CreateTagRequestDto implements CreateTagRequest {
   name: string;

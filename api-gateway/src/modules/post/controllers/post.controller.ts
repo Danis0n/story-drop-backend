@@ -22,7 +22,7 @@ import {
   UpdatePostResponseDto,
   UserId,
   UserIdValidateGuard,
-} from '../../common';
+} from '../../../common';
 import { Observable } from 'rxjs';
 
 @Controller('post')

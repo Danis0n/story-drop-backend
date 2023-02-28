@@ -18,7 +18,7 @@ import {
   User,
   UserId,
   UserIdValidateGuard,
-} from '../common';
+} from '../../common';
 import { AUTH_SERVICE_NAME, AuthServiceClient } from './auth.pb';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';

@@ -3,7 +3,7 @@ import {
   UpdatePostRequest,
   DeletePostRequest,
   FindOnePostIdRequest,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 
 export class CreatePostRequestDto implements CreatePostRequest {
   characterIds: string;

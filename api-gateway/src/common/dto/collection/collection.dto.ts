@@ -1,4 +1,4 @@
-import { Collection } from '../../../post/post.pb';
+import { Collection } from '../../../modules/post/post.pb';
 
 export class CollectionDto implements Collection {
   collectionId: string;

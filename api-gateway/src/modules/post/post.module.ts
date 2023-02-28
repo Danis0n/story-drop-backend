@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
-import { PostServiceProto } from '../common';
+import { PostServiceProto } from '../../common';
 import { AuthModule } from '../auth/auth.module';
 import {
   CharacterController,

@@ -3,7 +3,7 @@ import {
   UpdateTagResponse,
   DeleteTagResponse,
   FindOneTagByIdResponse,
-} from '../../../post/post.pb';
+} from '../../../modules/post/post.pb';
 import { TagDto } from './tag.dto';
 
 export class CreateTagResponseDto implements CreateTagResponse {

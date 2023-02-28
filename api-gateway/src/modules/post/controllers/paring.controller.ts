@@ -22,7 +22,7 @@ import {
   Roles,
   UpdateParingRequestDto,
   UpdateParingResponseDto,
-} from '../../common';
+} from '../../../common';
 import { Observable } from 'rxjs';
 
 @Controller('paring')
