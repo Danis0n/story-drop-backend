@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { GenreService } from './genre.service';
 import { GenreController } from './genre.controller';
-import { GenreMapper } from '../common';
-import { GenreRepository } from '../common/repository/genre';
+import { GenreMapper, GenreRepository } from '../common';
 
 @Module({
   providers: [GenreService, GenreMapper, GenreRepository],

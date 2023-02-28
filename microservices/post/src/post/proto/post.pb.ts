@@ -215,6 +215,8 @@ export interface FindOneCollectionByIdResponse {
 
 export interface CreateCollectionRequest {
   name: string;
+  userId: string;
+  postIds: string[];
 }
 
 export interface CreateCollectionResponse {
@@ -225,6 +227,9 @@ export interface CreateCollectionResponse {
 export interface UpdateCollectionRequest {
   collectionId: string;
   name: string;
+  postIdsInsert: string[];
+  postIdsDelete: string[];
+  isHidden: boolean;
 }
 
 export interface UpdateCollectionResponse {
@@ -289,6 +294,7 @@ export interface FindOneParingByIdResponse {
 
 export interface CreateParingRequest {
   name: string;
+  characterIds: string[];
 }
 
 export interface CreateParingResponse {
@@ -299,6 +305,8 @@ export interface CreateParingResponse {
 export interface UpdateParingRequest {
   paringId: string;
   name: string;
+  insertCharacterIds: string[];
+  removeCharacterIds: string[];
 }
 
 export interface UpdateParingResponse {

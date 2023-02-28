@@ -1,7 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { CharacterPrisma } from '../../dto';
-import { CollectionPrisma } from '../../dto/collection/collection-prisma.interface';
+import {
+  CollectionPrisma,
+  InsertPost,
+} from '../../dto/collection/collection-prisma.interface';
 import { randomUUID } from 'crypto';
 
 @Injectable()
@@ -9,28 +12,10 @@ export class CollectionRepository {
   @Inject(PrismaService)
   private readonly prisma: PrismaService;
 
-  public async create(name: string, userId: string): Promise<CollectionPrisma> {
-    try {
-      return await this.prisma.collection.create({
-        data: {
-          collection_name: name,
-          collection_id: randomUUID(),
-          user_id: userId,
-          is_hidden: false,
-        },
-      });
-    } catch (e) {
-      Logger.error(
-        `create: Ошибка во время создания коллекции: ${name}, ${userId}. ${e?.message}`,
-      );
-      return null;
-    }
-  }
-
-  public async createWithPosts(
+  public async create(
     name: string,
     userId: string,
-    postIds: { post_id: string }[],
+    postIds: InsertPost[],
   ): Promise<CollectionPrisma> {
     try {
       return await this.prisma.collection.create({
@@ -40,15 +25,15 @@ export class CollectionRepository {
           user_id: userId,
           is_hidden: false,
           collection_post: {
-            create: postIds,
+            create: postIds || undefined,
           },
         },
       });
     } catch (e) {
       Logger.error(
-        `createWithPosts: Ошибка во время создания коллекции: ${name}, ${userId}, ${JSON.stringify(
-          postIds,
-        )}. ${e?.message}`,
+        `create: Ошибка во время создания коллекции: ${name}, ${userId}, ${
+          postIds ? JSON.stringify(postIds) : null
+        }. ${e?.message}`,
       );
       return null;
     }
@@ -84,8 +69,8 @@ export class CollectionRepository {
     name: string,
     collectionId: string,
     isHidden: boolean,
-    postIdsInsert: { post_id: string }[],
-    postIdsDelete: { post_id: string }[],
+    postIdsInsert: InsertPost[],
+    postIdsDelete: InsertPost[],
   ) {
     try {
       return await this.prisma.collection.update({
@@ -107,24 +92,6 @@ export class CollectionRepository {
       );
       return null;
     }
-  }
-
-  public async deleteRelatedPost(collectionId: string, postId: string) {
-    try {
-      return await this.prisma.collection.update({
-        where: { collection_id: collectionId },
-        data: {
-          collection_post: {
-            disconnect: {
-              collection_id_post_id: {
-                collection_id: collectionId,
-                post_id: postId,
-              },
-            },
-          },
-        },
-      });
-    } catch (e) {}
   }
 
   public async delete(collectionId: string): Promise<CharacterPrisma> {

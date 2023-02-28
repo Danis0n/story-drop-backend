@@ -7,11 +7,14 @@ import {
 
 export class CreateParingRequestDto implements CreateParingRequest {
   name: string;
+  characterIds: string[];
 }
 
 export class UpdateParingRequestDto implements UpdateParingRequest {
   name: string;
   paringId: string;
+  insertCharacterIds: string[];
+  removeCharacterIds: string[];
 }
 
 export class DeleteParingRequestDto implements DeleteParingRequest {

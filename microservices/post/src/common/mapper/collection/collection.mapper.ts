@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
-  CollectionPostPrisma,
   CollectionPrisma,
+  InsertPost,
 } from '../../dto/collection/collection-prisma.interface';
 import { CollectionDto } from '../../dto';
 
@@ -11,11 +11,11 @@ export class CollectionMapper {
     return null;
   }
 
-  private mapToPrismaPostId(postId: string): CollectionPostPrisma {
+  private mapToPrismaPostId(postId: string): InsertPost {
     return { post_id: postId };
   }
 
-  public mapToPrismaPostIds(postIds: string[]): CollectionPostPrisma[] {
+  public mapToPrismaPostIds(postIds: string[]): InsertPost[] {
     return postIds.map((postId) => {
       return this.mapToPrismaPostId(postId);
     });

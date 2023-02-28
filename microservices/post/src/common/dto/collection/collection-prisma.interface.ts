@@ -5,6 +5,6 @@ export interface CollectionPrisma {
   is_hidden: boolean;
 }
 
-export interface CollectionPostPrisma {
+export interface InsertPost {
   post_id: string;
 }

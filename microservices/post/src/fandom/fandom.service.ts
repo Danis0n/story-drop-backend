@@ -16,6 +16,7 @@ import {
   GrpcNotFoundException,
 } from 'nestjs-grpc-exceptions';
 
+// TODO: add findByCharacter
 @Injectable()
 export class FandomService {
   @Inject(FandomMapper)
