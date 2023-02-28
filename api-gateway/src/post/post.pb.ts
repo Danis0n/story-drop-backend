@@ -179,6 +179,7 @@ export interface FindOneTagByIdResponse {
 
 export interface CreateTagRequest {
   name: string;
+  ageId: string;
 }
 
 export interface CreateTagResponse {

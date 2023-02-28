@@ -1,12 +1,13 @@
 import {
   CreateTagRequest,
-  UpdateTagRequest,
   DeleteTagRequest,
   FindOneTagByIdRequest,
+  UpdateTagRequest,
 } from '../../../post/post.pb';
 
 export class CreateTagRequestDto implements CreateTagRequest {
   name: string;
+  ageId: string;
 }
 
 export class UpdateTagRequestDto implements UpdateTagRequest {
