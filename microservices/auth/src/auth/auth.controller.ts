@@ -3,21 +3,21 @@ import { GrpcMethod } from '@nestjs/microservices';
 import { AUTH_SERVICE_NAME } from './proto/auth.pb';
 import { AuthService } from './auth.service';
 import {
+  FIND_ONE_USER_ID_BY_SESSION_METHOD,
+  FindOneUserIdBySessionRequestDto,
+  FindOneUserIdBySessionResponseDto,
   LOGIN_METHOD,
-  VALIDATE_METHOD,
   LoginRequestDto,
   LoginResponseDto,
+  LOGOUT_METHOD,
+  LogoutRequestDto,
+  LogoutResponseDto,
+  REGISTER_METHOD,
+  RegisterRequestDto,
+  RegisterResponseDto,
+  VALIDATE_METHOD,
   ValidateRequestDto,
   ValidateResponseDto,
-  LOGOUT_METHOD,
-  LogoutResponseDto,
-  FIND_ONE_USER_ID_BY_SESSION_METHOD,
-  FindOneUserIdBySessionResponseDto,
-  FindOneUserIdBySessionRequestDto,
-  REGISTER_METHOD,
-  RegisterResponseDto,
-  RegisterRequestDto,
-  LogoutRequestDto,
 } from '../common';
 
 @Controller()

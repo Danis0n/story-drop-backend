@@ -7,6 +7,7 @@ import {
 
 export class CreateTagRequestDto implements CreateTagRequest {
   name: string;
+  ageId: string;
 }
 
 export class UpdateTagRequestDto implements UpdateTagRequest {

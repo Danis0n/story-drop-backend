@@ -1,9 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import {
-  InsertCharacter,
-  ParingPrisma,
-} from '../../dto/paring/paring-prisma.interface';
+import { InsertCharacter, ParingPrisma } from '../../dto';
 import { randomUUID } from 'crypto';
 
 @Injectable()

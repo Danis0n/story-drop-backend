@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  InsertCharacter,
-  ParingPrisma,
-} from '../../dto/paring/paring-prisma.interface';
-import { ParingDto } from '../../dto';
+import { InsertCharacter, ParingDto, ParingPrisma } from '../../dto';
 
 @Injectable()
 export class ParingMapper {
@@ -18,6 +14,6 @@ export class ParingMapper {
   }
 
   private mapToInsertCharacter(characterId: string): InsertCharacter {
-    return { character_id: characterId };
+    return { age_id: characterId };
   }
 }

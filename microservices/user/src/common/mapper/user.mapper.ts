@@ -1,7 +1,7 @@
 import { sd_user_info as UserInfoEntity } from '@prisma/client';
 import { UserDto, UserInfoDto } from '../dto';
 import { Builder } from 'builder-pattern';
-import { roleWithRelationData, UserWithRelationData } from '../validation';
+import { RoleWithRelationData, UserWithRelationData } from '../validation';
 
 export class UserMapper {
   public mapToUserDto(user: UserWithRelationData): UserDto {
@@ -18,7 +18,7 @@ export class UserMapper {
       .build();
   }
 
-  private mapRoleToString(userRoles: roleWithRelationData[]): string[] {
+  private mapRoleToString(userRoles: RoleWithRelationData[]): string[] {
     return userRoles.map((role) => {
       return role.role.role_name;
     });

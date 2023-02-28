@@ -1,35 +1,34 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
-  DeleteRequestDto,
-  FindAvatarByUserRequestDto,
-  UpdateAvatarRequestDto,
-  UpdateRequestDto,
-  UserMapper,
   CreateUserRequestDto,
+  DeleteRequestDto,
+  DeleteResponseDto,
   FindAllResponseDto,
   FindAnyByRequestDto,
   FindAnyByResponseDto,
+  FindAvatarByUserRequestDto,
+  FindAvatarResponseDto,
   FindOneIdRequestDto,
   FindOneResponseDto,
-  UserRepository,
-  UserWithRelationData,
-  UpdateAvatarResponseDto,
-  FindAvatarResponseDto,
-  DeleteResponseDto,
-  UpdateResponseDto,
   FindOneRolesResponseDto,
-  UserWithRoleRelationData,
   FindOneUsernameRequestDto,
   FindOneUsernameResponseDto,
-  UpdateBannedRequestDto,
-  UpdateEnabledRequestDto,
-  UpdateBannedResponseDto,
-  UpdateEnabledResponseDto,
-  ImageMapper,
-  UpdatePasswordRequestDto,
   FindPasswordIdRequestDto,
-  UpdatePasswordResponseDto,
   FindPasswordIdResponseDto,
+  ImageMapper,
+  UpdateAvatarRequestDto,
+  UpdateAvatarResponseDto,
+  UpdateBannedRequestDto,
+  UpdateBannedResponseDto,
+  UpdateEnabledRequestDto,
+  UpdateEnabledResponseDto,
+  UpdatePasswordRequestDto,
+  UpdatePasswordResponseDto,
+  UpdateRequestDto,
+  UpdateResponseDto,
+  UserMapper,
+  UserRepository,
+  UserWithRelationData,
 } from '../common';
 
 @Injectable()
@@ -77,9 +76,7 @@ export class UserService {
   public async findOneId({
     uuid,
   }: FindOneIdRequestDto): Promise<FindOneResponseDto> {
-    const user: UserWithRelationData = await this.userRepository.findOneId(
-      uuid,
-    );
+    const user = await this.userRepository.findOneId(uuid);
 
     return { user: this.userMapper.mapToUserDto(user) };
   }
@@ -87,8 +84,7 @@ export class UserService {
   public async findOneRoles({
     uuid,
   }: FindOneIdRequestDto): Promise<FindOneRolesResponseDto> {
-    const user: UserWithRoleRelationData =
-      await this.userRepository.findRolesId(uuid);
+    const user = await this.userRepository.findRolesId(uuid);
 
     const roles: string[] = user.sd_role_user.map((role) => {
       return role.role.role_name;
@@ -110,8 +106,7 @@ export class UserService {
   public async findOneUsername({
     username,
   }: FindOneUsernameRequestDto): Promise<FindOneUsernameResponseDto> {
-    const user: UserWithRelationData =
-      await this.userRepository.findOneUsername(username);
+    const user = await this.userRepository.findOneUsername(username);
     if (!user) return { hashedPassword: null, isFound: false, user: null };
 
     return {
