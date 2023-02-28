@@ -1,17 +1,24 @@
 import {
   CreateParingRequest,
-  UpdateParingRequest,
   DeleteParingRequest,
   FindOneParingByIdRequest,
+  UpdateParingRequest,
 } from '../../../post/post.pb';
+import { IsOptional } from 'class-validator';
 
 export class CreateParingRequestDto implements CreateParingRequest {
   name: string;
+  characterIds: string[];
 }
 
 export class UpdateParingRequestDto implements UpdateParingRequest {
-  name: string;
   paringId: string;
+  @IsOptional()
+  name: string;
+  @IsOptional()
+  insertCharacterIds: string[];
+  @IsOptional()
+  removeCharacterIds: string[];
 }
 
 export class DeleteParingRequestDto implements DeleteParingRequest {

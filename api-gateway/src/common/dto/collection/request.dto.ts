@@ -9,6 +9,8 @@ import { IsOptional } from 'class-validator';
 export class CreateCollectionRequestDto implements CreateCollectionRequest {
   name: string;
   userId: string;
+  @IsOptional()
+  postIds: string[];
 }
 
 export class UpdateCollectionRequestDto implements UpdateCollectionRequest {
