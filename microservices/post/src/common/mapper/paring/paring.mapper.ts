@@ -11,13 +11,13 @@ export class ParingMapper {
     return { name: paring_name, paringId: paring_id };
   }
 
-  public mapToPrismaCharacterIds(characterIds: string[]): InsertCharacter[] {
+  public mapToInsertCharacters(characterIds: string[]): InsertCharacter[] {
     return characterIds.map((id) => {
-      return this.mapToPrismaCharacterId(id);
+      return this.mapToInsertCharacter(id);
     });
   }
 
-  private mapToPrismaCharacterId(characterId: string): InsertCharacter {
+  private mapToInsertCharacter(characterId: string): InsertCharacter {
     return { character_id: characterId };
   }
 }
