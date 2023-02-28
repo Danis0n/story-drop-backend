@@ -10,7 +10,7 @@ import {
   FindOneFandomByIdResponseDto,
   UpdateFandomRequestDto,
   UpdateFandomResponseDto,
-} from '../common';
+} from '../../common';
 import {
   GrpcAlreadyExistsException,
   GrpcNotFoundException,

@@ -11,7 +11,7 @@ import {
   FindOneFandomByIdResponseDto,
   UpdateFandomRequestDto,
   UpdateFandomResponseDto,
-} from '../common';
+} from '../../common';
 
 @Controller()
 export class FandomController {

@@ -3,7 +3,7 @@ import {
   DeleteParingRequest,
   FindOneParingByIdRequest,
   UpdateParingRequest,
-} from '../../../post/proto/post.pb';
+} from '../../../modules/post/proto/post.pb';
 
 export class CreateParingRequestDto implements CreateParingRequest {
   name: string;

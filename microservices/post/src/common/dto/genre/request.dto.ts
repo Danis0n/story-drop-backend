@@ -3,7 +3,7 @@ import {
   DeleteGenreRequest,
   FindOneGenreByIdRequest,
   UpdateGenreRequest,
-} from '../../../post/proto/post.pb';
+} from '../../../modules/post/proto/post.pb';
 
 export class CreateGenreRequestDto implements CreateGenreRequest {
   name: string;

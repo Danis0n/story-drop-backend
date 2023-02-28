@@ -10,7 +10,7 @@ import {
   TagRepository,
   UpdateTagRequestDto,
   UpdateTagResponseDto,
-} from '../common';
+} from '../../common';
 import {
   GrpcInvalidArgumentException,
   GrpcNotFoundException,

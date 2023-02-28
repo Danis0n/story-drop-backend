@@ -10,7 +10,7 @@ import {
   ParingRepository,
   UpdateParingRequestDto,
   UpdateParingResponseDto,
-} from '../common';
+} from '../../common';
 import {
   GrpcInternalException,
   GrpcInvalidArgumentException,

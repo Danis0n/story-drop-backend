@@ -1,4 +1,4 @@
-import { Chapter } from '../../../post/proto/post.pb';
+import { Chapter } from '../../../modules/post/proto/post.pb';
 
 export class ChapterDto implements Chapter {
   chapterId: string;

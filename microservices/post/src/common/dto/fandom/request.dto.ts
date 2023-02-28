@@ -3,7 +3,7 @@ import {
   DeleteFandomRequest,
   FindOneFandomByIdRequest,
   UpdateFandomRequest,
-} from '../../../post/proto/post.pb';
+} from '../../../modules/post/proto/post.pb';
 
 export class CreateFandomRequestDto implements CreateFandomRequest {
   name: string;

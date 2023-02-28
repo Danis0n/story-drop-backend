@@ -10,7 +10,7 @@ import {
   FindOneCharacterByIdResponseDto,
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
-} from '../common';
+} from '../../common';
 import {
   GrpcAlreadyExistsException,
   GrpcNotFoundException,

@@ -1,4 +1,4 @@
-import { Character } from '../../../post/proto/post.pb';
+import { Character } from '../../../modules/post/proto/post.pb';
 
 export class CharacterDto implements Character {
   characterId: string;

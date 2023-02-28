@@ -11,7 +11,7 @@ import {
   FindOneCollectionByIdResponseDto,
   UpdateCollectionRequestDto,
   UpdateCollectionResponseDto,
-} from '../common';
+} from '../../common';
 
 @Controller('collection')
 export class CollectionController {

@@ -10,7 +10,7 @@ import {
   FindOneTagByIdResponseDto,
   UpdateTagRequestDto,
   UpdateTagResponseDto,
-} from '../common';
+} from '../../common';
 import { TagService } from './tag.service';
 
 @Controller('tag')

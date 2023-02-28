@@ -10,7 +10,7 @@ import {
   FindOneGenreByIdResponseDto,
   UpdateGenreRequestDto,
   UpdateGenreResponseDto,
-} from '../common';
+} from '../../common';
 import { GenreService } from './genre.service';
 
 @Controller()

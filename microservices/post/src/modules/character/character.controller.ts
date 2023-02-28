@@ -11,7 +11,7 @@ import {
   FindOneCharacterByIdResponseDto,
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
-} from '../common';
+} from '../../common';
 
 @Controller('character')
 export class CharacterController {

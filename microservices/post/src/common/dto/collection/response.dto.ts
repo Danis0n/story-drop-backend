@@ -3,7 +3,7 @@ import {
   DeleteCollectionResponse,
   FindOneCollectionByIdResponse,
   UpdateCollectionResponse,
-} from '../../../post/proto/post.pb';
+} from '../../../modules/post/proto/post.pb';
 import { CollectionDto } from './collection.dto';
 
 export class CreateCollectionResponseDto implements CreateCollectionResponse {

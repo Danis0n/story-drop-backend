@@ -10,7 +10,7 @@ import {
   FindOneCollectionByIdResponseDto,
   UpdateCollectionRequestDto,
   UpdateCollectionResponseDto,
-} from '../common';
+} from '../../common';
 import {
   GrpcInternalException,
   GrpcNotFoundException,

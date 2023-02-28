@@ -10,7 +10,7 @@ import {
   GenreRepository,
   UpdateGenreRequestDto,
   UpdateGenreResponseDto,
-} from '../common';
+} from '../../common';
 import {
   GrpcAlreadyExistsException,
   GrpcNotFoundException,

@@ -3,7 +3,7 @@ import {
   DeleteFandomResponse,
   FindOneFandomByIdResponse,
   UpdateFandomResponse,
-} from '../../../post/proto/post.pb';
+} from '../../../modules/post/proto/post.pb';
 import { FandomDto } from './fandom.dto';
 
 export class CreateFandomResponseDto implements CreateFandomResponse {

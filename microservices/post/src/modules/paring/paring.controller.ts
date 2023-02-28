@@ -11,7 +11,7 @@ import {
   FindOneParingByIdResponseDto,
   UpdateParingRequestDto,
   UpdateParingResponseDto,
-} from '../common';
+} from '../../common';
 
 @Controller()
 export class ParingController {
