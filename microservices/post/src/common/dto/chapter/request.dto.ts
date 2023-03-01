@@ -18,6 +18,7 @@ export class UpdateChapterRequestDto implements UpdateChapterRequest {
   notes: string;
   text: string;
   userId: string;
+  name: string;
 }
 
 export class DeleteChapterRequestDto implements DeleteChapterRequest {
