@@ -53,6 +53,8 @@ CREATE TABLE chapter
 (
     chapter_id UUID NOT NULL PRIMARY KEY,
     post_id UUID NOT NULL REFERENCES post(post_id) ON DELETE CASCADE,
+    chapter_name VARCHAR(100) NOT NULL,
+    is_hidden BOOLEAN NOT NULL DEFAULT TRUE,
     notes TEXT,
     text TEXT NOT NULL,
     number INT NOT NULL,
