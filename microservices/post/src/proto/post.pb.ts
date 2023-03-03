@@ -69,6 +69,7 @@ export interface CreateChapterRequest {
   name: string;
   notes: string;
   text: string;
+  isHidden: boolean;
 }
 
 export interface CreateChapterResponse {
@@ -81,6 +82,8 @@ export interface UpdateChapterRequest {
   userId: string;
   notes: string;
   text: string;
+  name: string;
+  isHidden: boolean;
 }
 
 export interface UpdateChapterResponse {
@@ -417,6 +420,8 @@ export interface PostServiceClient {
 
   deleteChapter(request: DeleteChapterRequest): Observable<DeleteChapterResponse>;
 
+  /** TODO: add findByCharacter */
+
   findOneFandomById(request: FindOneFandomByIdRequest): Observable<FindOneFandomByIdResponse>;
 
   createFandom(request: CreateFandomRequest): Observable<CreateFandomResponse>;
@@ -441,6 +446,12 @@ export interface PostServiceClient {
 
   deleteTag(request: DeleteTagRequest): Observable<DeleteTagResponse>;
 
+  /**
+   * TODO: add create with posts
+   * TODO: add add post to collection_post
+   * TODO: add delete post from collection_post
+   */
+
   findOneCollectionById(request: FindOneCollectionByIdRequest): Observable<FindOneCollectionByIdResponse>;
 
   createCollection(request: CreateCollectionRequest): Observable<CreateCollectionResponse>;
@@ -449,6 +460,11 @@ export interface PostServiceClient {
 
   deleteCollection(request: DeleteCollectionRequest): Observable<DeleteCollectionResponse>;
 
+  /**
+   * TODO : add findByParing
+   * TODO : add findByFandom
+   */
+
   findOneCharacterById(request: FindOneCharacterByIdRequest): Observable<FindOneCharacterByIdResponse>;
 
   createCharacter(request: CreateCharacterRequest): Observable<CreateCharacterResponse>;
@@ -456,6 +472,12 @@ export interface PostServiceClient {
   updateCharacter(request: UpdateCharacterRequest): Observable<UpdateCharacterResponse>;
 
   deleteCharacter(request: DeleteCharacterRequest): Observable<DeleteCharacterResponse>;
+
+  /**
+   * TODO: add findByCharacter
+   * TODO: add insertCharacter
+   * TODO: add removeCharacter
+   */
 
   findOneParingById(request: FindOneParingByIdRequest): Observable<FindOneParingByIdResponse>;
 
@@ -499,6 +521,8 @@ export interface PostServiceController {
     request: DeleteChapterRequest,
   ): Promise<DeleteChapterResponse> | Observable<DeleteChapterResponse> | DeleteChapterResponse;
 
+  /** TODO: add findByCharacter */
+
   findOneFandomById(
     request: FindOneFandomByIdRequest,
   ): Promise<FindOneFandomByIdResponse> | Observable<FindOneFandomByIdResponse> | FindOneFandomByIdResponse;
@@ -541,6 +565,12 @@ export interface PostServiceController {
 
   deleteTag(request: DeleteTagRequest): Promise<DeleteTagResponse> | Observable<DeleteTagResponse> | DeleteTagResponse;
 
+  /**
+   * TODO: add create with posts
+   * TODO: add add post to collection_post
+   * TODO: add delete post from collection_post
+   */
+
   findOneCollectionById(
     request: FindOneCollectionByIdRequest,
   ): Promise<FindOneCollectionByIdResponse> | Observable<FindOneCollectionByIdResponse> | FindOneCollectionByIdResponse;
@@ -557,6 +587,11 @@ export interface PostServiceController {
     request: DeleteCollectionRequest,
   ): Promise<DeleteCollectionResponse> | Observable<DeleteCollectionResponse> | DeleteCollectionResponse;
 
+  /**
+   * TODO : add findByParing
+   * TODO : add findByFandom
+   */
+
   findOneCharacterById(
     request: FindOneCharacterByIdRequest,
   ): Promise<FindOneCharacterByIdResponse> | Observable<FindOneCharacterByIdResponse> | FindOneCharacterByIdResponse;
@@ -572,6 +607,12 @@ export interface PostServiceController {
   deleteCharacter(
     request: DeleteCharacterRequest,
   ): Promise<DeleteCharacterResponse> | Observable<DeleteCharacterResponse> | DeleteCharacterResponse;
+
+  /**
+   * TODO: add findByCharacter
+   * TODO: add insertCharacter
+   * TODO: add removeCharacter
+   */
 
   findOneParingById(
     request: FindOneParingByIdRequest,
