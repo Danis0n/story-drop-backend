@@ -1,9 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { GenrePrisma } from '../../dto/genre/genre-prisma.interface';
+import { GenreDto, GenrePrisma } from '../../dto';
 
 @Injectable()
 export class GenreMapper {
-  public mapToGenreDto(genre: GenrePrisma) {
+  public mapToDto(genre: GenrePrisma): GenreDto {
     return null;
+  }
+
+  public mapToGenrePrismas(genreIds: string[]): { genre_id: string }[] {
+    return genreIds.map((id) => {
+      return { genre_id: id };
+    });
   }
 }

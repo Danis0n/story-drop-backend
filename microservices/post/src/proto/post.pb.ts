@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "post";
 
-export interface FindOnePostIdRequest {
+export interface FindOnePostByIdRequest {
   uuid: string;
 }
 
@@ -16,11 +16,11 @@ export interface FindOnePostResponse {
 export interface CreatePostRequest {
   userId: string;
   name: string;
-  genreIds: string;
-  tagIds: string;
-  characterIds: string;
-  fandomIds: string;
-  paringIds: string;
+  genreIds: string[];
+  tagIds: string[];
+  characterIds: string[];
+  fandomIds: string[];
+  paringIds: string[];
   description: string;
   dedication: string;
 }
@@ -404,13 +404,21 @@ export interface Genre {
 export const POST_PACKAGE_NAME = "post";
 
 export interface PostServiceClient {
-  findOnePostById(request: FindOnePostIdRequest): Observable<FindOnePostResponse>;
+  /**
+   * TODO: check if beta has access to the post
+   * TODO: check if user owns the post
+   * TODO: check if user has access to the chapter
+   */
+
+  findOnePostById(request: FindOnePostByIdRequest): Observable<FindOnePostResponse>;
 
   createPost(request: CreatePostRequest): Observable<CreatePostResponse>;
 
   updatePost(request: UpdatePostRequest): Observable<UpdatePostResponse>;
 
   deletePost(request: DeletePostRequest): Observable<DeletePostResponse>;
+
+  /** TODO: add updateBeta */
 
   findOneChapterById(request: FindOneChapterByIdRequest): Observable<FindOneChapterByIdResponse>;
 
@@ -489,8 +497,14 @@ export interface PostServiceClient {
 }
 
 export interface PostServiceController {
+  /**
+   * TODO: check if beta has access to the post
+   * TODO: check if user owns the post
+   * TODO: check if user has access to the chapter
+   */
+
   findOnePostById(
-    request: FindOnePostIdRequest,
+    request: FindOnePostByIdRequest,
   ): Promise<FindOnePostResponse> | Observable<FindOnePostResponse> | FindOnePostResponse;
 
   createPost(
@@ -504,6 +518,8 @@ export interface PostServiceController {
   deletePost(
     request: DeletePostRequest,
   ): Promise<DeletePostResponse> | Observable<DeletePostResponse> | DeletePostResponse;
+
+  /** TODO: add updateBeta */
 
   findOneChapterById(
     request: FindOneChapterByIdRequest,

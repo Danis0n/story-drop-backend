@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  CollectionPrisma,
-  InsertPost,
-} from '../../dto/collection/collection-prisma.interface';
-import { CollectionDto } from '../../dto';
+import { CollectionDto, CollectionPrisma, InsertPost } from '../../dto';
 
 @Injectable()
 export class CollectionMapper {

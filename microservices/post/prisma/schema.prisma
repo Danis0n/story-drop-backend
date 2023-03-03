@@ -17,10 +17,12 @@ model age {
 model chapter {
   chapter_id       String         @id @db.Uuid
   post_id          String         @db.Uuid
+  chapter_name     String         @db.VarChar(100)
   notes            String?
   text             String
   number           Int
   date_of_creation DateTime       @db.Timestamp(6)
+  is_hidden        Boolean        @default(true)
   post             post           @relation(fields: [post_id], references: [post_id], onDelete: Cascade, onUpdate: NoAction)
   read_chapter     read_chapter[]
 }

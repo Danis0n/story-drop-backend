@@ -3,7 +3,7 @@ import {
   DeleteCollectionRequest,
   FindOneCollectionByIdRequest,
   UpdateCollectionRequest,
-} from '../../../modules/post/proto/post.pb';
+} from '../../../proto/post.pb';
 import { IsOptional } from 'class-validator';
 
 export class CreateCollectionRequestDto implements CreateCollectionRequest {

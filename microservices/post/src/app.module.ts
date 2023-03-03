@@ -10,9 +10,11 @@ import { FandomModule } from './modules/fandom/fandom.module';
 import { ParingModule } from './modules/paring/paring.module';
 import { ReadModule } from './modules/read/read.module';
 import { GenreModule } from './modules/genre/genre.module';
+import { ChapterModule } from './modules/chapter/chapter.module';
 
 @Module({
   imports: [
+    PrismaModule,
     PostModule,
     TagModule,
     ReadModule,
@@ -20,9 +22,8 @@ import { GenreModule } from './modules/genre/genre.module';
     CollectionModule,
     FandomModule,
     ParingModule,
-    ReadModule,
-    PrismaModule,
     GenreModule,
+    ChapterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

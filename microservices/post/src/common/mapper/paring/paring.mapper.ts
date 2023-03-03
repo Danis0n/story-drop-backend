@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InsertCharacter, ParingDto, ParingPrisma } from '../../dto';
+import { ParingDto, ParingPrisma } from '../../dto';
 
 @Injectable()
 export class ParingMapper {
@@ -7,13 +7,17 @@ export class ParingMapper {
     return { name: paring_name, paringId: paring_id };
   }
 
-  public mapToInsertCharacters(characterIds: string[]): InsertCharacter[] {
-    return characterIds.map((id) => {
-      return this.mapToInsertCharacter(id);
+  public mapToParingPrismas(paringIds: string[]): { paring_id: string }[] {
+    return paringIds.map((id) => {
+      return { paring_id: id };
     });
   }
 
-  private mapToInsertCharacter(characterId: string): InsertCharacter {
-    return { age_id: characterId };
+  public mapToCharacterPrismas(
+    characterIds: string[],
+  ): { character_id: string }[] {
+    return characterIds.map((id) => {
+      return { character_id: id };
+    });
   }
 }

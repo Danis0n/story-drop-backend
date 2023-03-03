@@ -3,7 +3,7 @@ import {
   DeleteGenreResponse,
   FindOneGenreByIdResponse,
   UpdateGenreResponse,
-} from '../../../modules/post/proto/post.pb';
+} from '../../../proto/post.pb';
 import { GenreDto } from './genre.dto';
 
 export class CreateGenreResponseDto implements CreateGenreResponse {

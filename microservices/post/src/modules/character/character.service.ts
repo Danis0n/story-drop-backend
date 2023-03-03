@@ -21,27 +21,27 @@ import {
 @Injectable()
 export class CharacterService {
   @Inject(CharacterRepository)
-  private readonly repository: CharacterRepository;
+  private readonly r: CharacterRepository;
 
   @Inject(CharacterMapper)
-  private readonly mapper: CharacterMapper;
+  private readonly m: CharacterMapper;
 
   public async create({
     name,
     fandomId,
   }: CreateCharacterRequestDto): Promise<CreateCharacterResponseDto> {
-    const isExist = !!(await this.repository.findName(name));
+    const isExist = !!(await this.r.findName(name));
 
     if (isExist)
       throw new GrpcAlreadyExistsException(
         'Персонаж с таким именем уже существует!',
       );
 
-    const character = await this.repository.create(name, fandomId);
+    const character = await this.r.create(name, fandomId);
     if (!character) return { character: null, success: false };
 
     return {
-      character: this.mapper.mapToCharacterDto(character),
+      character: this.m.mapToCharacterDto(character),
       success: true,
     };
   }
@@ -51,12 +51,12 @@ export class CharacterService {
     characterId,
     fandomId,
   }: UpdateCharacterRequestDto): Promise<UpdateCharacterResponseDto> {
-    const character = await this.repository.update(characterId, name, fandomId);
+    const character = await this.r.update(characterId, name, fandomId);
     if (!character)
       throw new GrpcNotFoundException('Персонаж с таким id не найден!');
 
     return {
-      character: this.mapper.mapToCharacterDto(character),
+      character: this.m.mapToCharacterDto(character),
       success: true,
     };
   }
@@ -64,7 +64,7 @@ export class CharacterService {
   public async delete({
     characterId,
   }: DeleteCharacterRequestDto): Promise<DeleteCharacterResponseDto> {
-    const character = await this.repository.delete(characterId);
+    const character = await this.r.delete(characterId);
     if (!character) return { success: false };
 
     return { success: true };
@@ -73,12 +73,12 @@ export class CharacterService {
   public async findId({
     characterId,
   }: FindOneCharacterByIdRequestDto): Promise<FindOneCharacterByIdResponseDto> {
-    const character = await this.repository.findId(characterId);
+    const character = await this.r.findId(characterId);
     if (!character)
       throw new GrpcNotFoundException('Персонаж с таким id не найден!');
 
     return {
-      character: this.mapper.mapToCharacterDto(character),
+      character: this.m.mapToCharacterDto(character),
       success: true,
     };
   }

@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { Transport } from '@nestjs/microservices';
-import { protobufPackage } from '../modules/post/proto/post.pb';
+import { protobufPackage } from '../proto/post.pb';
 
 export const postServiceProto = {
   transport: Transport.GRPC,

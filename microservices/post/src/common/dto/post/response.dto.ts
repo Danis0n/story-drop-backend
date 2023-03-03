@@ -3,7 +3,7 @@ import {
   DeletePostResponse,
   FindOnePostResponse,
   UpdatePostResponse,
-} from '../../../modules/post/proto/post.pb';
+} from '../../../proto/post.pb';
 import { PostDto } from './post.dto';
 
 export class CreatePostResponseDto implements CreatePostResponse {

@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { FandomPrisma } from '../../dto/fandom/fandom-prisma.interface';
+import { FandomPrisma } from '../../dto';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
 

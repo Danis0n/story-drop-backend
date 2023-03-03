@@ -3,7 +3,7 @@ import {
   DeleteChapterRequest,
   FindOneChapterByIdRequest,
   UpdateChapterRequest,
-} from '../../../modules/post/proto/post.pb';
+} from '../../../proto/post.pb';
 
 export class CreateChapterRequestDto implements CreateChapterRequest {
   name: string;
@@ -11,6 +11,7 @@ export class CreateChapterRequestDto implements CreateChapterRequest {
   postId: string;
   text: string;
   userId: string;
+  isHidden: boolean;
 }
 
 export class UpdateChapterRequestDto implements UpdateChapterRequest {
@@ -19,6 +20,7 @@ export class UpdateChapterRequestDto implements UpdateChapterRequest {
   text: string;
   userId: string;
   name: string;
+  isHidden: boolean;
 }
 
 export class DeleteChapterRequestDto implements DeleteChapterRequest {

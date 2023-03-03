@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/Danis0n/story-drop-proto.git",
-    "proto:post": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/modules/post/proto node_modules/story-drop-proto/proto/post.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
+    "proto:post": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto.cmd -I=./node_modules/story-drop-proto/proto --ts_proto_out=src/proto node_modules/story-drop-proto/proto/post.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.8.9",

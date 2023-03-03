@@ -20,10 +20,10 @@ import {
 @Injectable()
 export class ParingService {
   @Inject(ParingRepository)
-  private readonly repository: ParingRepository;
+  private readonly r: ParingRepository;
 
   @Inject(ParingMapper)
-  private readonly mapper: ParingMapper;
+  private readonly m: ParingMapper;
 
   public async create({
     name,
@@ -34,25 +34,25 @@ export class ParingService {
         'Ошибка при создании пейринга с одним или менее персонажем!',
       );
 
-    const paring = await this.repository.create(
+    const paring = await this.r.create(
       name,
-      this.mapper.mapToInsertCharacters(characterIds),
+      this.m.mapToCharacterPrismas(characterIds),
     );
 
     if (!paring)
       throw new GrpcInternalException('Ошибка при создании пейринга!');
 
-    return { paring: this.mapper.mapToParingDto(paring), success: true };
+    return { paring: this.m.mapToParingDto(paring), success: true };
   }
 
   public async findId({
     paringId,
   }: FindOneParingByIdRequestDto): Promise<FindOneParingByIdResponseDto> {
-    const paring = await this.repository.findId(paringId);
+    const paring = await this.r.findId(paringId);
     if (!paring)
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
-    return { paring: this.mapper.mapToParingDto(paring), success: true };
+    return { paring: this.m.mapToParingDto(paring), success: true };
   }
 
   public async update({
@@ -61,22 +61,22 @@ export class ParingService {
     insertCharacterIds,
     removeCharacterIds,
   }: UpdateParingRequestDto): Promise<UpdateParingResponseDto> {
-    const paring = await this.repository.update(
+    const paring = await this.r.update(
       paringId,
       name,
-      this.mapper.mapToInsertCharacters(insertCharacterIds),
-      this.mapper.mapToInsertCharacters(removeCharacterIds),
+      this.m.mapToCharacterPrismas(insertCharacterIds),
+      this.m.mapToCharacterPrismas(removeCharacterIds),
     );
     if (!paring)
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
-    return { paring: this.mapper.mapToParingDto(paring), success: true };
+    return { paring: this.m.mapToParingDto(paring), success: true };
   }
 
   public async delete({
     paringId,
   }: DeleteParingRequestDto): Promise<DeleteParingResponseDto> {
-    const paring = await this.repository.delete(paringId);
+    const paring = await this.r.delete(paringId);
     if (!paring)
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 

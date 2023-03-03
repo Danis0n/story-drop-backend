@@ -19,26 +19,26 @@ import {
 @Injectable()
 export class CollectionService {
   @Inject(CollectionMapper)
-  private readonly mapper: CollectionMapper;
+  private readonly m: CollectionMapper;
 
   @Inject(CollectionRepository)
-  private readonly repository: CollectionRepository;
+  private readonly r: CollectionRepository;
 
   public async create({
     name,
     userId,
     postIds,
   }: CreateCollectionRequestDto): Promise<CreateCollectionResponseDto> {
-    const collection = await this.repository.create(
+    const collection = await this.r.create(
       name,
       userId,
-      this.mapper.mapToPrismaPostIds(postIds),
+      this.m.mapToPrismaPostIds(postIds),
     );
     if (!collection)
       throw new GrpcInternalException('Ошибка при создании коллекции!');
 
     return {
-      collection: this.mapper.mapToCollectionDto(collection),
+      collection: this.m.mapToCollectionDto(collection),
       success: true,
     };
   }
@@ -46,12 +46,12 @@ export class CollectionService {
   public async findId({
     collectionId,
   }: FindOneCollectionByIdRequestDto): Promise<FindOneCollectionByIdResponseDto> {
-    const collection = await this.repository.findId(collectionId);
+    const collection = await this.r.findId(collectionId);
     if (!collection)
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 
     return {
-      collection: this.mapper.mapToCollectionDto(collection),
+      collection: this.m.mapToCollectionDto(collection),
       success: true,
     };
   }
@@ -63,18 +63,18 @@ export class CollectionService {
     postIdsDelete,
     isHidden,
   }: UpdateCollectionRequestDto): Promise<UpdateCollectionResponseDto> {
-    const collection = await this.repository.update(
+    const collection = await this.r.update(
       collectionId,
       name,
       isHidden,
-      this.mapper.mapToPrismaPostIds(postIdsInsert),
-      this.mapper.mapToPrismaPostIds(postIdsDelete),
+      this.m.mapToPrismaPostIds(postIdsInsert),
+      this.m.mapToPrismaPostIds(postIdsDelete),
     );
     if (!collection)
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 
     return {
-      collection: this.mapper.mapToCollectionDto(collection),
+      collection: this.m.mapToCollectionDto(collection),
       success: true,
     };
   }
@@ -82,7 +82,7 @@ export class CollectionService {
   public async delete({
     collectionId,
   }: DeleteCollectionRequestDto): Promise<DeleteCollectionResponseDto> {
-    const collection = await this.repository.delete(collectionId);
+    const collection = await this.r.delete(collectionId);
     if (!collection)
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 

@@ -1,4 +1,4 @@
-import { ChapterRecord, Post } from '../../../modules/post/proto/post.pb';
+import { ChapterRecord, Post } from '../../../proto/post.pb';
 import { CharacterDto } from '../character';
 import { FandomDto } from '../fandom';
 import { GenreDto } from '../genre';

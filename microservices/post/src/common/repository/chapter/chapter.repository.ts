@@ -18,10 +18,11 @@ export class ChapterRepository {
         data: {
           chapter_id: randomUUID(),
           chapter_name: payload.name,
-          notes: payload.notes,
-          text: payload.text,
+          notes: payload.notes || undefined,
+          text: payload.text || undefined,
           number: number,
           date_of_creation: new Date(),
+          is_hidden: payload.isHidden || true,
           post: { connect: { post_id: payload.postId } },
         },
       });
@@ -45,6 +46,7 @@ export class ChapterRepository {
           chapter_name: payload.name || undefined,
           notes: payload.notes || undefined,
           text: payload.text || undefined,
+          is_hidden: payload.isHidden || undefined,
         },
       });
     } catch (e) {
@@ -78,6 +80,20 @@ export class ChapterRepository {
     } catch (e) {
       Logger.error(
         `findPostId: Ошибка во время поиска главы по postId: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async findQuantity(postId: string): Promise<{ chapter_id: string }[]> {
+    try {
+      return await this.prisma.chapter.findMany({
+        where: { post_id: postId },
+        select: { chapter_id: true },
+      });
+    } catch (e) {
+      Logger.error(
+        `findQuantity: Ошибка во время поиска глав по postId: ${postId}. ${e?.message}`,
       );
       return null;
     }

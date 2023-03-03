@@ -3,7 +3,7 @@ import {
   DeleteChapterResponse,
   FindOneChapterByIdResponse,
   UpdateChapterResponse,
-} from '../../../modules/post/proto/post.pb';
+} from '../../../proto/post.pb';
 import { ChapterDto } from './chapter.dto';
 
 export class CreateChapterResponseDto implements CreateChapterResponse {

@@ -1,19 +1,19 @@
 import {
   CreatePostRequest,
   DeletePostRequest,
-  FindOnePostIdRequest,
+  FindOnePostByIdRequest,
   UpdatePostRequest,
-} from '../../../modules/post/proto/post.pb';
+} from '../../../proto/post.pb';
 
 export class CreatePostRequestDto implements CreatePostRequest {
-  characterIds: string;
+  characterIds: string[];
   dedication: string;
   description: string;
-  fandomIds: string;
-  genreIds: string;
+  fandomIds: string[];
+  genreIds: string[];
   name: string;
-  paringIds: string;
-  tagIds: string;
+  paringIds: string[];
+  tagIds: string[];
   userId: string;
 }
 
@@ -32,6 +32,6 @@ export class DeletePostRequestDto implements DeletePostRequest {
   userId: string;
 }
 
-export class FindOneIdRequestDto implements FindOnePostIdRequest {
+export class FindOnePostByIdRequestDto implements FindOnePostByIdRequest {
   uuid: string;
 }

@@ -19,48 +19,48 @@ import {
 @Injectable()
 export class GenreService {
   @Inject(GenreRepository)
-  private readonly repository: GenreRepository;
+  private readonly r: GenreRepository;
 
   @Inject(GenreMapper)
-  private readonly mapper: GenreMapper;
+  private readonly m: GenreMapper;
 
   public async create({
     name,
   }: CreateGenreRequestDto): Promise<CreateGenreResponseDto> {
-    const genre = await this.repository.create(name);
+    const genre = await this.r.create(name);
     if (!genre)
       throw new GrpcAlreadyExistsException(
         'Жанр с таким именем уже существует!',
       );
 
-    return { genre: this.mapper.mapToGenreDto(genre), success: true };
+    return { genre: this.m.mapToDto(genre), success: true };
   }
 
   public async findId({
     genreId,
   }: FindOneGenreByIdRequestDto): Promise<FindOneGenreByIdResponseDto> {
-    const genre = await this.repository.findId(genreId);
+    const genre = await this.r.findId(genreId);
     if (!genre)
       throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
-    return { genre: this.mapper.mapToGenreDto(genre), success: true };
+    return { genre: this.m.mapToDto(genre), success: true };
   }
 
   public async update({
     genreId,
     name,
   }: UpdateGenreRequestDto): Promise<UpdateGenreResponseDto> {
-    const genre = await this.repository.update(name, genreId);
+    const genre = await this.r.update(name, genreId);
     if (!genre)
       throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
-    return { genre: this.mapper.mapToGenreDto(genre), success: true };
+    return { genre: this.m.mapToDto(genre), success: true };
   }
 
   public async delete({
     genreId,
   }: DeleteGenreRequestDto): Promise<DeleteGenreResponseDto> {
-    const genre = await this.repository.delete(genreId);
+    const genre = await this.r.delete(genreId);
     if (!genre)
       throw new GrpcNotFoundException('Жанр с таким id не существует!');
 

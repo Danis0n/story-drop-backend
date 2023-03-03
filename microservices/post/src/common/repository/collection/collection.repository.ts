@@ -1,10 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
-import { CharacterPrisma } from '../../dto';
-import {
-  CollectionPrisma,
-  InsertPost,
-} from '../../dto/collection/collection-prisma.interface';
+import { CharacterPrisma, CollectionPrisma, InsertPost } from '../../dto';
 import { randomUUID } from 'crypto';
 
 @Injectable()

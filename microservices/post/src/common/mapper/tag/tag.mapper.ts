@@ -22,4 +22,10 @@ export class TagMapper {
   private mapToInsertAge(age: string): InsertAge {
     return { age_id: age };
   }
+
+  public mapToTagPrisma(tagIds: string[]): { tag_id: string }[] {
+    return tagIds.map((id) => {
+      return { tag_id: id };
+    });
+  }
 }
