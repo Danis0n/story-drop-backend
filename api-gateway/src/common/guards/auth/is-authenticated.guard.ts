@@ -5,13 +5,13 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from '../../modules/auth/auth.service';
-import { ValidateResponse } from '../../modules/auth/auth.pb';
+import { AuthService } from '../../../modules/auth/auth.service';
+import { ValidateResponse } from '../../../modules/auth/auth.pb';
 import {
   getRequestAuthData,
-  setCookieValidationSuccess,
   setCookieValidationFail,
-} from '../providers';
+  setCookieValidationSuccess,
+} from '../../providers';
 
 @Injectable()
 export class IsAuthenticatedGuard implements CanActivate {

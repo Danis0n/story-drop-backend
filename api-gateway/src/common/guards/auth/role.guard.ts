@@ -5,16 +5,16 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from '../../modules/auth/auth.service';
+import { AuthService } from '../../../modules/auth/auth.service';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../decorators';
+import { ROLES_KEY } from '../../decorators';
 
-import { UserService } from '../../modules/user/user.service';
+import { UserService } from '../../../modules/user/user.service';
 import {
   FindOneRolesResponseDto,
   FindOneUserIdBySessionResponseDto,
-} from '../dto';
-import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../constants';
+} from '../../dto';
+import { COOKIE_LOGGED_IN, COOKIE_SESSION } from '../../constants';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

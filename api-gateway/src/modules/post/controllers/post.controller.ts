@@ -54,6 +54,7 @@ export class PostController implements OnModuleInit {
     return this.serviceClient.findOnePostById({ uuid: uuid });
   }
 
+  // +PostGuard
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Patch('/:id')
   private async update(

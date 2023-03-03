@@ -13,6 +13,7 @@ import {
   TagController,
 } from './controllers';
 import { UserModule } from '../user/user.module';
+import { PostService } from './post.service';
 
 @Module({
   imports: [ClientsModule.register([PostServiceProto]), AuthModule, UserModule],
@@ -26,5 +27,6 @@ import { UserModule } from '../user/user.module';
     GenreController,
     ChapterController,
   ],
+  providers: [PostService],
 })
 export class PostModule {}

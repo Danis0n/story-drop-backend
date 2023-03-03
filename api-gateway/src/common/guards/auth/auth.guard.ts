@@ -5,10 +5,10 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from '../../modules/auth/auth.service';
-import { LoginRequest, LoginResponse } from '../../modules/auth/auth.pb';
-import { serializeUserAgentToString } from '../mapper';
-import { cleanResponseData, setCookieLoginSuccess } from '../providers';
+import { AuthService } from '../../../modules/auth/auth.service';
+import { LoginRequest, LoginResponse } from '../../../modules/auth/auth.pb';
+import { serializeUserAgentToString } from '../../mapper';
+import { cleanResponseData, setCookieLoginSuccess } from '../../providers';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

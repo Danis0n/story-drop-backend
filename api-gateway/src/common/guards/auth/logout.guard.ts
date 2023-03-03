@@ -5,11 +5,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { AuthService } from '../../modules/auth/auth.service';
-import { LogoutResponse } from '../../modules/auth/auth.pb';
+import { AuthService } from '../../../modules/auth/auth.service';
+import { LogoutResponse } from '../../../modules/auth/auth.pb';
 
-import { cleanResponseData } from '../providers';
-import { COOKIE_DEVICE, COOKIE_SESSION } from '../constants';
+import { cleanResponseData } from '../../providers';
+import { COOKIE_DEVICE, COOKIE_SESSION } from '../../constants';
 
 @Injectable()
 export class LogoutGuard implements CanActivate {
@@ -33,7 +33,7 @@ export class LogoutGuard implements CanActivate {
       sessionId: session,
     });
 
-    if (!isLoggedOut) throw new NotFoundException('сессия не найдена');
+    if (!isLoggedOut) throw new NotFoundException('Cессия не найдена');
 
     cleanResponseData(response);
     return true;
