@@ -16,21 +16,6 @@ export class PostRepository {
   @Inject(PrismaService)
   private readonly prisma: PrismaService;
 
-  @Inject(GenreMapper)
-  private readonly gm: GenreMapper;
-
-  @Inject(FandomMapper)
-  private readonly fm: FandomMapper;
-
-  @Inject(ParingMapper)
-  private readonly pm: ParingMapper;
-
-  @Inject(TagMapper)
-  private readonly tm: TagMapper;
-
-  @Inject(CharacterMapper)
-  private readonly cm: CharacterMapper;
-
   public async create(
     payload: CreatePostRequestDto,
   ): Promise<PostWithRelations> {
@@ -49,19 +34,19 @@ export class PostRepository {
             connect: { status_id: 'writingId!' }, // TODO: fix IT!!
           },
           post_genre: {
-            create: this.gm.mapToGenrePrismas(payload.genreIds),
+            create: GenreMapper.toPrisma(payload.genreIds),
           },
           fandom_post: {
-            create: this.fm.mapToFandomPrismas(payload.fandomIds),
+            create: FandomMapper.toPrisma(payload.fandomIds),
           },
           paring_post: {
-            create: this.pm.mapToParingPrismas(payload.paringIds),
+            create: ParingMapper.toPrisma(payload.paringIds),
           },
           post_tag: {
-            create: this.tm.mapToTagPrisma(payload.tagIds),
+            create: TagMapper.toPrisma(payload.tagIds),
           },
           character_post: {
-            create: this.cm.mapToCharacterPrisma(payload.characterIds),
+            create: CharacterMapper.toPrisma(payload.characterIds),
           },
         },
         include: PostInclude,
