@@ -21,9 +21,6 @@ export class TagService {
   @Inject(TagRepository)
   private readonly r: TagRepository;
 
-  @Inject(TagMapper)
-  private readonly m: TagMapper;
-
   public async create({
     name,
     ageId,
@@ -32,7 +29,7 @@ export class TagService {
     if (!tag)
       throw new GrpcInvalidArgumentException('Ошибка при создании тэга!');
 
-    return { success: true, tag: this.m.mapToTagDto(tag) };
+    return { success: true, tag: TagMapper.mapToTagDto(tag) };
   }
 
   public async findId({
@@ -41,7 +38,7 @@ export class TagService {
     const tag = await this.r.findId(tagId);
     if (!tag) throw new GrpcNotFoundException('Ошибка при поиске тэга!');
 
-    return { success: true, tag: this.m.mapToTagDto(tag) };
+    return { success: true, tag: TagMapper.mapToTagDto(tag) };
   }
 
   public async update({
@@ -51,7 +48,7 @@ export class TagService {
     const tag = await this.r.update(tagId, name);
     if (!tag) throw new GrpcNotFoundException('Ошибка при обновлении тэга!');
 
-    return { success: true, tag: this.m.mapToTagDto(tag) };
+    return { success: true, tag: TagMapper.mapToTagDto(tag) };
   }
 
   public async delete({

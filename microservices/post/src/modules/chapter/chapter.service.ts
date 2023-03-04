@@ -18,9 +18,6 @@ import {
 
 @Injectable()
 export class ChapterService {
-  @Inject(ChapterMapper)
-  private readonly m: ChapterMapper;
-
   @Inject(ChapterRepository)
   private readonly r: ChapterRepository;
 
@@ -34,7 +31,7 @@ export class ChapterService {
     if (!chapter)
       throw new GrpcInternalException('Ошибка во время создания главы!');
 
-    return { chapter: this.m.mapToChapterDto(chapter), success: false };
+    return { chapter: ChapterMapper.toDto(chapter), success: false };
   }
 
   public async findId({
@@ -44,7 +41,7 @@ export class ChapterService {
     if (!chapter)
       throw new GrpcNotFoundException('Главы с таким id не существует!');
 
-    return { chapter: this.m.mapToChapterDto(chapter), success: true };
+    return { chapter: ChapterMapper.toDto(chapter), success: true };
   }
 
   public async update(
@@ -54,7 +51,7 @@ export class ChapterService {
     if (!chapter)
       throw new GrpcNotFoundException('Главы с таким id не существует!');
 
-    return { chapter: this.m.mapToChapterDto(chapter), success: true };
+    return { chapter: ChapterMapper.toDto(chapter), success: true };
   }
 
   public async delete({

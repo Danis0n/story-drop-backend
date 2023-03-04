@@ -8,6 +8,5 @@ import { PrismaModule } from '../../prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [ParingController],
   providers: [ParingService, ParingMapper, ParingRepository],
-  exports: [ParingMapper],
 })
 export class ParingModule {}

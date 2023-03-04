@@ -8,6 +8,5 @@ import { PrismaModule } from '../../prisma/prisma.module';
   imports: [PrismaModule],
   providers: [ChapterService, ChapterRepository, ChapterMapper],
   controllers: [ChapterController],
-  exports: [ChapterMapper],
 })
 export class ChapterModule {}

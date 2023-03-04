@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import {
+  CharacterMapper,
   CreateParingRequestDto,
   CreateParingResponseDto,
   DeleteParingRequestDto,
@@ -22,9 +23,6 @@ export class ParingService {
   @Inject(ParingRepository)
   private readonly r: ParingRepository;
 
-  @Inject(ParingMapper)
-  private readonly m: ParingMapper;
-
   public async create({
     name,
     characterIds,
@@ -36,13 +34,13 @@ export class ParingService {
 
     const paring = await this.r.create(
       name,
-      this.m.mapToCharacterPrismas(characterIds),
+      CharacterMapper.toPrisma(characterIds),
     );
 
     if (!paring)
       throw new GrpcInternalException('Ошибка при создании пейринга!');
 
-    return { paring: this.m.mapToParingDto(paring), success: true };
+    return { paring: ParingMapper.toDto(paring), success: true };
   }
 
   public async findId({
@@ -52,7 +50,7 @@ export class ParingService {
     if (!paring)
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
-    return { paring: this.m.mapToParingDto(paring), success: true };
+    return { paring: ParingMapper.toDto(paring), success: true };
   }
 
   public async update({
@@ -64,13 +62,13 @@ export class ParingService {
     const paring = await this.r.update(
       paringId,
       name,
-      this.m.mapToCharacterPrismas(insertCharacterIds),
-      this.m.mapToCharacterPrismas(removeCharacterIds),
+      CharacterMapper.toPrisma(insertCharacterIds),
+      CharacterMapper.toPrisma(removeCharacterIds),
     );
     if (!paring)
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
-    return { paring: this.m.mapToParingDto(paring), success: true };
+    return { paring: ParingMapper.toDto(paring), success: true };
   }
 
   public async delete({

@@ -8,6 +8,7 @@ export const PostInclude = Prisma.validator<Prisma.postInclude>()({
   fandom_post: { include: { fandom: true } },
   character_post: { include: { character: true } },
   chapter: true,
+  status: true,
 });
 
 export type PostWithRelations = Prisma.postGetPayload<{

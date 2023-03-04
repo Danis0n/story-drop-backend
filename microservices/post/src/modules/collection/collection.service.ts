@@ -18,9 +18,6 @@ import {
 
 @Injectable()
 export class CollectionService {
-  @Inject(CollectionMapper)
-  private readonly m: CollectionMapper;
-
   @Inject(CollectionRepository)
   private readonly r: CollectionRepository;
 
@@ -32,13 +29,13 @@ export class CollectionService {
     const collection = await this.r.create(
       name,
       userId,
-      this.m.mapToPrismaPostIds(postIds),
+      CollectionMapper.mapToPrismaPostIds(postIds),
     );
     if (!collection)
       throw new GrpcInternalException('Ошибка при создании коллекции!');
 
     return {
-      collection: this.m.mapToCollectionDto(collection),
+      collection: CollectionMapper.toDto(collection),
       success: true,
     };
   }
@@ -51,7 +48,7 @@ export class CollectionService {
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 
     return {
-      collection: this.m.mapToCollectionDto(collection),
+      collection: CollectionMapper.toDto(collection),
       success: true,
     };
   }
@@ -67,14 +64,14 @@ export class CollectionService {
       collectionId,
       name,
       isHidden,
-      this.m.mapToPrismaPostIds(postIdsInsert),
-      this.m.mapToPrismaPostIds(postIdsDelete),
+      CollectionMapper.mapToPrismaPostIds(postIdsInsert),
+      CollectionMapper.mapToPrismaPostIds(postIdsDelete),
     );
     if (!collection)
       throw new GrpcNotFoundException('Коллекция с таким id не найдена!');
 
     return {
-      collection: this.m.mapToCollectionDto(collection),
+      collection: CollectionMapper.toDto(collection),
       success: true,
     };
   }

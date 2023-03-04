@@ -15,9 +15,6 @@ import { GrpcInvalidArgumentException } from 'nestjs-grpc-exceptions';
 
 @Injectable()
 export class PostService {
-  @Inject(PostMapper)
-  private readonly m: PostMapper;
-
   @Inject(PostRepository)
   private readonly r: PostRepository;
 
@@ -28,7 +25,7 @@ export class PostService {
     if (!post)
       throw new GrpcInvalidArgumentException('Ошибка при создании поста!');
 
-    return { post: this.m.mapToPostDto(post), success: true };
+    return { post: PostMapper.toDto(post), success: true };
   }
 
   // TODO: fix to postId later
@@ -39,7 +36,7 @@ export class PostService {
     if (!post)
       throw new GrpcInvalidArgumentException('Ошибка при поиске поста!');
 
-    return { post: this.m.mapToPostDto(post), success: true };
+    return { post: PostMapper.toDto(post), success: true };
   }
 
   // TODO: delete userId

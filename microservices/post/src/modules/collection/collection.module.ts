@@ -8,6 +8,5 @@ import { PrismaModule } from '../../prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [CollectionController],
   providers: [CollectionService, CollectionMapper, CollectionRepository],
-  exports: [CollectionMapper],
 })
 export class CollectionModule {}

@@ -23,9 +23,6 @@ export class CharacterService {
   @Inject(CharacterRepository)
   private readonly r: CharacterRepository;
 
-  @Inject(CharacterMapper)
-  private readonly m: CharacterMapper;
-
   public async create({
     name,
     fandomId,
@@ -41,7 +38,7 @@ export class CharacterService {
     if (!character) return { character: null, success: false };
 
     return {
-      character: this.m.mapToCharacterDto(character),
+      character: CharacterMapper.toDto(character),
       success: true,
     };
   }
@@ -56,7 +53,7 @@ export class CharacterService {
       throw new GrpcNotFoundException('Персонаж с таким id не найден!');
 
     return {
-      character: this.m.mapToCharacterDto(character),
+      character: CharacterMapper.toDto(character),
       success: true,
     };
   }
@@ -78,7 +75,7 @@ export class CharacterService {
       throw new GrpcNotFoundException('Персонаж с таким id не найден!');
 
     return {
-      character: this.m.mapToCharacterDto(character),
+      character: CharacterMapper.toDto(character),
       success: true,
     };
   }

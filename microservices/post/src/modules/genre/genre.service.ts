@@ -21,9 +21,6 @@ export class GenreService {
   @Inject(GenreRepository)
   private readonly r: GenreRepository;
 
-  @Inject(GenreMapper)
-  private readonly m: GenreMapper;
-
   public async create({
     name,
   }: CreateGenreRequestDto): Promise<CreateGenreResponseDto> {
@@ -33,7 +30,7 @@ export class GenreService {
         'Жанр с таким именем уже существует!',
       );
 
-    return { genre: this.m.mapToDto(genre), success: true };
+    return { genre: GenreMapper.toDto(genre), success: true };
   }
 
   public async findId({
@@ -43,7 +40,7 @@ export class GenreService {
     if (!genre)
       throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
-    return { genre: this.m.mapToDto(genre), success: true };
+    return { genre: GenreMapper.toDto(genre), success: true };
   }
 
   public async update({
@@ -54,7 +51,7 @@ export class GenreService {
     if (!genre)
       throw new GrpcNotFoundException('Жанр с таким id не существует!');
 
-    return { genre: this.m.mapToDto(genre), success: true };
+    return { genre: GenreMapper.toDto(genre), success: true };
   }
 
   public async delete({

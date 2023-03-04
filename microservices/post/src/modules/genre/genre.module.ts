@@ -8,6 +8,5 @@ import { PrismaModule } from '../../prisma/prisma.module';
   imports: [PrismaModule],
   providers: [GenreService, GenreMapper, GenreRepository],
   controllers: [GenreController],
-  exports: [GenreMapper],
 })
 export class GenreModule {}

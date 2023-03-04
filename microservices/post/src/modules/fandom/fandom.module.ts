@@ -8,6 +8,5 @@ import { PrismaModule } from '../../prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [FandomController],
   providers: [FandomService, FandomRepository, FandomMapper],
-  exports: [FandomService, FandomMapper],
 })
 export class FandomModule {}

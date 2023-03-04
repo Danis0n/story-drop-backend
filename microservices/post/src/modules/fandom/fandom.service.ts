@@ -18,9 +18,6 @@ import {
 
 @Injectable()
 export class FandomService {
-  @Inject(FandomMapper)
-  private readonly m: FandomMapper;
-
   @Inject(FandomRepository)
   private readonly r: FandomRepository;
 
@@ -33,7 +30,7 @@ export class FandomService {
         'Фандом с таким именем уже существует!',
       );
 
-    return { fandom: this.m.mapToFandomDto(fandom), success: true };
+    return { fandom: FandomMapper.toDto(fandom), success: true };
   }
 
   public async findId({
@@ -43,7 +40,7 @@ export class FandomService {
     if (!fandom)
       throw new GrpcNotFoundException('Фандом с таким id не существует!');
 
-    return { fandom: this.m.mapToFandomDto(fandom), success: true };
+    return { fandom: FandomMapper.toDto(fandom), success: true };
   }
 
   public async update({
@@ -54,7 +51,7 @@ export class FandomService {
     if (!fandom)
       throw new GrpcNotFoundException('Фандом с таким id не существует!');
 
-    return { fandom: this.m.mapToFandomDto(fandom), success: true };
+    return { fandom: FandomMapper.toDto(fandom), success: true };
   }
 
   public async delete({
