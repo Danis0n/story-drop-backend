@@ -271,7 +271,6 @@ export interface CreateCharacterResponse {
 export interface UpdateCharacterRequest {
   characterId: string;
   name: string;
-  fandomId: string;
 }
 
 export interface UpdateCharacterResponse {

@@ -30,9 +30,10 @@ model chapter {
 model character {
   character_id     String             @id @db.Uuid
   character_name   String             @unique @db.VarChar(100)
+  fandom_id        String?            @db.Uuid
+  fandom           fandom?            @relation(fields: [fandom_id], references: [fandom_id], onDelete: NoAction, onUpdate: NoAction)
   character_paring character_paring[]
   character_post   character_post[]
-  fandom_character fandom_character[]
 }
 
 model character_paring {
@@ -71,10 +72,10 @@ model collection_post {
 }
 
 model fandom {
-  fandom_id        String             @id @db.Uuid
-  fandom_name      String             @unique @db.VarChar(100)
-  fandom_character fandom_character[]
-  fandom_post      fandom_post[]
+  fandom_id   String        @id @db.Uuid
+  fandom_name String        @unique @db.VarChar(100)
+  character   character[]
+  fandom_post fandom_post[]
 }
 
 model fandom_post {
@@ -184,13 +185,4 @@ model post_genre {
   post     post   @relation(fields: [post_id], references: [post_id], onDelete: Cascade)
 
   @@id([genre_id, post_id], map: "genre_post_pkey")
-}
-
-model fandom_character {
-  fandom_id    String    @db.Uuid
-  character_id String    @db.Uuid
-  character    character @relation(fields: [character_id], references: [character_id], onDelete: Cascade)
-  fandom       fandom    @relation(fields: [fandom_id], references: [fandom_id], onDelete: Cascade)
-
-  @@id([fandom_id, character_id])
 }

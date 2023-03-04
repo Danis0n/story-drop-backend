@@ -17,7 +17,7 @@ export class CharacterRepository {
         data: {
           character_name: name,
           character_id: randomUUID(),
-          fandom_character: { create: [{ fandom_id: fandomId }] },
+          fandom: { connect: { fandom_id: fandomId } },
         },
       });
     } catch (e) {
@@ -71,19 +71,17 @@ export class CharacterRepository {
   public async update(
     characterId: string,
     name: string,
-    fandomId: string,
   ): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.update({
         where: { character_id: characterId },
         data: {
           character_name: name || undefined,
-          fandom_character: { create: [{ fandom_id: fandomId }] },
         },
       });
     } catch (e) {
       Logger.error(
-        `update: Ошибка во время обновления персонажа: ${characterId}, ${name}, ${fandomId}. ${e?.message}`,
+        `update: Ошибка во время обновления персонажа: ${characterId}, ${name}. ${e?.message}`,
       );
       return null;
     }

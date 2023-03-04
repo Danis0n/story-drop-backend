@@ -46,9 +46,8 @@ export class CharacterService {
   public async update({
     name,
     characterId,
-    fandomId,
   }: UpdateCharacterRequestDto): Promise<UpdateCharacterResponseDto> {
-    const character = await this.r.update(characterId, name, fandomId);
+    const character = await this.r.update(characterId, name);
     if (!character)
       throw new GrpcNotFoundException('Персонаж с таким id не найден!');
 

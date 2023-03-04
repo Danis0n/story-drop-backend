@@ -21,7 +21,8 @@ CREATE TABLE paring
 CREATE TABLE character
 (
     character_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    character_name VARCHAR(100) UNIQUE NOT NULL
+    character_name VARCHAR(100) UNIQUE NOT NULL,
+    fandom_id UUID REFERENCES fandom(fandom_id) default null
 );
 
 CREATE TABLE status

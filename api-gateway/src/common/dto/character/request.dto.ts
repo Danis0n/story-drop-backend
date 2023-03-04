@@ -15,8 +15,6 @@ export class UpdateCharacterRequestDto implements UpdateCharacterRequest {
   characterId: string;
   @IsOptional()
   name: string;
-  @IsOptional()
-  fandomId: string;
 }
 
 export class DeleteCharacterRequestDto implements DeleteCharacterRequest {
