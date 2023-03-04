@@ -82,7 +82,7 @@ export class PostRepository {
       });
     } catch (e) {
       Logger.error(
-        `findId: Ошибка во время удаления поста по id: ${postId}. ${e?.message}`,
+        `delete: Ошибка во время удаления поста по id: ${postId}. ${e?.message}`,
       );
       return null;
     }
