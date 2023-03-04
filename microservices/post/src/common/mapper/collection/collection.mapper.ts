@@ -1,19 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { CollectionDto, CollectionPrisma, InsertPost } from '../../dto';
+import { Builder } from 'builder-pattern';
 
 @Injectable()
 export class CollectionMapper {
-  public mapToCollectionDto(collection: CollectionPrisma): CollectionDto {
-    return null;
+  public static toDto(c: CollectionPrisma): CollectionDto {
+    return Builder(CollectionDto)
+      .collectionId(c.collection_id)
+      .name(c.collection_name)
+      .isHidden(c.is_hidden)
+      .userId(c.user_id)
+      .build();
   }
 
-  private mapToPrismaPostId(postId: string): InsertPost {
+  public static mapToPrismaPostId(postId: string): InsertPost {
     return { post_id: postId };
   }
 
-  public mapToPrismaPostIds(postIds: string[]): InsertPost[] {
+  public static mapToPrismaPostIds(postIds: string[]): InsertPost[] {
     return postIds.map((postId) => {
-      return this.mapToPrismaPostId(postId);
+      return { post_id: postId };
     });
   }
 }

@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterPrisma } from '../../dto';
+import { CharacterDto, CharacterPrisma } from '../../dto';
 
 @Injectable()
 export class CharacterMapper {
-  public mapToCharacterDto(character: CharacterPrisma) {
-    return null;
+  public static toDto({
+    character_id,
+    character_name,
+  }: CharacterPrisma): CharacterDto {
+    return { characterId: character_id, name: character_name };
   }
 
-  public mapToCharacterPrisma(characterIds: string[]) {
+  public static toPrisma(characterIds: string[]) {
     return characterIds.map((id) => {
       return { character_id: id };
     });

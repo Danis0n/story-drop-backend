@@ -5,7 +5,11 @@ import { Builder } from 'builder-pattern';
 
 @Injectable()
 export class TagMapper {
-  public mapToTagDto({ tag_id, tag_name, age }: TagWithRelation): TagDto {
+  public static mapToTagDto({
+    tag_id,
+    tag_name,
+    age,
+  }: TagWithRelation): TagDto {
     return Builder(TagDto)
       .tagId(tag_id)
       .name(tag_name)
@@ -19,11 +23,11 @@ export class TagMapper {
       .build();
   }
 
-  private mapToInsertAge(age: string): InsertAge {
+  public static toInsert(age: string): InsertAge {
     return { age_id: age };
   }
 
-  public mapToTagPrisma(tagIds: string[]): { tag_id: string }[] {
+  public static toPrisma(tagIds: string[]): { tag_id: string }[] {
     return tagIds.map((id) => {
       return { tag_id: id };
     });
