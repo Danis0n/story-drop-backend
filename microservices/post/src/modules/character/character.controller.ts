@@ -9,6 +9,8 @@ import {
   DeleteCharacterResponseDto,
   FindOneCharacterByIdRequestDto,
   FindOneCharacterByIdResponseDto,
+  FindOneCharacterByParingRequestDto,
+  FindOneCharacterByParingResponseDto,
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
 } from '../../common';
@@ -30,6 +32,13 @@ export class CharacterController {
     payload: FindOneCharacterByIdRequestDto,
   ): Promise<FindOneCharacterByIdResponseDto> {
     return this.s.findId(payload);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'FindOneCharacterByParing')
+  private async findParingId(
+    payload: FindOneCharacterByParingRequestDto,
+  ): Promise<FindOneCharacterByParingResponseDto> {
+    return this.s.findParingId(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateCharacter')

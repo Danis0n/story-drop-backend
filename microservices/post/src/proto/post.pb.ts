@@ -40,9 +40,8 @@ export interface FindOneParingByCharacterRequest {
   characterId: string;
 }
 
-export interface FindOneParingByCharacterResponse {
-  paring: Paring | undefined;
-  success: boolean;
+export interface FindManyParingByCharacterResponse {
+  parings: Paring[];
 }
 
 export interface UpdatePostToCollectionRequest {
@@ -171,9 +170,8 @@ export interface FindOneFandomByCharacterRequest {
   characterId: string;
 }
 
-export interface FindOneFandomByCharacterResponse {
-  fandom: Fandom | undefined;
-  success: boolean;
+export interface FindManyFandomByCharacterResponse {
+  fandoms: Fandom[];
 }
 
 export interface FindOneFandomByIdRequest {
@@ -330,18 +328,16 @@ export interface FindOneCharacterByFandomRequest {
   fandomId: string;
 }
 
-export interface FindOneCharacterByFandomResponse {
-  character: Character | undefined;
-  success: boolean;
+export interface FindManyCharacterByFandomResponse {
+  characters: Character[];
 }
 
 export interface FindOneCharacterByParingRequest {
   paringId: string;
 }
 
-export interface FindOneCharacterByParingResponse {
-  character: Character | undefined;
-  success: boolean;
+export interface FindManyCharacterByParingResponse {
+  characters: Character[];
 }
 
 export interface FindOneCharacterByIdRequest {
@@ -516,7 +512,7 @@ export interface PostServiceClient {
 
   deleteChapter(request: DeleteChapterRequest): Observable<DeleteChapterResponse>;
 
-  findOneFandomByCharacter(request: FindOneFandomByCharacterRequest): Observable<FindOneFandomByCharacterResponse>;
+  findOneFandomByCharacter(request: FindOneFandomByCharacterRequest): Observable<FindManyFandomByCharacterResponse>;
 
   findManyFandomByName(request: FindManyFandomByNameRequest): Observable<FindManyFandomByNameResponse>;
 
@@ -558,9 +554,9 @@ export interface PostServiceClient {
 
   findManyCharacterByName(request: FindManyCharacterByNameRequest): Observable<FindManyCharacterByNameResponse>;
 
-  findOneCharacterByParing(request: FindOneCharacterByParingRequest): Observable<FindOneCharacterByParingResponse>;
+  findOneCharacterByParing(request: FindOneCharacterByParingRequest): Observable<FindManyCharacterByParingResponse>;
 
-  findOneCharacterByFandom(request: FindOneCharacterByFandomRequest): Observable<FindOneCharacterByFandomResponse>;
+  findOneCharacterByFandom(request: FindOneCharacterByFandomRequest): Observable<FindManyCharacterByFandomResponse>;
 
   findOneCharacterById(request: FindOneCharacterByIdRequest): Observable<FindOneCharacterByIdResponse>;
 
@@ -572,7 +568,7 @@ export interface PostServiceClient {
 
   findManyParingByName(request: FindManyParingByNameRequest): Observable<FindManyParingByNameResponse>;
 
-  findOneParingByCharacter(request: FindOneParingByCharacterRequest): Observable<FindOneParingByCharacterResponse>;
+  findOneParingByCharacter(request: FindOneParingByCharacterRequest): Observable<FindManyParingByCharacterResponse>;
 
   findOneParingById(request: FindOneParingByIdRequest): Observable<FindOneParingByIdResponse>;
 
@@ -621,9 +617,9 @@ export interface PostServiceController {
   findOneFandomByCharacter(
     request: FindOneFandomByCharacterRequest,
   ):
-    | Promise<FindOneFandomByCharacterResponse>
-    | Observable<FindOneFandomByCharacterResponse>
-    | FindOneFandomByCharacterResponse;
+    | Promise<FindManyFandomByCharacterResponse>
+    | Observable<FindManyFandomByCharacterResponse>
+    | FindManyFandomByCharacterResponse;
 
   findManyFandomByName(
     request: FindManyFandomByNameRequest,
@@ -708,16 +704,16 @@ export interface PostServiceController {
   findOneCharacterByParing(
     request: FindOneCharacterByParingRequest,
   ):
-    | Promise<FindOneCharacterByParingResponse>
-    | Observable<FindOneCharacterByParingResponse>
-    | FindOneCharacterByParingResponse;
+    | Promise<FindManyCharacterByParingResponse>
+    | Observable<FindManyCharacterByParingResponse>
+    | FindManyCharacterByParingResponse;
 
   findOneCharacterByFandom(
     request: FindOneCharacterByFandomRequest,
   ):
-    | Promise<FindOneCharacterByFandomResponse>
-    | Observable<FindOneCharacterByFandomResponse>
-    | FindOneCharacterByFandomResponse;
+    | Promise<FindManyCharacterByFandomResponse>
+    | Observable<FindManyCharacterByFandomResponse>
+    | FindManyCharacterByFandomResponse;
 
   findOneCharacterById(
     request: FindOneCharacterByIdRequest,
@@ -742,9 +738,9 @@ export interface PostServiceController {
   findOneParingByCharacter(
     request: FindOneParingByCharacterRequest,
   ):
-    | Promise<FindOneParingByCharacterResponse>
-    | Observable<FindOneParingByCharacterResponse>
-    | FindOneParingByCharacterResponse;
+    | Promise<FindManyParingByCharacterResponse>
+    | Observable<FindManyParingByCharacterResponse>
+    | FindManyParingByCharacterResponse;
 
   findOneParingById(
     request: FindOneParingByIdRequest,

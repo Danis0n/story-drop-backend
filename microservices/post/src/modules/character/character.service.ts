@@ -8,6 +8,8 @@ import {
   DeleteCharacterResponseDto,
   FindOneCharacterByIdRequestDto,
   FindOneCharacterByIdResponseDto,
+  FindOneCharacterByParingRequestDto,
+  FindOneCharacterByParingResponseDto,
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
 } from '../../common';
@@ -77,5 +79,11 @@ export class CharacterService {
       character: CharacterMapper.toDto(character),
       success: true,
     };
+  }
+
+  public async findParingId({
+    paringId,
+  }: FindOneCharacterByParingRequestDto): Promise<FindOneCharacterByParingResponseDto> {
+    return undefined;
   }
 }
