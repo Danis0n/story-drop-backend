@@ -43,6 +43,8 @@ export class GenreService {
     return { genre: GenreMapper.toDto(genre), success: true };
   }
 
+  public async findNameMany() {}
+
   public async update({
     genreId,
     name,

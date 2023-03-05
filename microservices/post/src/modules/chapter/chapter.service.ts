@@ -44,6 +44,8 @@ export class ChapterService {
     return { chapter: ChapterMapper.toDto(chapter), success: true };
   }
 
+  public async findPostId(): Promise<void> {}
+
   public async update(
     payload: UpdateChapterRequestDto,
   ): Promise<UpdateChapterResponseDto> {

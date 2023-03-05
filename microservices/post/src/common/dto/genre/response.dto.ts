@@ -1,6 +1,7 @@
 import {
   CreateGenreResponse,
   DeleteGenreResponse,
+  FindManyGenreByNameResponse,
   FindOneGenreByIdResponse,
   UpdateGenreResponse,
 } from '../../../proto/post.pb';
@@ -23,4 +24,10 @@ export class DeleteGenreResponseDto implements DeleteGenreResponse {
 export class FindOneGenreByIdResponseDto implements FindOneGenreByIdResponse {
   genre: GenreDto;
   success: boolean;
+}
+
+export class FindManyGenreByNameResponseDto
+  implements FindManyGenreByNameResponse
+{
+  genres: GenreDto[];
 }

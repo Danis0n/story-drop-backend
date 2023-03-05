@@ -1,6 +1,7 @@
 import {
   CreateCharacterRequest,
   DeleteCharacterRequest,
+  FindManyCharacterByNameRequest,
   FindOneCharacterByFandomRequest,
   FindOneCharacterByIdRequest,
   FindOneCharacterByParingRequest,
@@ -39,4 +40,10 @@ export class FindOneCharacterByFandomRequestDto
   implements FindOneCharacterByFandomRequest
 {
   fandomId: string;
+}
+
+export class FindManyCharacterByNameRequestDto
+  implements FindManyCharacterByNameRequest
+{
+  name: string;
 }

@@ -1,6 +1,7 @@
 import {
   CreateCollectionResponse,
   DeleteCollectionResponse,
+  FindManyCollectionByNameResponse,
   FindOneCollectionByIdResponse,
   UpdateCollectionResponse,
 } from '../../../proto/post.pb';
@@ -25,4 +26,10 @@ export class FindOneCollectionByIdResponseDto
 {
   collection: CollectionDto;
   success: boolean;
+}
+
+export class FindManyCollectionByNameResponseDto
+  implements FindManyCollectionByNameResponse
+{
+  collections: CollectionDto[];
 }

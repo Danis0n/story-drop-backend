@@ -1,6 +1,7 @@
 import {
   CreateGenreRequest,
   DeleteGenreRequest,
+  FindManyGenreByNameRequest,
   FindOneGenreByIdRequest,
   UpdateGenreRequest,
 } from '../../../proto/post.pb';
@@ -20,4 +21,10 @@ export class DeleteGenreRequestDto implements DeleteGenreRequest {
 
 export class FindOneGenreByIdRequestDto implements FindOneGenreByIdRequest {
   genreId: string;
+}
+
+export class FindManyGenreByNameRequestDto
+  implements FindManyGenreByNameRequest
+{
+  name: string;
 }

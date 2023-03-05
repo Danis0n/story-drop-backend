@@ -1,6 +1,7 @@
 import {
   CreateParingResponse,
   DeleteParingResponse,
+  FindManyParingByNameResponse,
   FindOneParingByCharacterResponse,
   FindOneParingByIdResponse,
   UpdateParingResponse,
@@ -31,4 +32,10 @@ export class FindOneParingByCharacterResponseDto
 {
   paring: ParingDto;
   success: boolean;
+}
+
+export class FindManyParingByNameResponseDto
+  implements FindManyParingByNameResponse
+{
+  parings: ParingDto[];
 }

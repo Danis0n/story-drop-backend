@@ -1,6 +1,7 @@
 import {
   CreateParingRequest,
   DeleteParingRequest,
+  FindManyParingByNameRequest,
   FindOneParingByCharacterRequest,
   FindOneParingByIdRequest,
   UpdateParingRequest,
@@ -30,4 +31,10 @@ export class FindOneParingByCharacterRequestDto
   implements FindOneParingByCharacterRequest
 {
   characterId: string;
+}
+
+export class FindManyParingByNameRequestDto
+  implements FindManyParingByNameRequest
+{
+  name: string;
 }

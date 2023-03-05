@@ -1,6 +1,7 @@
 import {
   CreateCharacterResponse,
   DeleteCharacterResponse,
+  FindManyCharacterByNameResponse,
   FindOneCharacterByFandomResponse,
   FindOneCharacterByIdResponse,
   FindOneCharacterByParingResponse,
@@ -41,4 +42,10 @@ export class FindOneCharacterByFandomResponseDto
 {
   character: CharacterDto;
   success: boolean;
+}
+
+export class FindManyCharacterByNameResponseDto
+  implements FindManyCharacterByNameResponse
+{
+  characters: CharacterDto[];
 }

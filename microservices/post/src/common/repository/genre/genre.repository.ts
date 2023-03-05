@@ -64,19 +64,6 @@ export class GenreRepository {
     }
   }
 
-  public async findName(name: string): Promise<GenrePrisma> {
-    try {
-      return await this.prisma.genre.findUnique({
-        where: { genre_name: name },
-      });
-    } catch (e) {
-      Logger.error(
-        `findName: Ошибка во время поиска жанра по имени: ${name}. ${e}`,
-      );
-      return null;
-    }
-  }
-
   public async findNameMany(name: string): Promise<GenrePrisma[]> {
     try {
       return await this.prisma.genre.findMany({

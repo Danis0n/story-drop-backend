@@ -4,6 +4,38 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "post";
 
+export interface FindManyParingByNameRequest {
+  name: string;
+}
+
+export interface FindManyParingByNameResponse {
+  parings: Paring[];
+}
+
+export interface FindManyGenreByNameRequest {
+  name: string;
+}
+
+export interface FindManyGenreByNameResponse {
+  genres: Genre[];
+}
+
+export interface FindManyCollectionByNameRequest {
+  name: string;
+}
+
+export interface FindManyCollectionByNameResponse {
+  collections: Collection[];
+}
+
+export interface FindManyCharacterByNameRequest {
+  name: string;
+}
+
+export interface FindManyCharacterByNameResponse {
+  characters: Character[];
+}
+
 export interface FindOneParingByCharacterRequest {
   characterId: string;
 }
@@ -484,8 +516,6 @@ export interface PostServiceClient {
 
   deleteChapter(request: DeleteChapterRequest): Observable<DeleteChapterResponse>;
 
-  /** findByName */
-
   findOneFandomByCharacter(request: FindOneFandomByCharacterRequest): Observable<FindOneFandomByCharacterResponse>;
 
   findManyFandomByName(request: FindManyFandomByNameRequest): Observable<FindManyFandomByNameResponse>;
@@ -497,6 +527,8 @@ export interface PostServiceClient {
   updateFandom(request: UpdateFandomRequest): Observable<UpdateFandomResponse>;
 
   deleteFandom(request: DeleteFandomRequest): Observable<DeleteFandomResponse>;
+
+  findManyGenreByName(request: FindManyGenreByNameRequest): Observable<FindManyGenreByNameResponse>;
 
   findOneGenreById(request: FindOneGenreByIdRequest): Observable<FindOneGenreByIdResponse>;
 
@@ -514,6 +546,8 @@ export interface PostServiceClient {
 
   deleteTag(request: DeleteTagRequest): Observable<DeleteTagResponse>;
 
+  findManyCollectionByName(request: FindManyCollectionByNameRequest): Observable<FindManyCollectionByNameResponse>;
+
   findOneCollectionById(request: FindOneCollectionByIdRequest): Observable<FindOneCollectionByIdResponse>;
 
   createCollection(request: CreateCollectionRequest): Observable<CreateCollectionResponse>;
@@ -521,6 +555,8 @@ export interface PostServiceClient {
   updateCollection(request: UpdateCollectionRequest): Observable<UpdateCollectionResponse>;
 
   deleteCollection(request: DeleteCollectionRequest): Observable<DeleteCollectionResponse>;
+
+  findManyCharacterByName(request: FindManyCharacterByNameRequest): Observable<FindManyCharacterByNameResponse>;
 
   findOneCharacterByParing(request: FindOneCharacterByParingRequest): Observable<FindOneCharacterByParingResponse>;
 
@@ -533,6 +569,8 @@ export interface PostServiceClient {
   updateCharacter(request: UpdateCharacterRequest): Observable<UpdateCharacterResponse>;
 
   deleteCharacter(request: DeleteCharacterRequest): Observable<DeleteCharacterResponse>;
+
+  findManyParingByName(request: FindManyParingByNameRequest): Observable<FindManyParingByNameResponse>;
 
   findOneParingByCharacter(request: FindOneParingByCharacterRequest): Observable<FindOneParingByCharacterResponse>;
 
@@ -580,8 +618,6 @@ export interface PostServiceController {
     request: DeleteChapterRequest,
   ): Promise<DeleteChapterResponse> | Observable<DeleteChapterResponse> | DeleteChapterResponse;
 
-  /** findByName */
-
   findOneFandomByCharacter(
     request: FindOneFandomByCharacterRequest,
   ):
@@ -609,6 +645,10 @@ export interface PostServiceController {
     request: DeleteFandomRequest,
   ): Promise<DeleteFandomResponse> | Observable<DeleteFandomResponse> | DeleteFandomResponse;
 
+  findManyGenreByName(
+    request: FindManyGenreByNameRequest,
+  ): Promise<FindManyGenreByNameResponse> | Observable<FindManyGenreByNameResponse> | FindManyGenreByNameResponse;
+
   findOneGenreById(
     request: FindOneGenreByIdRequest,
   ): Promise<FindOneGenreByIdResponse> | Observable<FindOneGenreByIdResponse> | FindOneGenreByIdResponse;
@@ -635,6 +675,13 @@ export interface PostServiceController {
 
   deleteTag(request: DeleteTagRequest): Promise<DeleteTagResponse> | Observable<DeleteTagResponse> | DeleteTagResponse;
 
+  findManyCollectionByName(
+    request: FindManyCollectionByNameRequest,
+  ):
+    | Promise<FindManyCollectionByNameResponse>
+    | Observable<FindManyCollectionByNameResponse>
+    | FindManyCollectionByNameResponse;
+
   findOneCollectionById(
     request: FindOneCollectionByIdRequest,
   ): Promise<FindOneCollectionByIdResponse> | Observable<FindOneCollectionByIdResponse> | FindOneCollectionByIdResponse;
@@ -650,6 +697,13 @@ export interface PostServiceController {
   deleteCollection(
     request: DeleteCollectionRequest,
   ): Promise<DeleteCollectionResponse> | Observable<DeleteCollectionResponse> | DeleteCollectionResponse;
+
+  findManyCharacterByName(
+    request: FindManyCharacterByNameRequest,
+  ):
+    | Promise<FindManyCharacterByNameResponse>
+    | Observable<FindManyCharacterByNameResponse>
+    | FindManyCharacterByNameResponse;
 
   findOneCharacterByParing(
     request: FindOneCharacterByParingRequest,
@@ -680,6 +734,10 @@ export interface PostServiceController {
   deleteCharacter(
     request: DeleteCharacterRequest,
   ): Promise<DeleteCharacterResponse> | Observable<DeleteCharacterResponse> | DeleteCharacterResponse;
+
+  findManyParingByName(
+    request: FindManyParingByNameRequest,
+  ): Promise<FindManyParingByNameResponse> | Observable<FindManyParingByNameResponse> | FindManyParingByNameResponse;
 
   findOneParingByCharacter(
     request: FindOneParingByCharacterRequest,
@@ -723,6 +781,7 @@ export function PostServiceControllerMethods() {
       "createFandom",
       "updateFandom",
       "deleteFandom",
+      "findManyGenreByName",
       "findOneGenreById",
       "createGenre",
       "updateGenre",
@@ -731,16 +790,19 @@ export function PostServiceControllerMethods() {
       "createTag",
       "updateTag",
       "deleteTag",
+      "findManyCollectionByName",
       "findOneCollectionById",
       "createCollection",
       "updateCollection",
       "deleteCollection",
+      "findManyCharacterByName",
       "findOneCharacterByParing",
       "findOneCharacterByFandom",
       "findOneCharacterById",
       "createCharacter",
       "updateCharacter",
       "deleteCharacter",
+      "findManyParingByName",
       "findOneParingByCharacter",
       "findOneParingById",
       "createParing",

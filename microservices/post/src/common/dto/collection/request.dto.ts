@@ -1,6 +1,7 @@
 import {
   CreateCollectionRequest,
   DeleteCollectionRequest,
+  FindManyCollectionByNameRequest,
   FindOneCollectionByIdRequest,
   UpdateCollectionRequest,
 } from '../../../proto/post.pb';
@@ -33,4 +34,10 @@ export class FindOneCollectionByIdRequestDto
   implements FindOneCollectionByIdRequest
 {
   collectionId: string;
+}
+
+export class FindManyCollectionByNameRequestDto
+  implements FindManyCollectionByNameRequest
+{
+  name: string;
 }
