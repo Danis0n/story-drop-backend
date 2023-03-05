@@ -1,6 +1,7 @@
 import {
   CreateFandomResponse,
   DeleteFandomResponse,
+  FindOneFandomByCharacterResponse,
   FindOneFandomByIdResponse,
   UpdateFandomResponse,
 } from '../../../proto/post.pb';
@@ -21,6 +22,13 @@ export class DeleteFandomResponseDto implements DeleteFandomResponse {
 }
 
 export class FindOneFandomByIdResponseDto implements FindOneFandomByIdResponse {
+  fandom: FandomDto;
+  success: boolean;
+}
+
+export class FindOneFandomByCharacterResponseDto
+  implements FindOneFandomByCharacterResponse
+{
   fandom: FandomDto;
   success: boolean;
 }

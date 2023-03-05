@@ -1,7 +1,9 @@
 import {
   CreateCharacterResponse,
   DeleteCharacterResponse,
+  FindOneCharacterByFandomResponse,
   FindOneCharacterByIdResponse,
+  FindOneCharacterByParingResponse,
   UpdateCharacterResponse,
 } from '../../../proto/post.pb';
 import { CharacterDto } from './character.dto';
@@ -23,6 +25,20 @@ export class FindOneCharacterByIdResponseDto
 }
 
 export class UpdateCharacterResponseDto implements UpdateCharacterResponse {
+  character: CharacterDto;
+  success: boolean;
+}
+
+export class FindOneCharacterByParingResponseDto
+  implements FindOneCharacterByParingResponse
+{
+  character: CharacterDto;
+  success: boolean;
+}
+
+export class FindOneCharacterByFandomResponseDto
+  implements FindOneCharacterByFandomResponse
+{
   character: CharacterDto;
   success: boolean;
 }

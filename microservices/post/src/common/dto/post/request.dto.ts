@@ -2,6 +2,7 @@ import {
   CreatePostRequest,
   DeletePostRequest,
   FindOnePostByIdRequest,
+  IsOwnerRequest,
   UpdatePostRequest,
 } from '../../../proto/post.pb';
 
@@ -34,4 +35,9 @@ export class DeletePostRequestDto implements DeletePostRequest {
 
 export class FindOnePostByIdRequestDto implements FindOnePostByIdRequest {
   uuid: string;
+}
+
+export class IsOwnerRequestDto implements IsOwnerRequest {
+  postId: string;
+  userId: string;
 }

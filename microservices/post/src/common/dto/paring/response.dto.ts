@@ -1,6 +1,7 @@
 import {
   CreateParingResponse,
   DeleteParingResponse,
+  FindOneParingByCharacterResponse,
   FindOneParingByIdResponse,
   UpdateParingResponse,
 } from '../../../proto/post.pb';
@@ -21,6 +22,13 @@ export class DeleteParingResponseDto implements DeleteParingResponse {
 }
 
 export class FindOneParingByIdResponseDto implements FindOneParingByIdResponse {
+  paring: ParingDto;
+  success: boolean;
+}
+
+export class FindOneParingByCharacterResponseDto
+  implements FindOneParingByCharacterResponse
+{
   paring: ParingDto;
   success: boolean;
 }

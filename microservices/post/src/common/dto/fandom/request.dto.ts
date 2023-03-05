@@ -1,6 +1,7 @@
 import {
   CreateFandomRequest,
   DeleteFandomRequest,
+  FindOneFandomByCharacterRequest,
   FindOneFandomByIdRequest,
   UpdateFandomRequest,
 } from '../../../proto/post.pb';
@@ -20,4 +21,10 @@ export class DeleteFandomRequestDto implements DeleteFandomRequest {
 
 export class FindOneFandomByIdRequestDto implements FindOneFandomByIdRequest {
   fandomId: string;
+}
+
+export class FindOneFandomByCharacterRequestDto
+  implements FindOneFandomByCharacterRequest
+{
+  characterId: string;
 }

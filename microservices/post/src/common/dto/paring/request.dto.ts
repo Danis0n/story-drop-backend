@@ -1,6 +1,7 @@
 import {
   CreateParingRequest,
   DeleteParingRequest,
+  FindOneParingByCharacterRequest,
   FindOneParingByIdRequest,
   UpdateParingRequest,
 } from '../../../proto/post.pb';
@@ -23,4 +24,10 @@ export class DeleteParingRequestDto implements DeleteParingRequest {
 
 export class FindOneParingByIdRequestDto implements FindOneParingByIdRequest {
   paringId: string;
+}
+
+export class FindOneParingByCharacterRequestDto
+  implements FindOneParingByCharacterRequest
+{
+  characterId: string;
 }

@@ -5,6 +5,7 @@ import {
   UpdatePostResponse,
 } from '../../../proto/post.pb';
 import { PostDto } from './post.dto';
+import { IsOwnerRequestDto } from './request.dto';
 
 export class CreatePostResponseDto implements CreatePostResponse {
   post: PostDto;
@@ -23,4 +24,9 @@ export class DeletePostResponseDto implements DeletePostResponse {
 export class FindOnePostResponseDto implements FindOnePostResponse {
   post: PostDto;
   success: boolean;
+}
+
+export class IsOwnerResponseDto implements IsOwnerRequestDto {
+  postId: string;
+  userId: string;
 }

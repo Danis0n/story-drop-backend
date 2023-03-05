@@ -4,6 +4,34 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "post";
 
+export interface FindOneParingByCharacterRequest {
+  characterId: string;
+}
+
+export interface FindOneParingByCharacterResponse {
+  paring: Paring | undefined;
+  success: boolean;
+}
+
+export interface UpdatePostToCollectionRequest {
+  insertIds: string[];
+  deleteIds: string[];
+  collectionId: string;
+}
+
+export interface UpdatePostToCollectionResponse {
+  success: boolean;
+}
+
+export interface IsOwnerRequest {
+  postId: string;
+  userId: string;
+}
+
+export interface IsOwnerResponse {
+  success: boolean;
+}
+
 export interface FindOnePostByIdRequest {
   uuid: string;
 }
@@ -96,6 +124,15 @@ export interface DeleteChapterRequest {
 }
 
 export interface DeleteChapterResponse {
+  success: boolean;
+}
+
+export interface FindOneFandomByCharacterRequest {
+  characterId: string;
+}
+
+export interface FindOneFandomByCharacterResponse {
+  fandom: Fandom | undefined;
   success: boolean;
 }
 
@@ -246,6 +283,24 @@ export interface DeleteCollectionRequest {
 }
 
 export interface DeleteCollectionResponse {
+  success: boolean;
+}
+
+export interface FindOneCharacterByFandomRequest {
+  fandomId: string;
+}
+
+export interface FindOneCharacterByFandomResponse {
+  character: Character | undefined;
+  success: boolean;
+}
+
+export interface FindOneCharacterByParingRequest {
+  paringId: string;
+}
+
+export interface FindOneCharacterByParingResponse {
+  character: Character | undefined;
   success: boolean;
 }
 
@@ -403,11 +458,7 @@ export interface Genre {
 export const POST_PACKAGE_NAME = "post";
 
 export interface PostServiceClient {
-  /**
-   * TODO: check if beta has access to the post
-   * TODO: check if user owns the post
-   * TODO: check if user has access to the chapter
-   */
+  isOwner(request: IsOwnerRequest): Observable<IsOwnerResponse>;
 
   findOnePostById(request: FindOnePostByIdRequest): Observable<FindOnePostResponse>;
 
@@ -417,8 +468,6 @@ export interface PostServiceClient {
 
   deletePost(request: DeletePostRequest): Observable<DeletePostResponse>;
 
-  /** TODO: add updateBeta */
-
   findOneChapterById(request: FindOneChapterByIdRequest): Observable<FindOneChapterByIdResponse>;
 
   createChapter(request: CreateChapterRequest): Observable<CreateChapterResponse>;
@@ -427,7 +476,7 @@ export interface PostServiceClient {
 
   deleteChapter(request: DeleteChapterRequest): Observable<DeleteChapterResponse>;
 
-  /** TODO: add findByCharacter */
+  findOneFandomByCharacter(request: FindOneFandomByCharacterRequest): Observable<FindOneFandomByCharacterResponse>;
 
   findOneFandomById(request: FindOneFandomByIdRequest): Observable<FindOneFandomByIdResponse>;
 
@@ -453,12 +502,6 @@ export interface PostServiceClient {
 
   deleteTag(request: DeleteTagRequest): Observable<DeleteTagResponse>;
 
-  /**
-   * TODO: add create with posts
-   * TODO: add add post to collection_post
-   * TODO: add delete post from collection_post
-   */
-
   findOneCollectionById(request: FindOneCollectionByIdRequest): Observable<FindOneCollectionByIdResponse>;
 
   createCollection(request: CreateCollectionRequest): Observable<CreateCollectionResponse>;
@@ -467,10 +510,9 @@ export interface PostServiceClient {
 
   deleteCollection(request: DeleteCollectionRequest): Observable<DeleteCollectionResponse>;
 
-  /**
-   * TODO : add findByParing
-   * TODO : add findByFandom
-   */
+  findOneCharacterByParing(request: FindOneCharacterByParingRequest): Observable<FindOneCharacterByParingResponse>;
+
+  findOneCharacterByFandom(request: FindOneCharacterByFandomRequest): Observable<FindOneCharacterByFandomResponse>;
 
   findOneCharacterById(request: FindOneCharacterByIdRequest): Observable<FindOneCharacterByIdResponse>;
 
@@ -480,11 +522,7 @@ export interface PostServiceClient {
 
   deleteCharacter(request: DeleteCharacterRequest): Observable<DeleteCharacterResponse>;
 
-  /**
-   * TODO: add findByCharacter
-   * TODO: add insertCharacter
-   * TODO: add removeCharacter
-   */
+  findOneParingByCharacter(request: FindOneParingByCharacterRequest): Observable<FindOneParingByCharacterResponse>;
 
   findOneParingById(request: FindOneParingByIdRequest): Observable<FindOneParingByIdResponse>;
 
@@ -496,11 +534,7 @@ export interface PostServiceClient {
 }
 
 export interface PostServiceController {
-  /**
-   * TODO: check if beta has access to the post
-   * TODO: check if user owns the post
-   * TODO: check if user has access to the chapter
-   */
+  isOwner(request: IsOwnerRequest): Promise<IsOwnerResponse> | Observable<IsOwnerResponse> | IsOwnerResponse;
 
   findOnePostById(
     request: FindOnePostByIdRequest,
@@ -518,8 +552,6 @@ export interface PostServiceController {
     request: DeletePostRequest,
   ): Promise<DeletePostResponse> | Observable<DeletePostResponse> | DeletePostResponse;
 
-  /** TODO: add updateBeta */
-
   findOneChapterById(
     request: FindOneChapterByIdRequest,
   ): Promise<FindOneChapterByIdResponse> | Observable<FindOneChapterByIdResponse> | FindOneChapterByIdResponse;
@@ -536,7 +568,12 @@ export interface PostServiceController {
     request: DeleteChapterRequest,
   ): Promise<DeleteChapterResponse> | Observable<DeleteChapterResponse> | DeleteChapterResponse;
 
-  /** TODO: add findByCharacter */
+  findOneFandomByCharacter(
+    request: FindOneFandomByCharacterRequest,
+  ):
+    | Promise<FindOneFandomByCharacterResponse>
+    | Observable<FindOneFandomByCharacterResponse>
+    | FindOneFandomByCharacterResponse;
 
   findOneFandomById(
     request: FindOneFandomByIdRequest,
@@ -580,12 +617,6 @@ export interface PostServiceController {
 
   deleteTag(request: DeleteTagRequest): Promise<DeleteTagResponse> | Observable<DeleteTagResponse> | DeleteTagResponse;
 
-  /**
-   * TODO: add create with posts
-   * TODO: add add post to collection_post
-   * TODO: add delete post from collection_post
-   */
-
   findOneCollectionById(
     request: FindOneCollectionByIdRequest,
   ): Promise<FindOneCollectionByIdResponse> | Observable<FindOneCollectionByIdResponse> | FindOneCollectionByIdResponse;
@@ -602,10 +633,19 @@ export interface PostServiceController {
     request: DeleteCollectionRequest,
   ): Promise<DeleteCollectionResponse> | Observable<DeleteCollectionResponse> | DeleteCollectionResponse;
 
-  /**
-   * TODO : add findByParing
-   * TODO : add findByFandom
-   */
+  findOneCharacterByParing(
+    request: FindOneCharacterByParingRequest,
+  ):
+    | Promise<FindOneCharacterByParingResponse>
+    | Observable<FindOneCharacterByParingResponse>
+    | FindOneCharacterByParingResponse;
+
+  findOneCharacterByFandom(
+    request: FindOneCharacterByFandomRequest,
+  ):
+    | Promise<FindOneCharacterByFandomResponse>
+    | Observable<FindOneCharacterByFandomResponse>
+    | FindOneCharacterByFandomResponse;
 
   findOneCharacterById(
     request: FindOneCharacterByIdRequest,
@@ -623,11 +663,12 @@ export interface PostServiceController {
     request: DeleteCharacterRequest,
   ): Promise<DeleteCharacterResponse> | Observable<DeleteCharacterResponse> | DeleteCharacterResponse;
 
-  /**
-   * TODO: add findByCharacter
-   * TODO: add insertCharacter
-   * TODO: add removeCharacter
-   */
+  findOneParingByCharacter(
+    request: FindOneParingByCharacterRequest,
+  ):
+    | Promise<FindOneParingByCharacterResponse>
+    | Observable<FindOneParingByCharacterResponse>
+    | FindOneParingByCharacterResponse;
 
   findOneParingById(
     request: FindOneParingByIdRequest,
@@ -649,6 +690,7 @@ export interface PostServiceController {
 export function PostServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = [
+      "isOwner",
       "findOnePostById",
       "createPost",
       "updatePost",
@@ -657,6 +699,7 @@ export function PostServiceControllerMethods() {
       "createChapter",
       "updateChapter",
       "deleteChapter",
+      "findOneFandomByCharacter",
       "findOneFandomById",
       "createFandom",
       "updateFandom",
@@ -673,10 +716,13 @@ export function PostServiceControllerMethods() {
       "createCollection",
       "updateCollection",
       "deleteCollection",
+      "findOneCharacterByParing",
+      "findOneCharacterByFandom",
       "findOneCharacterById",
       "createCharacter",
       "updateCharacter",
       "deleteCharacter",
+      "findOneParingByCharacter",
       "findOneParingById",
       "createParing",
       "updateParing",
