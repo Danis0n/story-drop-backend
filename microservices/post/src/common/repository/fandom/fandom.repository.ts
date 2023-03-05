@@ -24,33 +24,6 @@ export class FandomRepository {
     }
   }
 
-  public async update(name: string, fandomId: string): Promise<FandomPrisma> {
-    try {
-      return await this.prisma.fandom.update({
-        where: { fandom_id: fandomId },
-        data: { fandom_name: name },
-      });
-    } catch (e) {
-      Logger.error(
-        `update: Ошибка во время обновлении фандома: ${name}, ${fandomId}. ${e?.message}`,
-      );
-      return null;
-    }
-  }
-
-  public async delete(fandomId: string): Promise<FandomPrisma> {
-    try {
-      return await this.prisma.fandom.delete({
-        where: { fandom_id: fandomId },
-      });
-    } catch (e) {
-      Logger.error(
-        `delete: Ошибка во время удалени фандома: ${fandomId}. ${e?.messagee}`,
-      );
-      return null;
-    }
-  }
-
   public async findId(fandomId: string): Promise<FandomPrisma> {
     try {
       return await this.prisma.fandom.findUnique({
@@ -90,6 +63,33 @@ export class FandomRepository {
     } catch (e) {
       Logger.error(
         `findNameMany: Ошибка во время поиска фандомов по имени: ${name}. ${e}`,
+      );
+      return null;
+    }
+  }
+
+  public async update(name: string, fandomId: string): Promise<FandomPrisma> {
+    try {
+      return await this.prisma.fandom.update({
+        where: { fandom_id: fandomId },
+        data: { fandom_name: name },
+      });
+    } catch (e) {
+      Logger.error(
+        `update: Ошибка во время обновлении фандома: ${name}, ${fandomId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async delete(fandomId: string): Promise<FandomPrisma> {
+    try {
+      return await this.prisma.fandom.delete({
+        where: { fandom_id: fandomId },
+      });
+    } catch (e) {
+      Logger.error(
+        `delete: Ошибка во время удалени фандома: ${fandomId}. ${e?.messagee}`,
       );
       return null;
     }

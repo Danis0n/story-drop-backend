@@ -5,6 +5,10 @@ import {
   CreateParingResponseDto,
   DeleteParingRequestDto,
   DeleteParingResponseDto,
+  FindManyParingByCharacterRequestDto,
+  FindManyParingByCharacterResponseDto,
+  FindManyParingByNameRequestDto,
+  FindManyParingByNameResponseDto,
   FindOneParingByIdRequestDto,
   FindOneParingByIdResponseDto,
   ParingMapper,
@@ -53,6 +57,12 @@ export class ParingService {
     return { paring: ParingMapper.toDto(paring), success: true };
   }
 
+  public async findCharacterId({
+    characterId,
+  }: FindManyParingByCharacterRequestDto): Promise<FindManyParingByCharacterResponseDto> {
+    return undefined;
+  }
+
   public async update({
     name,
     paringId,
@@ -79,5 +89,11 @@ export class ParingService {
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
     return { success: true };
+  }
+
+  public async findName({
+    name,
+  }: FindManyParingByNameRequestDto): Promise<FindManyParingByNameResponseDto> {
+    return undefined;
   }
 }

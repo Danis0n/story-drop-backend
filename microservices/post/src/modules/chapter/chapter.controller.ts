@@ -16,33 +16,33 @@ import {
 @Controller('chapter')
 export class ChapterController {
   @Inject(ChapterService)
-  private readonly s: ChapterService;
+  private readonly cs: ChapterService;
 
   @GrpcMethod(POST_SERVICE_NAME, 'CreateChapter')
   private async create(
     payload: CreateChapterRequestDto,
   ): Promise<CreateChapterResponseDto> {
-    return this.s.create(payload);
+    return this.cs.create(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'FindOneChapterById')
   private async findId(
     payload: FindOneChapterByIdRequestDto,
   ): Promise<FindOneChapterByIdResponseDto> {
-    return this.s.findId(payload);
+    return this.cs.findId(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateChapter')
   private async update(
     payload: UpdateChapterRequestDto,
   ): Promise<UpdateChapterResponseDto> {
-    return this.s.update(payload);
+    return this.cs.update(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'DeleteChapter')
   private async delete(
     payload: DeleteChapterRequestDto,
   ): Promise<DeleteChapterResponseDto> {
-    return this.s.delete(payload);
+    return this.cs.delete(payload);
   }
 }

@@ -15,33 +15,33 @@ import { PostService } from './post.service';
 @Controller('post')
 export class PostController {
   @Inject(PostService)
-  private readonly s: PostService;
+  private readonly ps: PostService;
 
   @GrpcMethod(POST_SERVICE_NAME, 'CreatePost')
   private async create(
     payload: CreatePostRequestDto,
   ): Promise<CreatePostResponseDto> {
-    return this.s.create(payload);
+    return this.ps.create(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'FindOnePostById')
   private async findId(
     payload: FindOnePostByIdRequestDto,
   ): Promise<FindOnePostResponse> {
-    return this.s.findId(payload);
+    return this.ps.findId(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdatePost')
   private async update(
     payload: UpdatePostRequestDto,
   ): Promise<UpdatePostResponseDto> {
-    return this.s.update(payload);
+    return this.ps.update(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'DeletePost')
   private async delete(
     payload: DeletePostRequestDto,
   ): Promise<DeletePostResponseDto> {
-    return this.s.delete(payload);
+    return this.ps.delete(payload);
   }
 }

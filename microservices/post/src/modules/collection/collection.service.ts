@@ -6,6 +6,8 @@ import {
   CreateCollectionResponseDto,
   DeleteCollectionRequestDto,
   DeleteCollectionResponseDto,
+  FindManyCollectionByNameRequestDto,
+  FindManyCollectionByNameResponseDto,
   FindOneCollectionByIdRequestDto,
   FindOneCollectionByIdResponseDto,
   UpdateCollectionRequestDto,
@@ -51,6 +53,12 @@ export class CollectionService {
       collection: CollectionMapper.toDto(collection),
       success: true,
     };
+  }
+
+  public async findName({
+    name,
+  }: FindManyCollectionByNameRequestDto): Promise<FindManyCollectionByNameResponseDto> {
+    return undefined;
   }
 
   public async update({

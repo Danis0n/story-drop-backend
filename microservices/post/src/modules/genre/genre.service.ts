@@ -4,6 +4,8 @@ import {
   CreateGenreResponseDto,
   DeleteGenreRequestDto,
   DeleteGenreResponseDto,
+  FindManyGenreByNameRequestDto,
+  FindManyGenreByNameResponseDto,
   FindOneGenreByIdRequestDto,
   FindOneGenreByIdResponseDto,
   GenreMapper,
@@ -43,7 +45,11 @@ export class GenreService {
     return { genre: GenreMapper.toDto(genre), success: true };
   }
 
-  public async findNameMany() {}
+  public async findName({
+    name,
+  }: FindManyGenreByNameRequestDto): Promise<FindManyGenreByNameResponseDto> {
+    return { genres: [] };
+  }
 
   public async update({
     genreId,

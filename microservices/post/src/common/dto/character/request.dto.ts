@@ -1,10 +1,10 @@
 import {
   CreateCharacterRequest,
   DeleteCharacterRequest,
+  FindManyCharacterByFandomRequest,
   FindManyCharacterByNameRequest,
-  FindOneCharacterByFandomRequest,
+  FindManyCharacterByParingRequest,
   FindOneCharacterByIdRequest,
-  FindOneCharacterByParingRequest,
   UpdateCharacterRequest,
 } from '../../../proto/post.pb';
 import { IsOptional } from 'class-validator';
@@ -30,14 +30,14 @@ export class FindOneCharacterByIdRequestDto
   characterId: string;
 }
 
-export class FindOneCharacterByParingRequestDto
-  implements FindOneCharacterByParingRequest
+export class FindManyCharacterByParingRequestDto
+  implements FindManyCharacterByParingRequest
 {
   paringId: string;
 }
 
-export class FindOneCharacterByFandomRequestDto
-  implements FindOneCharacterByFandomRequest
+export class FindManyCharacterByFandomRequestDto
+  implements FindManyCharacterByFandomRequest
 {
   fandomId: string;
 }

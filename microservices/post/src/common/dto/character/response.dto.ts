@@ -30,7 +30,7 @@ export class UpdateCharacterResponseDto implements UpdateCharacterResponse {
   success: boolean;
 }
 
-export class FindOneCharacterByParingResponseDto
+export class FindManyCharacterByParingResponseDto
   implements FindManyCharacterByParingResponse
 {
   characters: CharacterDto[];

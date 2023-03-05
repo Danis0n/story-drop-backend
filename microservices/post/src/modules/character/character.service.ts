@@ -6,10 +6,14 @@ import {
   CreateCharacterResponseDto,
   DeleteCharacterRequestDto,
   DeleteCharacterResponseDto,
+  FindManyCharacterByFandomRequestDto,
+  FindManyCharacterByFandomResponseDto,
+  FindManyCharacterByNameRequestDto,
+  FindManyCharacterByNameResponseDto,
+  FindManyCharacterByParingRequestDto,
+  FindManyCharacterByParingResponseDto,
   FindOneCharacterByIdRequestDto,
   FindOneCharacterByIdResponseDto,
-  FindOneCharacterByParingRequestDto,
-  FindOneCharacterByParingResponseDto,
   UpdateCharacterRequestDto,
   UpdateCharacterResponseDto,
 } from '../../common';
@@ -83,7 +87,19 @@ export class CharacterService {
 
   public async findParingId({
     paringId,
-  }: FindOneCharacterByParingRequestDto): Promise<FindOneCharacterByParingResponseDto> {
+  }: FindManyCharacterByParingRequestDto): Promise<FindManyCharacterByParingResponseDto> {
+    return undefined;
+  }
+
+  public async findName({
+    name,
+  }: FindManyCharacterByNameRequestDto): Promise<FindManyCharacterByNameResponseDto> {
+    return undefined;
+  }
+
+  public async findFandomId({
+    fandomId,
+  }: FindManyCharacterByFandomRequestDto): Promise<FindManyCharacterByFandomResponseDto> {
     return undefined;
   }
 }
