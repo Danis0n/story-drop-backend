@@ -1,6 +1,7 @@
 import {
   CreateFandomRequest,
   DeleteFandomRequest,
+  FindManyFandomByNameRequest,
   FindOneFandomByCharacterRequest,
   FindOneFandomByIdRequest,
   UpdateFandomRequest,
@@ -27,4 +28,10 @@ export class FindOneFandomByCharacterRequestDto
   implements FindOneFandomByCharacterRequest
 {
   characterId: string;
+}
+
+export class FindManyFandomByNameRequestDto
+  implements FindManyFandomByNameRequest
+{
+  name: string;
 }

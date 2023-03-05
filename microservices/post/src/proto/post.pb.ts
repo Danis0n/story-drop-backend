@@ -127,6 +127,14 @@ export interface DeleteChapterResponse {
   success: boolean;
 }
 
+export interface FindManyFandomByNameRequest {
+  name: string;
+}
+
+export interface FindManyFandomByNameResponse {
+  fandoms: Fandom[];
+}
+
 export interface FindOneFandomByCharacterRequest {
   characterId: string;
 }
@@ -476,7 +484,11 @@ export interface PostServiceClient {
 
   deleteChapter(request: DeleteChapterRequest): Observable<DeleteChapterResponse>;
 
+  /** findByName */
+
   findOneFandomByCharacter(request: FindOneFandomByCharacterRequest): Observable<FindOneFandomByCharacterResponse>;
+
+  findManyFandomByName(request: FindManyFandomByNameRequest): Observable<FindManyFandomByNameResponse>;
 
   findOneFandomById(request: FindOneFandomByIdRequest): Observable<FindOneFandomByIdResponse>;
 
@@ -568,12 +580,18 @@ export interface PostServiceController {
     request: DeleteChapterRequest,
   ): Promise<DeleteChapterResponse> | Observable<DeleteChapterResponse> | DeleteChapterResponse;
 
+  /** findByName */
+
   findOneFandomByCharacter(
     request: FindOneFandomByCharacterRequest,
   ):
     | Promise<FindOneFandomByCharacterResponse>
     | Observable<FindOneFandomByCharacterResponse>
     | FindOneFandomByCharacterResponse;
+
+  findManyFandomByName(
+    request: FindManyFandomByNameRequest,
+  ): Promise<FindManyFandomByNameResponse> | Observable<FindManyFandomByNameResponse> | FindManyFandomByNameResponse;
 
   findOneFandomById(
     request: FindOneFandomByIdRequest,
@@ -700,6 +718,7 @@ export function PostServiceControllerMethods() {
       "updateChapter",
       "deleteChapter",
       "findOneFandomByCharacter",
+      "findManyFandomByName",
       "findOneFandomById",
       "createFandom",
       "updateFandom",

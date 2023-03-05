@@ -1,6 +1,7 @@
 import {
   CreateFandomResponse,
   DeleteFandomResponse,
+  FindManyFandomByNameResponse,
   FindOneFandomByCharacterResponse,
   FindOneFandomByIdResponse,
   UpdateFandomResponse,
@@ -31,4 +32,10 @@ export class FindOneFandomByCharacterResponseDto
 {
   fandom: FandomDto;
   success: boolean;
+}
+
+export class FindManyFandomByNameResponseDto
+  implements FindManyFandomByNameResponse
+{
+  fandoms: FandomDto[];
 }

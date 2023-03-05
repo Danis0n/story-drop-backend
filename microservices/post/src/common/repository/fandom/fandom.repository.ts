@@ -64,14 +64,19 @@ export class FandomRepository {
     }
   }
 
-  public async findName(name: string): Promise<FandomPrisma> {
+  public async findCharacterId(
+    characterId: string,
+  ): Promise<{ fandom: FandomPrisma }> {
     try {
-      return await this.prisma.fandom.findUnique({
-        where: { fandom_name: name },
+      return await this.prisma.character.findUnique({
+        where: { character_id: characterId },
+        select: {
+          fandom: true,
+        },
       });
     } catch (e) {
       Logger.error(
-        `findName: Ошибка во время поиска фандома по имени: ${name}. ${e}`,
+        `findId: Ошибка во время поиска фандома по CharacterId: ${characterId}. ${e?.message}`,
       );
       return null;
     }

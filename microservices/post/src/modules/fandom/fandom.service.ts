@@ -6,6 +6,10 @@ import {
   DeleteFandomResponseDto,
   FandomMapper,
   FandomRepository,
+  FindManyFandomByNameRequestDto,
+  FindManyFandomByNameResponseDto,
+  FindOneFandomByCharacterRequestDto,
+  FindOneFandomByCharacterResponseDto,
   FindOneFandomByIdRequestDto,
   FindOneFandomByIdResponseDto,
   UpdateFandomRequestDto,
@@ -41,6 +45,32 @@ export class FandomService {
       throw new GrpcNotFoundException('Фандом с таким id не существует!');
 
     return { fandom: FandomMapper.toDto(fandom), success: true };
+  }
+
+  public async findNameMany({
+    name,
+  }: FindManyFandomByNameRequestDto): Promise<FindManyFandomByNameResponseDto> {
+    const fandoms = await this.r.findNameMany(name);
+
+    return {
+      fandoms: fandoms
+        ? fandoms.map((fandom) => {
+            return FandomMapper.toDto(fandom);
+          })
+        : [],
+    };
+  }
+
+  public async findCharacterId({
+    characterId,
+  }: FindOneFandomByCharacterRequestDto): Promise<FindOneFandomByCharacterResponseDto> {
+    const { fandom } = await this.r.findCharacterId(characterId);
+    if (!fandom)
+      throw new GrpcNotFoundException(
+        'Фандом с таким characterId не существует!',
+      );
+
+    return { fandom: FandomMapper.toDto(fandom), success: false };
   }
 
   public async update({

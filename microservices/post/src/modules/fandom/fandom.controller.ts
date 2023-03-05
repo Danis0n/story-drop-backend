@@ -7,6 +7,10 @@ import {
   CreateFandomResponseDto,
   DeleteFandomRequestDto,
   DeleteFandomResponseDto,
+  FindManyFandomByNameRequestDto,
+  FindManyFandomByNameResponseDto,
+  FindOneFandomByCharacterRequestDto,
+  FindOneFandomByCharacterResponseDto,
   FindOneFandomByIdRequestDto,
   FindOneFandomByIdResponseDto,
   UpdateFandomRequestDto,
@@ -30,6 +34,20 @@ export class FandomController {
     payload: FindOneFandomByIdRequestDto,
   ): Promise<FindOneFandomByIdResponseDto> {
     return this.s.findId(payload);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'FindOneFandomByCharacter')
+  private async findCharacterId(
+    payload: FindOneFandomByCharacterRequestDto,
+  ): Promise<FindOneFandomByCharacterResponseDto> {
+    return this.s.findCharacterId(payload);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'FindManyFandomByName')
+  private async findNameMany(
+    payload: FindManyFandomByNameRequestDto,
+  ): Promise<FindManyFandomByNameResponseDto> {
+    return this.s.findNameMany(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateFandom')
