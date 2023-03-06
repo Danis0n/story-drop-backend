@@ -53,10 +53,10 @@ export class CharacterController {
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'FindManyCharacterByName')
-  private async findName(
+  private async findNameMany(
     payload: FindManyCharacterByNameRequestDto,
   ): Promise<FindManyCharacterByNameResponseDto> {
-    return this.cs.findName(payload);
+    return this.cs.findNameMany(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateCharacter')

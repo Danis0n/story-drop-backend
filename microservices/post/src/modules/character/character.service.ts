@@ -49,6 +49,58 @@ export class CharacterService {
     };
   }
 
+  public async findId({
+    characterId,
+  }: FindOneCharacterByIdRequestDto): Promise<FindOneCharacterByIdResponseDto> {
+    const character = await this.r.findId(characterId);
+    if (!character)
+      throw new GrpcNotFoundException('Персонаж с таким id не найден!');
+
+    return {
+      character: CharacterMapper.toDto(character),
+      success: true,
+    };
+  }
+
+  public async findParingId({
+    paringId,
+  }: FindManyCharacterByParingRequestDto): Promise<FindManyCharacterByParingResponseDto> {
+    const characters = await this.r.findParingId(paringId);
+
+    return {
+      characters:
+        characters.map(({ character }) => {
+          return CharacterMapper.toDto(character);
+        }) || [],
+    };
+  }
+
+  public async findNameMany({
+    name,
+  }: FindManyCharacterByNameRequestDto): Promise<FindManyCharacterByNameResponseDto> {
+    const characters = await this.r.findNameMany(name);
+
+    return {
+      characters:
+        characters.map((character) => {
+          return CharacterMapper.toDto(character);
+        }) || [],
+    };
+  }
+
+  public async findFandomId({
+    fandomId,
+  }: FindManyCharacterByFandomRequestDto): Promise<FindManyCharacterByFandomResponseDto> {
+    const characters = await this.r.findFandomId(fandomId);
+
+    return {
+      characters:
+        characters.map((character) => {
+          return CharacterMapper.toDto(character);
+        }) || [],
+    };
+  }
+
   public async update({
     name,
     characterId,
@@ -67,39 +119,9 @@ export class CharacterService {
     characterId,
   }: DeleteCharacterRequestDto): Promise<DeleteCharacterResponseDto> {
     const character = await this.r.delete(characterId);
-    if (!character) return { success: false };
-
-    return { success: true };
-  }
-
-  public async findId({
-    characterId,
-  }: FindOneCharacterByIdRequestDto): Promise<FindOneCharacterByIdResponseDto> {
-    const character = await this.r.findId(characterId);
     if (!character)
       throw new GrpcNotFoundException('Персонаж с таким id не найден!');
 
-    return {
-      character: CharacterMapper.toDto(character),
-      success: true,
-    };
-  }
-
-  public async findParingId({
-    paringId,
-  }: FindManyCharacterByParingRequestDto): Promise<FindManyCharacterByParingResponseDto> {
-    return undefined;
-  }
-
-  public async findName({
-    name,
-  }: FindManyCharacterByNameRequestDto): Promise<FindManyCharacterByNameResponseDto> {
-    return undefined;
-  }
-
-  public async findFandomId({
-    fandomId,
-  }: FindManyCharacterByFandomRequestDto): Promise<FindManyCharacterByFandomResponseDto> {
-    return undefined;
+    return { success: true };
   }
 }
