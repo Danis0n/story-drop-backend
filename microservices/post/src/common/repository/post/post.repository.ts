@@ -87,4 +87,18 @@ export class PostRepository {
       return null;
     }
   }
+
+  public async isOwner(postId: string): Promise<{ user_id: string }> {
+    try {
+      return await this.prisma.post.findUnique({
+        where: { post_id: postId },
+        select: { user_id: true },
+      });
+    } catch (e) {
+      Logger.error(
+        `delete: Ошибка во время удаления поста по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
 }

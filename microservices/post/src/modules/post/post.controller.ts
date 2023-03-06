@@ -1,12 +1,15 @@
 import { Controller, Inject } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { FindOnePostResponse, POST_SERVICE_NAME } from '../../proto/post.pb';
+import { POST_SERVICE_NAME } from '../../proto/post.pb';
 import {
   CreatePostRequestDto,
   CreatePostResponseDto,
   DeletePostRequestDto,
   DeletePostResponseDto,
   FindOnePostByIdRequestDto,
+  FindOnePostResponseDto,
+  IsOwnerRequestDto,
+  IsOwnerResponseDto,
   UpdatePostRequestDto,
   UpdatePostResponseDto,
 } from '../../common';
@@ -27,7 +30,7 @@ export class PostController {
   @GrpcMethod(POST_SERVICE_NAME, 'FindOnePostById')
   private async findId(
     payload: FindOnePostByIdRequestDto,
-  ): Promise<FindOnePostResponse> {
+  ): Promise<FindOnePostResponseDto> {
     return this.ps.findId(payload);
   }
 
@@ -43,5 +46,12 @@ export class PostController {
     payload: DeletePostRequestDto,
   ): Promise<DeletePostResponseDto> {
     return this.ps.delete(payload);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'IsOwner')
+  private async isOwner(
+    payload: IsOwnerRequestDto,
+  ): Promise<IsOwnerResponseDto> {
+    return this.ps.isOwner(payload);
   }
 }

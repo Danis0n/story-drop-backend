@@ -5,6 +5,8 @@ import {
   DeletePostRequestDto,
   DeletePostResponseDto,
   FindOnePostByIdRequestDto,
+  IsOwnerRequestDto,
+  IsOwnerResponseDto,
   PostMapper,
   PostRepository,
   UpdatePostRequestDto,
@@ -55,5 +57,14 @@ export class PostService {
       throw new GrpcInvalidArgumentException('Ошибка при удалении поста!');
 
     return { success: true };
+  }
+
+  public async isOwner({
+    postId,
+    userId,
+  }: IsOwnerRequestDto): Promise<IsOwnerResponseDto> {
+    const { user_id: id } = await this.r.isOwner(postId);
+
+    return { success: userId === id };
   }
 }
