@@ -7,6 +7,8 @@ import {
   CreateChapterResponseDto,
   DeleteChapterRequestDto,
   DeleteChapterResponseDto,
+  FindManyChapterByPostIdRequestDto,
+  FindManyChapterByPostIdResponseDto,
   FindOneChapterByIdRequestDto,
   FindOneChapterByIdResponseDto,
   UpdateChapterRequestDto,
@@ -30,6 +32,13 @@ export class ChapterController {
     payload: FindOneChapterByIdRequestDto,
   ): Promise<FindOneChapterByIdResponseDto> {
     return this.cs.findId(payload);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'FindManyChapterByPostId')
+  private async findPostId(
+    payload: FindManyChapterByPostIdRequestDto,
+  ): Promise<FindManyChapterByPostIdResponseDto> {
+    return this.cs.findPostId(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateChapter')

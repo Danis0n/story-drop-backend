@@ -6,6 +6,8 @@ import {
   CreateChapterResponseDto,
   DeleteChapterRequestDto,
   DeleteChapterResponseDto,
+  FindManyChapterByPostIdRequestDto,
+  FindManyChapterByPostIdResponseDto,
   FindOneChapterByIdRequestDto,
   FindOneChapterByIdResponseDto,
   UpdateChapterRequestDto,
@@ -44,7 +46,18 @@ export class ChapterService {
     return { chapter: ChapterMapper.toDto(chapter), success: true };
   }
 
-  public async findPostId(): Promise<void> {}
+  public async findPostId({
+    postId,
+  }: FindManyChapterByPostIdRequestDto): Promise<FindManyChapterByPostIdResponseDto> {
+    const chapters = await this.r.findPostId(postId);
+
+    return {
+      chapters:
+        chapters.map((chapter) => {
+          return ChapterMapper.toDto(chapter);
+        }) || [],
+    };
+  }
 
   public async update(
     payload: UpdateChapterRequestDto,

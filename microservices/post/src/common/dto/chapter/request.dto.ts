@@ -1,6 +1,7 @@
 import {
   CreateChapterRequest,
   DeleteChapterRequest,
+  FindManyChapterByPostIdRequest,
   FindOneChapterByIdRequest,
   UpdateChapterRequest,
 } from '../../../proto/post.pb';
@@ -29,4 +30,10 @@ export class DeleteChapterRequestDto implements DeleteChapterRequest {
 
 export class FindOneChapterByIdRequestDto implements FindOneChapterByIdRequest {
   chapterId: string;
+}
+
+export class FindManyChapterByPostIdRequestDto
+  implements FindManyChapterByPostIdRequest
+{
+  postId: string;
 }
