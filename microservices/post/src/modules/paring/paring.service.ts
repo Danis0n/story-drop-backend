@@ -60,7 +60,27 @@ export class ParingService {
   public async findCharacterId({
     characterId,
   }: FindManyParingByCharacterRequestDto): Promise<FindManyParingByCharacterResponseDto> {
-    return undefined;
+    const parings = await this.r.findCharacterId(characterId);
+
+    return {
+      parings:
+        parings.map(({ paring }) => {
+          return ParingMapper.toDto(paring);
+        }) || [],
+    };
+  }
+
+  public async findNameMany({
+    name,
+  }: FindManyParingByNameRequestDto): Promise<FindManyParingByNameResponseDto> {
+    const parings = await this.r.findNameMany(name);
+
+    return {
+      parings:
+        parings.map((paring) => {
+          return ParingMapper.toDto(paring);
+        }) || [],
+    };
   }
 
   public async update({
@@ -89,11 +109,5 @@ export class ParingService {
       throw new GrpcNotFoundException('Пейринг с таким id не существует!');
 
     return { success: true };
-  }
-
-  public async findName({
-    name,
-  }: FindManyParingByNameRequestDto): Promise<FindManyParingByNameResponseDto> {
-    return undefined;
   }
 }

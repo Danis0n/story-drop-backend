@@ -45,10 +45,17 @@ export class GenreService {
     return { genre: GenreMapper.toDto(genre), success: true };
   }
 
-  public async findName({
+  public async findNameMany({
     name,
   }: FindManyGenreByNameRequestDto): Promise<FindManyGenreByNameResponseDto> {
-    return { genres: [] };
+    const genres = await this.r.findNameMany(name);
+
+    return {
+      genres:
+        genres.map((genre) => {
+          return GenreMapper.toDto(genre);
+        }) || [],
+    };
   }
 
   public async update({

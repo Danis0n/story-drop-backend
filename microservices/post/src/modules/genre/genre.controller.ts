@@ -35,10 +35,10 @@ export class GenreController {
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'FindManyGenreByName')
-  private async findName(
+  private async findNameMany(
     payload: FindManyGenreByNameRequestDto,
   ): Promise<FindManyGenreByNameResponseDto> {
-    return this.gs.findName(payload);
+    return this.gs.findNameMany(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateGenre')

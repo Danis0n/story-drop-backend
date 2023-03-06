@@ -24,6 +24,32 @@ export class GenreRepository {
     }
   }
 
+  public async findId(genreId: string): Promise<GenrePrisma> {
+    try {
+      return await this.prisma.genre.findUnique({
+        where: { genre_id: genreId },
+      });
+    } catch (e) {
+      Logger.error(
+        `findId: Ошибка во время поиска жанра по id: ${genreId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async findNameMany(name: string): Promise<GenrePrisma[]> {
+    try {
+      return await this.prisma.genre.findMany({
+        where: { genre_name: { contains: name, mode: 'insensitive' } },
+      });
+    } catch (e) {
+      Logger.error(
+        `findNameMany: Ошибка во время поиска жанраво по имени: ${name}. ${e}`,
+      );
+      return null;
+    }
+  }
+
   public async update(name: string, genreId: string): Promise<GenrePrisma> {
     try {
       return await this.prisma.genre.update({
@@ -46,32 +72,6 @@ export class GenreRepository {
     } catch (e) {
       Logger.error(
         `delete: Ошибка во время удалени жанра: ${genreId}. ${e?.messagee}`,
-      );
-      return null;
-    }
-  }
-
-  public async findId(genreId: string): Promise<GenrePrisma> {
-    try {
-      return await this.prisma.genre.findUnique({
-        where: { genre_id: genreId },
-      });
-    } catch (e) {
-      Logger.error(
-        `findId: Ошибка во время поиска жанра по id: ${genreId}. ${e?.message}`,
-      );
-      return null;
-    }
-  }
-
-  public async findNameMany(name: string): Promise<GenrePrisma[]> {
-    try {
-      return await this.prisma.genre.findMany({
-        where: { genre_name: { contains: name, mode: 'insensitive' } },
-      });
-    } catch (e) {
-      Logger.error(
-        `findNameMany: Ошибка во время поиска жанраво по имени: ${name}. ${e}`,
       );
       return null;
     }

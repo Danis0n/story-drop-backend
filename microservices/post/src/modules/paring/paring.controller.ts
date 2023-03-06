@@ -44,10 +44,10 @@ export class ParingController {
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'FindManyParingByName')
-  private async findName(
+  private async findNameMany(
     payload: FindManyParingByNameRequestDto,
   ): Promise<FindManyParingByNameResponseDto> {
-    return this.ps.findName(payload);
+    return this.ps.findNameMany(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateParing')

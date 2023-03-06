@@ -17,9 +17,7 @@ export class ParingRepository {
         data: {
           paring_id: randomUUID(),
           paring_name: name,
-          character_paring: {
-            create: insertCharacters,
-          },
+          character_paring: { create: insertCharacters },
         },
       });
     } catch (e) {
@@ -53,6 +51,22 @@ export class ParingRepository {
     } catch (e) {
       Logger.error(
         `findNameMany: Ошибка во время поиска пейрингов: ${name}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async findCharacterId(
+    characterId: string,
+  ): Promise<{ paring: ParingPrisma }[]> {
+    try {
+      return await this.prisma.character_paring.findMany({
+        where: { character_id: characterId },
+        select: { paring: true },
+      });
+    } catch (e) {
+      Logger.error(
+        `findCharacterId: Ошибка во время поиска пейрингов по characterId: ${characterId}. ${e?.message}`,
       );
       return null;
     }
