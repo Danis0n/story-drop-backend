@@ -61,6 +61,19 @@ export class CollectionRepository {
     }
   }
 
+  public async findManyName(name: string): Promise<CollectionPrisma[]> {
+    try {
+      return await this.prisma.collection.findMany({
+        where: { collection_name: { contains: name, mode: 'insensitive' } },
+      });
+    } catch (e) {
+      Logger.error(
+        `findUserId: Ошибка во время поиска коллекций по имени: ${name}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
   public async update(
     name: string,
     collectionId: string,

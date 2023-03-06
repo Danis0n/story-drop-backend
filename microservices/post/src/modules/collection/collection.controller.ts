@@ -9,6 +9,8 @@ import {
   DeleteCollectionResponseDto,
   FindManyCollectionByNameRequestDto,
   FindManyCollectionByNameResponseDto,
+  FindManyCollectionByUserIdRequestDto,
+  FindManyCollectionByUserIdResponseDto,
   FindOneCollectionByIdRequestDto,
   FindOneCollectionByIdResponseDto,
   UpdateCollectionRequestDto,
@@ -34,11 +36,18 @@ export class CollectionController {
     return this.cs.findId(payload);
   }
 
+  @GrpcMethod(POST_SERVICE_NAME, 'FindManyCollectionByUserId')
+  private async findUserId(
+    payload: FindManyCollectionByUserIdRequestDto,
+  ): Promise<FindManyCollectionByUserIdResponseDto> {
+    return this.cs.findUserId(payload);
+  }
+
   @GrpcMethod(POST_SERVICE_NAME, 'FindManyCollectionByName')
-  private async findName(
+  private async findManyName(
     payload: FindManyCollectionByNameRequestDto,
   ): Promise<FindManyCollectionByNameResponseDto> {
-    return this.cs.findName(payload);
+    return this.cs.findManyName(payload);
   }
 
   @GrpcMethod(POST_SERVICE_NAME, 'UpdateCollection')

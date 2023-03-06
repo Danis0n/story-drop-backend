@@ -28,6 +28,19 @@ export class CharacterRepository {
     }
   }
 
+  public async findId(characterId: string): Promise<CharacterPrisma> {
+    try {
+      return await this.prisma.character.findUnique({
+        where: { character_id: characterId },
+      });
+    } catch (e) {
+      Logger.error(
+        `findId: Ошибка во время поиска персонажа по id: ${characterId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
   public async findName(name: string): Promise<CharacterPrisma> {
     try {
       return await this.prisma.character.findUnique({
@@ -54,20 +67,35 @@ export class CharacterRepository {
     }
   }
 
-  public async findId(characterId: string): Promise<CharacterPrisma> {
+  public async findParingId(
+    paringId: string,
+  ): Promise<{ character: CharacterPrisma }[]> {
     try {
-      return await this.prisma.character.findUnique({
-        where: { character_id: characterId },
+      return await this.prisma.character_paring.findMany({
+        where: { paring_id: paringId },
+        select: { character: true },
       });
     } catch (e) {
       Logger.error(
-        `findId: Ошибка во время поиска персонажа по id: ${characterId}. ${e?.message}`,
+        `findParingId: Ошибка во время поиска персонажа по paringId: ${paringId}. ${e?.message}`,
       );
       return null;
     }
   }
 
-  // TODO: implement many-to-many delete (delete character from fandom)
+  public async findFandomId(fandomId: string) {
+    try {
+      return await this.prisma.character.findMany({
+        where: { fandom_id: fandomId },
+      });
+    } catch (e) {
+      Logger.error(
+        `findFandomId: Ошибка во время поиска персонажа по fandomId: ${fandomId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
   public async update(
     characterId: string,
     name: string,
@@ -75,9 +103,7 @@ export class CharacterRepository {
     try {
       return await this.prisma.character.update({
         where: { character_id: characterId },
-        data: {
-          character_name: name || undefined,
-        },
+        data: { character_name: name || undefined },
       });
     } catch (e) {
       Logger.error(

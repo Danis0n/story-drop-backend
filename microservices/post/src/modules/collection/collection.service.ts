@@ -8,6 +8,8 @@ import {
   DeleteCollectionResponseDto,
   FindManyCollectionByNameRequestDto,
   FindManyCollectionByNameResponseDto,
+  FindManyCollectionByUserIdRequestDto,
+  FindManyCollectionByUserIdResponseDto,
   FindOneCollectionByIdRequestDto,
   FindOneCollectionByIdResponseDto,
   UpdateCollectionRequestDto,
@@ -55,10 +57,30 @@ export class CollectionService {
     };
   }
 
-  public async findName({
+  public async findUserId({
+    userId,
+  }: FindManyCollectionByUserIdRequestDto): Promise<FindManyCollectionByUserIdResponseDto> {
+    const collections = await this.r.findUserId(userId);
+
+    return {
+      collections:
+        collections.map((collection) => {
+          return CollectionMapper.toDto(collection);
+        }) || [],
+    };
+  }
+
+  public async findManyName({
     name,
   }: FindManyCollectionByNameRequestDto): Promise<FindManyCollectionByNameResponseDto> {
-    return undefined;
+    const collections = await this.r.findManyName(name);
+
+    return {
+      collections:
+        collections.map((collection) => {
+          return CollectionMapper.toDto(collection);
+        }) || [],
+    };
   }
 
   public async update({
