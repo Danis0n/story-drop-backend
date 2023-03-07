@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
@@ -24,6 +25,7 @@ import {
   UserIdValidateGuard,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/post')
 export class PostController implements OnModuleInit {
@@ -37,6 +39,7 @@ export class PostController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Post()
   private async create(
@@ -55,20 +58,20 @@ export class PostController implements OnModuleInit {
   }
 
   // +PostGuard
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Patch('/:id')
   private async update(
-    @UserId() userId: string,
     @Param('id') postId: string,
     @Body() payload: UpdatePostRequestDto,
   ): Promise<Observable<UpdatePostResponseDto>> {
     payload.postId = postId;
-    payload.userId = userId;
 
     return this.serviceClient.updatePost(payload);
   }
 
   // check if user owns the post
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Delete('/:id')
   private async delete(
