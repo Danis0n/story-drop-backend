@@ -4,6 +4,14 @@ import { Observable } from "rxjs";
 
 export const protobufPackage = "post";
 
+export interface FindManyCollectionByUserIdRequest {
+  userId: string;
+}
+
+export interface FindManyCollectionByUserIdResponse {
+  collections: Collection[];
+}
+
 export interface FindManyParingByNameRequest {
   name: string;
 }
@@ -111,6 +119,14 @@ export interface DeletePostRequest {
 
 export interface DeletePostResponse {
   success: boolean;
+}
+
+export interface FindManyChapterByPostIdRequest {
+  postId: string;
+}
+
+export interface FindManyChapterByPostIdResponse {
+  chapters: Chapter[];
 }
 
 export interface FindOneChapterByIdRequest {
@@ -507,6 +523,8 @@ export interface PostServiceClient {
 
   findOneChapterById(request: FindOneChapterByIdRequest): Observable<FindOneChapterByIdResponse>;
 
+  findManyChapterByPostId(request: FindManyChapterByPostIdRequest): Observable<FindManyChapterByPostIdResponse>;
+
   createChapter(request: CreateChapterRequest): Observable<CreateChapterResponse>;
 
   updateChapter(request: UpdateChapterRequest): Observable<UpdateChapterResponse>;
@@ -544,6 +562,10 @@ export interface PostServiceClient {
   deleteTag(request: DeleteTagRequest): Observable<DeleteTagResponse>;
 
   findManyCollectionByName(request: FindManyCollectionByNameRequest): Observable<FindManyCollectionByNameResponse>;
+
+  findManyCollectionByUserId(
+    request: FindManyCollectionByUserIdRequest,
+  ): Observable<FindManyCollectionByUserIdResponse>;
 
   findOneCollectionById(request: FindOneCollectionByIdRequest): Observable<FindOneCollectionByIdResponse>;
 
@@ -602,6 +624,13 @@ export interface PostServiceController {
   findOneChapterById(
     request: FindOneChapterByIdRequest,
   ): Promise<FindOneChapterByIdResponse> | Observable<FindOneChapterByIdResponse> | FindOneChapterByIdResponse;
+
+  findManyChapterByPostId(
+    request: FindManyChapterByPostIdRequest,
+  ):
+    | Promise<FindManyChapterByPostIdResponse>
+    | Observable<FindManyChapterByPostIdResponse>
+    | FindManyChapterByPostIdResponse;
 
   createChapter(
     request: CreateChapterRequest,
@@ -678,6 +707,13 @@ export interface PostServiceController {
     | Promise<FindManyCollectionByNameResponse>
     | Observable<FindManyCollectionByNameResponse>
     | FindManyCollectionByNameResponse;
+
+  findManyCollectionByUserId(
+    request: FindManyCollectionByUserIdRequest,
+  ):
+    | Promise<FindManyCollectionByUserIdResponse>
+    | Observable<FindManyCollectionByUserIdResponse>
+    | FindManyCollectionByUserIdResponse;
 
   findOneCollectionById(
     request: FindOneCollectionByIdRequest,
@@ -769,6 +805,7 @@ export function PostServiceControllerMethods() {
       "updatePost",
       "deletePost",
       "findOneChapterById",
+      "findManyChapterByPostId",
       "createChapter",
       "updateChapter",
       "deleteChapter",
@@ -788,6 +825,7 @@ export function PostServiceControllerMethods() {
       "updateTag",
       "deleteTag",
       "findManyCollectionByName",
+      "findManyCollectionByUserId",
       "findOneCollectionById",
       "createCollection",
       "updateCollection",

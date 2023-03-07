@@ -1,6 +1,9 @@
 import {
   CreateCharacterResponse,
   DeleteCharacterResponse,
+  FindManyCharacterByFandomResponse,
+  FindManyCharacterByNameResponse,
+  FindManyCharacterByParingResponse,
   FindOneCharacterByIdResponse,
   UpdateCharacterResponse,
 } from '../../../modules/post/post.pb';
@@ -25,4 +28,22 @@ export class FindOneCharacterByIdResponseDto
 export class UpdateCharacterResponseDto implements UpdateCharacterResponse {
   character: CharacterDto;
   success: boolean;
+}
+
+export class FindManyCharacterByParingResponseDto
+  implements FindManyCharacterByParingResponse
+{
+  characters: CharacterDto[];
+}
+
+export class FindManyCharacterByFandomResponseDto
+  implements FindManyCharacterByFandomResponse
+{
+  characters: CharacterDto[];
+}
+
+export class FindManyCharacterByNameResponseDto
+  implements FindManyCharacterByNameResponse
+{
+  characters: CharacterDto[];
 }

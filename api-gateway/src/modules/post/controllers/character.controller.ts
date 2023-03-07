@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -16,6 +17,9 @@ import {
   CreateCharacterRequestDto,
   CreateCharacterResponseDto,
   DeleteCharacterResponseDto,
+  FindManyCharacterByFandomResponseDto,
+  FindManyCharacterByNameResponseDto,
+  FindManyCharacterByParingResponseDto,
   FindOneCharacterByIdResponseDto,
   IsAuthenticatedGuard,
   RoleGuard,
@@ -24,6 +28,7 @@ import {
   UpdateCharacterResponseDto,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/character')
 export class CharacterController implements OnModuleInit {
@@ -37,6 +42,7 @@ export class CharacterController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard)
   @Post()
   private async create(
@@ -45,6 +51,7 @@ export class CharacterController implements OnModuleInit {
     return this.serviceClient.createCharacter(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') uuid: string,
@@ -52,6 +59,28 @@ export class CharacterController implements OnModuleInit {
     return this.serviceClient.findOneCharacterById({ characterId: uuid });
   }
 
+  @Get('name/:name')
+  private async findNameMany(
+    @Param('name') name: string,
+  ): Promise<Observable<FindManyCharacterByNameResponseDto>> {
+    return this.serviceClient.findManyCharacterByName({ name: name });
+  }
+
+  @Get('fandom/:id')
+  private async findCharacterId(
+    @Param('id') id: string,
+  ): Promise<Observable<FindManyCharacterByFandomResponseDto>> {
+    return this.serviceClient.findManyCharacterByFandom({ fandomId: id });
+  }
+
+  @Get('paring/:id')
+  private async findParingId(
+    @Param('id') id: string,
+  ): Promise<Observable<FindManyCharacterByParingResponseDto>> {
+    return this.serviceClient.findManyCharacterByParing({ paringId: id });
+  }
+
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
@@ -63,6 +92,7 @@ export class CharacterController implements OnModuleInit {
     return this.serviceClient.updateCharacter(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')
