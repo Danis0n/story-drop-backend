@@ -2,6 +2,7 @@ import {
   CreatePostResponse,
   DeletePostResponse,
   FindOnePostResponse,
+  IsOwnerResponse,
   UpdatePostResponse,
 } from '../../../modules/post/post.pb';
 import { PostDto } from './post.dto';
@@ -22,5 +23,9 @@ export class DeletePostResponseDto implements DeletePostResponse {
 
 export class FindOnePostResponseDto implements FindOnePostResponse {
   post: PostDto;
+  success: boolean;
+}
+
+export class IsOwnerResponseDto implements IsOwnerResponse {
   success: boolean;
 }

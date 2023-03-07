@@ -8,13 +8,14 @@ import {
 import { IsOptional } from 'class-validator';
 
 export class CreateChapterRequestDto implements CreateChapterRequest {
+  @IsOptional()
+  userId: string;
   name: string;
   @IsOptional()
   notes: string;
   postId: string;
   @IsOptional()
   text: string;
-  userId: string;
   @IsOptional()
   isHidden: boolean;
 }

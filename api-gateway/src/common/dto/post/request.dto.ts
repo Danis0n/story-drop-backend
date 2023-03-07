@@ -2,6 +2,7 @@ import {
   CreatePostRequest,
   DeletePostRequest,
   FindOnePostByIdRequest,
+  IsOwnerRequest,
   UpdatePostRequest,
 } from '../../../modules/post/post.pb';
 import { IsOptional } from 'class-validator';
@@ -41,4 +42,9 @@ export class DeletePostRequestDto implements DeletePostRequest {
 
 export class FindOnePostByIdRequestDto implements FindOnePostByIdRequest {
   uuid: string;
+}
+
+export class IsOwnerRequestDto implements IsOwnerRequest {
+  postId: string;
+  userId: string;
 }

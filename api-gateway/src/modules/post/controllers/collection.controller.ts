@@ -87,9 +87,9 @@ export class CollectionController implements OnModuleInit {
     return this.serviceClient.updateCollection(payload);
   }
 
+  // check if user owns collection (guard)
   @UseInterceptors(GrpcToHttpInterceptor)
-  @Roles('Admin')
-  @UseGuards(IsAuthenticatedGuard, RoleGuard)
+  @UseGuards(IsAuthenticatedGuard)
   @Delete('/:id')
   private async delete(
     @Param('id') uuid: string,

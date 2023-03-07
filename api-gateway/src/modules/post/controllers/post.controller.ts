@@ -68,6 +68,7 @@ export class PostController implements OnModuleInit {
     return this.serviceClient.updatePost(payload);
   }
 
+  // check if user owns the post
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Delete('/:id')
   private async delete(
