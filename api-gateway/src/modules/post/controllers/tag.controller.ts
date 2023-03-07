@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -24,6 +25,7 @@ import {
   UpdateTagResponseDto,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/tag')
 export class TagController implements OnModuleInit {
@@ -37,6 +39,7 @@ export class TagController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard)
   @Post()
   private async create(
@@ -45,6 +48,7 @@ export class TagController implements OnModuleInit {
     return this.serviceClient.createTag(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') uuid: string,
@@ -52,6 +56,7 @@ export class TagController implements OnModuleInit {
     return this.serviceClient.findOneTagById({ tagId: uuid });
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
@@ -63,6 +68,7 @@ export class TagController implements OnModuleInit {
     return this.serviceClient.updateTag(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')

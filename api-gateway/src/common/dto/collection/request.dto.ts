@@ -1,6 +1,8 @@
 import {
   CreateCollectionRequest,
   DeleteCollectionRequest,
+  FindManyCollectionByNameRequest,
+  FindManyCollectionByUserIdRequest,
   FindOneCollectionByIdRequest,
   UpdateCollectionRequest,
 } from '../../../modules/post/post.pb';
@@ -33,4 +35,16 @@ export class FindOneCollectionByIdRequestDto
   implements FindOneCollectionByIdRequest
 {
   collectionId: string;
+}
+
+export class FindManyCollectionByNameRequestDto
+  implements FindManyCollectionByNameRequest
+{
+  name: string;
+}
+
+export class FindManyCollectionByUserIdRequestDto
+  implements FindManyCollectionByUserIdRequest
+{
+  userId: string;
 }

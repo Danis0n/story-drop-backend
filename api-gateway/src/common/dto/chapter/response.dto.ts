@@ -1,8 +1,9 @@
 import {
   CreateChapterResponse,
-  UpdateChapterResponse,
   DeleteChapterResponse,
+  FindManyChapterByPostIdResponse,
   FindOneChapterByIdResponse,
+  UpdateChapterResponse,
 } from '../../../modules/post/post.pb';
 import { ChapterDto } from './chapter.dto';
 
@@ -25,4 +26,10 @@ export class FindOneChapterByIdResponseDto
 {
   chapter: ChapterDto;
   success: boolean;
+}
+
+export class FindManyChapterByPostIdResponseDto
+  implements FindManyChapterByPostIdResponse
+{
+  chapters: ChapterDto[];
 }

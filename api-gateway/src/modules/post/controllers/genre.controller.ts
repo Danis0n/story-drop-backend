@@ -8,7 +8,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -16,6 +18,8 @@ import {
   CreateGenreRequestDto,
   CreateGenreResponseDto,
   DeleteGenreResponseDto,
+  FindManyGenreByNameRequestDto,
+  FindManyGenreByNameResponseDto,
   FindOneGenreByIdResponseDto,
   IsAuthenticatedGuard,
   RoleGuard,
@@ -24,6 +28,7 @@ import {
   UpdateGenreResponseDto,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/genre')
 export class GenreController implements OnModuleInit {
@@ -37,6 +42,7 @@ export class GenreController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard)
   @Post()
   private async create(
@@ -45,6 +51,7 @@ export class GenreController implements OnModuleInit {
     return this.serviceClient.createGenre(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') uuid: string,
@@ -52,6 +59,14 @@ export class GenreController implements OnModuleInit {
     return this.serviceClient.findOneGenreById({ genreId: uuid });
   }
 
+  @Get('name')
+  private async findNameMany(
+    @Query() payload: FindManyGenreByNameRequestDto,
+  ): Promise<Observable<FindManyGenreByNameResponseDto>> {
+    return this.serviceClient.findManyGenreByName(payload);
+  }
+
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
@@ -63,6 +78,7 @@ export class GenreController implements OnModuleInit {
     return this.serviceClient.updateGenre(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')

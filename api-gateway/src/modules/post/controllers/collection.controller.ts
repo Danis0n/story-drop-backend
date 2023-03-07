@@ -8,7 +8,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -16,6 +18,10 @@ import {
   CreateCollectionRequestDto,
   CreateCollectionResponseDto,
   DeleteCollectionResponseDto,
+  FindManyCollectionByNameRequestDto,
+  FindManyCollectionByNameResponseDto,
+  FindManyCollectionByUserIdRequestDto,
+  FindManyCollectionByUserIdResponseDto,
   FindOneCollectionByIdResponseDto,
   IsAuthenticatedGuard,
   RoleGuard,
@@ -24,6 +30,7 @@ import {
   UpdateCollectionResponseDto,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/collection')
 export class CollectionController implements OnModuleInit {
@@ -37,6 +44,7 @@ export class CollectionController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard)
   @Post()
   private async create(
@@ -45,6 +53,7 @@ export class CollectionController implements OnModuleInit {
     return this.serviceClient.createCollection(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') uuid: string,
@@ -52,6 +61,21 @@ export class CollectionController implements OnModuleInit {
     return this.serviceClient.findOneCollectionById({ collectionId: uuid });
   }
 
+  @Get('/user')
+  private async findUserId(
+    @Query() payload: FindManyCollectionByUserIdRequestDto,
+  ): Promise<Observable<FindManyCollectionByUserIdResponseDto>> {
+    return this.serviceClient.findManyCollectionByUserId(payload);
+  }
+
+  @Get('/name')
+  private async findNameMany(
+    @Query() payload: FindManyCollectionByNameRequestDto,
+  ): Promise<Observable<FindManyCollectionByNameResponseDto>> {
+    return this.serviceClient.findManyCollectionByName(payload);
+  }
+
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
@@ -63,6 +87,7 @@ export class CollectionController implements OnModuleInit {
     return this.serviceClient.updateCollection(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')

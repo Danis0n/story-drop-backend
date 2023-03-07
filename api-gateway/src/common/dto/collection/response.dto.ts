@@ -1,8 +1,10 @@
 import {
   CreateCollectionResponse,
-  UpdateCollectionResponse,
   DeleteCollectionResponse,
+  FindManyCollectionByNameResponse,
+  FindManyCollectionByUserIdResponse,
   FindOneCollectionByIdResponse,
+  UpdateCollectionResponse,
 } from '../../../modules/post/post.pb';
 import { CollectionDto } from './collection.dto';
 
@@ -25,4 +27,16 @@ export class FindOneCollectionByIdResponseDto
 {
   collection: CollectionDto;
   success: boolean;
+}
+
+export class FindManyCollectionByNameResponseDto
+  implements FindManyCollectionByNameResponse
+{
+  collections: CollectionDto[];
+}
+
+export class FindManyCollectionByUserIdResponseDto
+  implements FindManyCollectionByUserIdResponse
+{
+  collections: CollectionDto[];
 }

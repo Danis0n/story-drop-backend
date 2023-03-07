@@ -8,7 +8,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -16,6 +18,10 @@ import {
   CreateFandomRequestDto,
   CreateFandomResponseDto,
   DeleteFandomResponseDto,
+  FindManyFandomByNameRequestDto,
+  FindManyFandomByNameResponseDto,
+  FindOneFandomByCharacterRequestDto,
+  FindOneFandomByCharacterResponseDto,
   FindOneFandomByIdResponseDto,
   IsAuthenticatedGuard,
   RoleGuard,
@@ -24,6 +30,7 @@ import {
   UpdateFandomResponseDto,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/fandom')
 export class FandomController implements OnModuleInit {
@@ -37,6 +44,7 @@ export class FandomController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard)
   @Post()
   private async create(
@@ -45,6 +53,7 @@ export class FandomController implements OnModuleInit {
     return this.serviceClient.createFandom(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') uuid: string,
@@ -52,6 +61,22 @@ export class FandomController implements OnModuleInit {
     return this.serviceClient.findOneFandomById({ fandomId: uuid });
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
+  @Get('character')
+  private async findCharacterId(
+    @Query() payload: FindOneFandomByCharacterRequestDto,
+  ): Promise<Observable<FindOneFandomByCharacterResponseDto>> {
+    return this.serviceClient.findOneFandomByCharacter(payload);
+  }
+
+  @Get('name')
+  private async findNameMany(
+    @Query() payload: FindManyFandomByNameRequestDto,
+  ): Promise<Observable<FindManyFandomByNameResponseDto>> {
+    return this.serviceClient.findManyFandomByName(payload);
+  }
+
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
@@ -63,6 +88,7 @@ export class FandomController implements OnModuleInit {
     return this.serviceClient.updateFandom(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')

@@ -1,8 +1,10 @@
 import {
   CreateParingResponse,
-  UpdateParingResponse,
   DeleteParingResponse,
+  FindManyParingByCharacterResponse,
+  FindManyParingByNameResponse,
   FindOneParingByIdResponse,
+  UpdateParingResponse,
 } from '../../../modules/post/post.pb';
 import { ParingDto } from './paring.dto';
 
@@ -23,4 +25,16 @@ export class DeleteParingResponseDto implements DeleteParingResponse {
 export class FindOneParingByIdResponseDto implements FindOneParingByIdResponse {
   paring: ParingDto;
   success: boolean;
+}
+
+export class FindManyParingByCharacterResponseDto
+  implements FindManyParingByCharacterResponse
+{
+  parings: ParingDto[];
+}
+
+export class FindManyParingByNameResponseDto
+  implements FindManyParingByNameResponse
+{
+  parings: ParingDto[];
 }

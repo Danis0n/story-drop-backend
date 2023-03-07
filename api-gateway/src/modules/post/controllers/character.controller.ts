@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -17,8 +18,11 @@ import {
   CreateCharacterRequestDto,
   CreateCharacterResponseDto,
   DeleteCharacterResponseDto,
+  FindManyCharacterByFandomRequestDto,
   FindManyCharacterByFandomResponseDto,
+  FindManyCharacterByNameRequestDto,
   FindManyCharacterByNameResponseDto,
+  FindManyCharacterByParingRequestDto,
   FindManyCharacterByParingResponseDto,
   FindOneCharacterByIdResponseDto,
   IsAuthenticatedGuard,
@@ -59,25 +63,25 @@ export class CharacterController implements OnModuleInit {
     return this.serviceClient.findOneCharacterById({ characterId: uuid });
   }
 
-  @Get('name/:name')
+  @Get('name')
   private async findNameMany(
-    @Param('name') name: string,
+    @Query() payload: FindManyCharacterByNameRequestDto,
   ): Promise<Observable<FindManyCharacterByNameResponseDto>> {
-    return this.serviceClient.findManyCharacterByName({ name: name });
+    return this.serviceClient.findManyCharacterByName(payload);
   }
 
-  @Get('fandom/:id')
+  @Get('fandom')
   private async findCharacterId(
-    @Param('id') id: string,
+    @Query() payload: FindManyCharacterByFandomRequestDto,
   ): Promise<Observable<FindManyCharacterByFandomResponseDto>> {
-    return this.serviceClient.findManyCharacterByFandom({ fandomId: id });
+    return this.serviceClient.findManyCharacterByFandom(payload);
   }
 
-  @Get('paring/:id')
+  @Get('paring')
   private async findParingId(
-    @Param('id') id: string,
+    @Query() payload: FindManyCharacterByParingRequestDto,
   ): Promise<Observable<FindManyCharacterByParingResponseDto>> {
-    return this.serviceClient.findManyCharacterByParing({ paringId: id });
+    return this.serviceClient.findManyCharacterByParing(payload);
   }
 
   @UseInterceptors(GrpcToHttpInterceptor)

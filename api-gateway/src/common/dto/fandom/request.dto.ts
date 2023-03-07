@@ -1,8 +1,10 @@
 import {
   CreateFandomRequest,
-  UpdateFandomRequest,
   DeleteFandomRequest,
+  FindManyFandomByNameRequest,
+  FindOneFandomByCharacterRequest,
   FindOneFandomByIdRequest,
+  UpdateFandomRequest,
 } from '../../../modules/post/post.pb';
 
 export class CreateFandomRequestDto implements CreateFandomRequest {
@@ -20,4 +22,16 @@ export class DeleteFandomRequestDto implements DeleteFandomRequest {
 
 export class FindOneFandomByIdRequestDto implements FindOneFandomByIdRequest {
   fandomId: string;
+}
+
+export class FindOneFandomByCharacterRequestDto
+  implements FindOneFandomByCharacterRequest
+{
+  characterId: string;
+}
+
+export class FindManyFandomByNameRequestDto
+  implements FindManyFandomByNameRequest
+{
+  name: string;
 }

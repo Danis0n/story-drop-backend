@@ -8,7 +8,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { POST_SERVICE_NAME, PostServiceClient } from '../post.pb';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -16,6 +18,10 @@ import {
   CreateParingRequestDto,
   CreateParingResponseDto,
   DeleteParingResponseDto,
+  FindManyParingByCharacterRequestDto,
+  FindManyParingByCharacterResponseDto,
+  FindManyParingByNameRequestDto,
+  FindManyParingByNameResponseDto,
   FindOneParingByIdResponseDto,
   IsAuthenticatedGuard,
   RoleGuard,
@@ -24,6 +30,7 @@ import {
   UpdateParingResponseDto,
 } from '../../../common';
 import { Observable } from 'rxjs';
+import { GrpcToHttpInterceptor } from 'nestjs-grpc-exceptions';
 
 @Controller('api/paring')
 export class ParingController implements OnModuleInit {
@@ -37,6 +44,7 @@ export class ParingController implements OnModuleInit {
       this.client.getService<PostServiceClient>(POST_SERVICE_NAME);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @UseGuards(IsAuthenticatedGuard)
   @Post()
   private async create(
@@ -45,6 +53,7 @@ export class ParingController implements OnModuleInit {
     return this.serviceClient.createParing(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') uuid: string,
@@ -52,6 +61,21 @@ export class ParingController implements OnModuleInit {
     return this.serviceClient.findOneParingById({ paringId: uuid });
   }
 
+  @Get('name')
+  private async findNameMany(
+    @Query() payload: FindManyParingByNameRequestDto,
+  ): Promise<Observable<FindManyParingByNameResponseDto>> {
+    return this.serviceClient.findManyParingByName(payload);
+  }
+
+  @Get('character')
+  private async findCharacterId(
+    @Query() payload: FindManyParingByCharacterRequestDto,
+  ): Promise<Observable<FindManyParingByCharacterResponseDto>> {
+    return this.serviceClient.findManyParingByCharacter(payload);
+  }
+
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Patch('/:id')
@@ -63,6 +87,7 @@ export class ParingController implements OnModuleInit {
     return this.serviceClient.updateParing(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Roles('Admin')
   @UseGuards(IsAuthenticatedGuard, RoleGuard)
   @Delete('/:id')

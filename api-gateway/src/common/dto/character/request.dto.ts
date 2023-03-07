@@ -7,7 +7,6 @@ import {
   FindOneCharacterByIdRequest,
   UpdateCharacterRequest,
 } from '../../../modules/post/post.pb';
-import { IsOptional } from 'class-validator';
 
 export class CreateCharacterRequestDto implements CreateCharacterRequest {
   name: string;
@@ -16,7 +15,6 @@ export class CreateCharacterRequestDto implements CreateCharacterRequest {
 
 export class UpdateCharacterRequestDto implements UpdateCharacterRequest {
   characterId: string;
-  @IsOptional()
   name: string;
 }
 
