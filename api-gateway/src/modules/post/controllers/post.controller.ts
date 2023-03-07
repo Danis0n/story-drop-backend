@@ -19,6 +19,7 @@ import {
   DeletePostResponseDto,
   FindOnePostResponseDto,
   IsAuthenticatedGuard,
+  PostGuard,
   UpdatePostRequestDto,
   UpdatePostResponseDto,
   UserId,
@@ -52,14 +53,13 @@ export class PostController implements OnModuleInit {
 
   @Get('/:id')
   private async findOneId(
-    @Param('id') uuid: string,
+    @Param('id') postId: string,
   ): Promise<Observable<FindOnePostResponseDto>> {
-    return this.serviceClient.findOnePostById({ uuid: uuid });
+    return this.serviceClient.findOnePostById({ postId: postId });
   }
 
-  // +PostGuard
   @UseInterceptors(GrpcToHttpInterceptor)
-  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
+  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard, PostGuard)
   @Patch('/:id')
   private async update(
     @Param('id') postId: string,
@@ -70,14 +70,13 @@ export class PostController implements OnModuleInit {
     return this.serviceClient.updatePost(payload);
   }
 
-  // check if user owns the post
   @UseInterceptors(GrpcToHttpInterceptor)
-  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
+  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard, PostGuard)
   @Delete('/:id')
   private async delete(
     @UserId() userId: string,
     @Param('id') postId: string,
   ): Promise<Observable<DeletePostResponseDto>> {
-    return this.serviceClient.deletePost({ postId: postId, userId: userId });
+    return this.serviceClient.deletePost({ postId: postId });
   }
 }

@@ -12,6 +12,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import {
+  ChapterGuard,
   CreateChapterRequestDto,
   CreateChapterResponseDto,
   DeleteChapterResponseDto,
@@ -60,7 +61,6 @@ export class ChapterController implements OnModuleInit {
     return this.serviceClient.findOneChapterById({ chapterId: chapterId });
   }
 
-  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Get('post/:id')
   private async findPostId(
     @Param('id') postId: string,
@@ -68,19 +68,19 @@ export class ChapterController implements OnModuleInit {
     return this.serviceClient.findManyChapterByPostId({ postId: postId });
   }
 
-  // +guard
   @Patch('/:id')
-  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
+  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard, ChapterGuard)
   @UseInterceptors(GrpcToHttpInterceptor)
   private async update(
+    @Param('id') chapterId: string,
     @Body() payload: UpdateChapterRequestDto,
   ): Promise<Observable<UpdateChapterResponseDto>> {
+    payload.chapterId = chapterId;
     return this.serviceClient.updateChapter(payload);
   }
 
-  // +guard
   @Delete('/:id')
-  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
+  @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard, ChapterGuard)
   @UseInterceptors(GrpcToHttpInterceptor)
   private async delete(
     @Param('id') chapterId: string,

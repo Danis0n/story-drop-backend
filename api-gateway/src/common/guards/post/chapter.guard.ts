@@ -6,13 +6,21 @@ import {
 } from '@nestjs/common';
 import { PostService } from '../../../modules/post/post.service';
 
-// TODO: check if user has access to the chapter
-
 @Injectable()
 export class ChapterGuard implements CanActivate {
   @Inject(PostService) private readonly service: PostService;
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {
-    return true;
+    const request = context.switchToHttp().getRequest();
+
+    const chapterId = request.params.id;
+    const userId = request.UID;
+
+    const { success } = await this.service.isOwnerChapter({
+      chapterId: chapterId,
+      userId: userId,
+    });
+
+    return success;
   }
 }

@@ -3,6 +3,7 @@ import {
   DeleteChapterResponse,
   FindManyChapterByPostIdResponse,
   FindOneChapterByIdResponse,
+  IsOwnerChapterResponse,
   UpdateChapterResponse,
 } from '../../../modules/post/post.pb';
 import { ChapterDto } from './chapter.dto';
@@ -32,4 +33,8 @@ export class FindManyChapterByPostIdResponseDto
   implements FindManyChapterByPostIdResponse
 {
   chapters: ChapterDto[];
+}
+
+export class IsOwnerChapterResponseDto implements IsOwnerChapterResponse {
+  success: boolean;
 }

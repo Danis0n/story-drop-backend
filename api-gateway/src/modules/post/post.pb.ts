@@ -72,7 +72,7 @@ export interface IsOwnerResponse {
 }
 
 export interface FindOnePostByIdRequest {
-  uuid: string;
+  postId: string;
 }
 
 export interface FindOnePostResponse {
@@ -114,7 +114,6 @@ export interface UpdatePostResponse {
 
 export interface DeletePostRequest {
   postId: string;
-  userId: string;
 }
 
 export interface DeletePostResponse {
@@ -127,6 +126,15 @@ export interface FindManyChapterByPostIdRequest {
 
 export interface FindManyChapterByPostIdResponse {
   chapters: Chapter[];
+}
+
+export interface IsOwnerChapterRequest {
+  chapterId: string;
+  userId: string;
+}
+
+export interface IsOwnerChapterResponse {
+  success: boolean;
 }
 
 export interface FindOneChapterByIdRequest {
@@ -521,6 +529,8 @@ export interface PostServiceClient {
 
   deletePost(request: DeletePostRequest): Observable<DeletePostResponse>;
 
+  isOwnerChapter(request: IsOwnerChapterRequest): Observable<IsOwnerChapterResponse>;
+
   findOneChapterById(request: FindOneChapterByIdRequest): Observable<FindOneChapterByIdResponse>;
 
   findManyChapterByPostId(request: FindManyChapterByPostIdRequest): Observable<FindManyChapterByPostIdResponse>;
@@ -620,6 +630,10 @@ export interface PostServiceController {
   deletePost(
     request: DeletePostRequest,
   ): Promise<DeletePostResponse> | Observable<DeletePostResponse> | DeletePostResponse;
+
+  isOwnerChapter(
+    request: IsOwnerChapterRequest,
+  ): Promise<IsOwnerChapterResponse> | Observable<IsOwnerChapterResponse> | IsOwnerChapterResponse;
 
   findOneChapterById(
     request: FindOneChapterByIdRequest,
@@ -804,6 +818,7 @@ export function PostServiceControllerMethods() {
       "createPost",
       "updatePost",
       "deletePost",
+      "isOwnerChapter",
       "findOneChapterById",
       "findManyChapterByPostId",
       "createChapter",

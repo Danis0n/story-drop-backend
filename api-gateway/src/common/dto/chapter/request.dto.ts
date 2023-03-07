@@ -3,6 +3,7 @@ import {
   DeleteChapterRequest,
   FindManyChapterByPostIdRequest,
   FindOneChapterByIdRequest,
+  IsOwnerChapterRequest,
   UpdateChapterRequest,
 } from '../../../modules/post/post.pb';
 import { IsOptional } from 'class-validator';
@@ -22,6 +23,7 @@ export class CreateChapterRequestDto implements CreateChapterRequest {
 
 export class UpdateChapterRequestDto implements UpdateChapterRequest {
   name: string;
+  @IsOptional()
   chapterId: string;
   @IsOptional()
   notes: string;
@@ -44,4 +46,9 @@ export class FindManyChapterByPostIdRequestDto
   implements FindManyChapterByPostIdRequest
 {
   postId: string;
+}
+
+export class IsOwnerChapterRequestDto implements IsOwnerChapterRequest {
+  chapterId: string;
+  userId: string;
 }
