@@ -3,6 +3,7 @@ import {
   DeleteChapterRequest,
   FindManyChapterByPostIdRequest,
   FindOneChapterByIdRequest,
+  IsOwnerChapterRequest,
   UpdateChapterRequest,
 } from '../../../proto/post.pb';
 
@@ -36,4 +37,9 @@ export class FindManyChapterByPostIdRequestDto
   implements FindManyChapterByPostIdRequest
 {
   postId: string;
+}
+
+export class IsOwnerChapterRequestDto implements IsOwnerChapterRequest {
+  chapterId: string;
+  userId: string;
 }

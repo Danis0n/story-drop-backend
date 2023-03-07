@@ -10,6 +10,8 @@ import {
   FindManyChapterByPostIdResponseDto,
   FindOneChapterByIdRequestDto,
   FindOneChapterByIdResponseDto,
+  IsOwnerChapterRequestDto,
+  IsOwnerChapterResponseDto,
   UpdateChapterRequestDto,
   UpdateChapterResponseDto,
 } from '../../common';
@@ -77,5 +79,14 @@ export class ChapterService {
       throw new GrpcNotFoundException('Главы с таким id не существует!');
 
     return { success: true };
+  }
+
+  public async isOwner({
+    chapterId,
+    userId,
+  }: IsOwnerChapterRequestDto): Promise<IsOwnerChapterResponseDto> {
+    const { post } = await this.r.findUserIdByChapter(chapterId);
+
+    return { success: userId === post.user_id };
   }
 }

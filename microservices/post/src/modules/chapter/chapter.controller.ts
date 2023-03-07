@@ -11,6 +11,8 @@ import {
   FindManyChapterByPostIdResponseDto,
   FindOneChapterByIdRequestDto,
   FindOneChapterByIdResponseDto,
+  IsOwnerChapterRequestDto,
+  IsOwnerChapterResponseDto,
   UpdateChapterRequestDto,
   UpdateChapterResponseDto,
 } from '../../common';
@@ -53,5 +55,12 @@ export class ChapterController {
     payload: DeleteChapterRequestDto,
   ): Promise<DeleteChapterResponseDto> {
     return this.cs.delete(payload);
+  }
+
+  @GrpcMethod(POST_SERVICE_NAME, 'IsOwnerChapter')
+  private async isOwner(
+    payload: IsOwnerChapterRequestDto,
+  ): Promise<IsOwnerChapterResponseDto> {
+    return this.cs.isOwner(payload);
   }
 }

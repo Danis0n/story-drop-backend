@@ -32,9 +32,9 @@ export class PostService {
 
   // TODO: fix to postId later
   public async findId({
-    uuid,
+    postId,
   }: FindOnePostByIdRequestDto): Promise<FindOnePostResponse> {
-    const post = await this.r.findId(uuid);
+    const post = await this.r.findId(postId);
     if (!post)
       throw new GrpcInvalidArgumentException('Ошибка при поиске поста!');
 
@@ -48,7 +48,6 @@ export class PostService {
     return { post: null, success: true };
   }
 
-  // TODO: delete userId
   public async delete({
     postId,
   }: DeletePostRequestDto): Promise<DeletePostResponseDto> {

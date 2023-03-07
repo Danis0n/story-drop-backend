@@ -30,11 +30,10 @@ export class UpdatePostRequestDto implements UpdatePostRequest {
 
 export class DeletePostRequestDto implements DeletePostRequest {
   postId: string;
-  userId: string;
 }
 
 export class FindOnePostByIdRequestDto implements FindOnePostByIdRequest {
-  uuid: string;
+  postId: string;
 }
 
 export class IsOwnerRequestDto implements IsOwnerRequest {

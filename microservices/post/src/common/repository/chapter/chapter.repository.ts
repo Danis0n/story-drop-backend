@@ -111,4 +111,26 @@ export class ChapterRepository {
       return null;
     }
   }
+
+  public async findUserIdByChapter(
+    chapterId: string,
+  ): Promise<{ post: { user_id: string } }> {
+    try {
+      return await this.prisma.chapter.findUnique({
+        where: { chapter_id: chapterId },
+        select: {
+          post: {
+            select: {
+              user_id: true,
+            },
+          },
+        },
+      });
+    } catch (e) {
+      Logger.error(
+        `findUserIdByChapter: Ошибка во время удаления главы по id: ${chapterId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
 }
