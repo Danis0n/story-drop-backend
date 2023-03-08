@@ -19,13 +19,16 @@ export class CreatePostRequestDto implements CreatePostRequest {
 }
 
 export class UpdatePostRequestDto implements UpdatePostRequest {
+  postId: string;
   dedication: string;
   description: string;
   isHidden: boolean;
   name: string;
-  postId: string;
   statusId: string;
-  userId: string;
+  deleteGenres: string[];
+  deleteTags: string[];
+  insertGenres: string[];
+  insertTags: string[];
 }
 
 export class DeletePostRequestDto implements DeletePostRequest {

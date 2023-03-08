@@ -99,12 +99,15 @@ export interface CreatePostResponse {
 
 export interface UpdatePostRequest {
   postId: string;
-  userId: string;
   name: string;
   description: string;
   dedication: string;
   statusId: string;
   isHidden: boolean;
+  insertGenres: string[];
+  deleteGenres: string[];
+  insertTags: string[];
+  deleteTags: string[];
 }
 
 export interface UpdatePostResponse {
