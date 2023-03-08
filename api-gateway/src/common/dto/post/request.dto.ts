@@ -19,7 +19,7 @@ export class CreatePostRequestDto implements CreatePostRequest {
   userId: string;
 }
 
-export class UpdatePostRequestDto implements UpdatePostRequest {
+export class UpdatePostDto {
   postId: string;
   @IsOptional()
   statusId: string;
@@ -32,7 +32,36 @@ export class UpdatePostRequestDto implements UpdatePostRequest {
   @IsOptional()
   name: string;
   @IsOptional()
-  userId: string;
+  deleteGenres: string[];
+  @IsOptional()
+  deleteTags: string[];
+  @IsOptional()
+  insertGenres: string[];
+  @IsOptional()
+  insertTags: string[];
+}
+
+export class UpdatePostRequestDto implements UpdatePostRequest {
+  postId: string;
+  @IsOptional()
+  statusId: string;
+  @IsOptional()
+  dedication: string;
+  @IsOptional()
+  description: string;
+  @IsOptional()
+  isHidden: boolean;
+  @IsOptional()
+  name: string;
+
+  @IsOptional()
+  deleteGenres: string[];
+  @IsOptional()
+  deleteTags: string[];
+  @IsOptional()
+  insertGenres: string[];
+  @IsOptional()
+  insertTags: string[];
 }
 
 export class DeletePostRequestDto implements DeletePostRequest {
