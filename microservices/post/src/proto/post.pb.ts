@@ -94,7 +94,7 @@ export interface CreatePostRequest {
 
 export interface CreatePostResponse {
   success: boolean;
-  post: Post | undefined;
+  postId: string;
 }
 
 export interface UpdatePostRequest {
@@ -112,7 +112,7 @@ export interface UpdatePostRequest {
 
 export interface UpdatePostResponse {
   success: boolean;
-  post: Post | undefined;
+  postId: string;
 }
 
 export interface DeletePostRequest {

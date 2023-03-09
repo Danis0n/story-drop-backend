@@ -7,7 +7,13 @@ import {
   UpdatePostRequestDto,
 } from '../../dto';
 import { randomUUID } from 'crypto';
-import { FandomMapper, GenreMapper, TagMapper } from '../../mapper';
+import {
+  CharacterMapper,
+  FandomMapper,
+  GenreMapper,
+  ParingMapper,
+  TagMapper,
+} from '../../mapper';
 
 @Injectable()
 export class PostRepository {
@@ -28,32 +34,7 @@ export class PostRepository {
           date_of_creation: new Date(),
           is_hidden: false,
           is_hidden_admin: false,
-          is_finished: true,
-          post_genre: {
-            createMany: {
-              data: GenreMapper.toPrisma(payload.genreIds),
-            },
-          },
-          fandom_post: {
-            createMany: {
-              data: FandomMapper.toPrisma(payload.fandomIds),
-            },
-          },
-          // paring_post: {
-          //   createMany: {
-          //     data: ParingMapper.toPrisma(payload.paringIds) || undefined,
-          //   },
-          // },
-          post_tag: {
-            createMany: {
-              data: TagMapper.toPrisma(payload.tagIds),
-            },
-          },
-          // character_post: {
-          //   createMany: {
-          //     data: CharacterMapper.toPrisma(payload.characterIds) || undefined,
-          //   },
-          // },
+          is_finished: false,
         },
         include: PostInclude,
       });
@@ -81,7 +62,6 @@ export class PostRepository {
     }
   }
 
-  // TODO: fix if create new post_tag, post_genre
   public async update(
     payload: UpdatePostRequestDto,
   ): Promise<PostWithRelations> {
@@ -94,16 +74,6 @@ export class PostRepository {
           description: payload.description || undefined,
           is_hidden: payload.isHidden || undefined,
           is_finished: payload.isFinished || undefined,
-          post_tag: {
-            createMany: {
-              data: TagMapper.toPrisma(payload.insertTags),
-            },
-          },
-          post_genre: {
-            createMany: {
-              data: GenreMapper.toPrisma(payload.insertGenres),
-            },
-          },
         },
         include: PostInclude,
       });
@@ -112,6 +82,118 @@ export class PostRepository {
         `update: Ошибка во время обновления поста по id: ${JSON.stringify(
           payload,
         )}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async insertParings(
+    postId: string,
+    ids: string[],
+  ): Promise<PostPrisma> {
+    try {
+      return await this.prisma.post.update({
+        where: { post_id: postId },
+        data: {
+          paring_post: {
+            createMany: {
+              data: ParingMapper.toPrisma(ids),
+            },
+          },
+        },
+      });
+    } catch (e) {
+      Logger.error(
+        `insertParings: Ошибка во время добавления пейринга к посту по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async insertFandoms(
+    postId: string,
+    ids: string[],
+  ): Promise<PostPrisma> {
+    try {
+      return await this.prisma.post.update({
+        where: { post_id: postId },
+        data: {
+          fandom_post: {
+            createMany: {
+              data: FandomMapper.toPrisma(ids),
+            },
+          },
+        },
+      });
+    } catch (e) {
+      Logger.error(
+        `insertParings: Ошибка во время добавления фандома к посту по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async insertGenres(
+    postId: string,
+    ids: string[],
+  ): Promise<PostPrisma> {
+    try {
+      return await this.prisma.post.update({
+        where: { post_id: postId },
+        data: {
+          post_genre: {
+            createMany: {
+              data: GenreMapper.toPrisma(ids),
+            },
+          },
+        },
+      });
+    } catch (e) {
+      Logger.error(
+        `insertGenres: Ошибка во время добавления жанра к посту по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async insertCharacters(
+    postId: string,
+    ids: string[],
+  ): Promise<PostPrisma> {
+    try {
+      return await this.prisma.post.update({
+        where: { post_id: postId },
+        data: {
+          character_post: {
+            createMany: {
+              data: CharacterMapper.toPrisma(ids),
+            },
+          },
+        },
+      });
+    } catch (e) {
+      Logger.error(
+        `insertCharacters: Ошибка во время добавления персонажей к посту по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async insertTags(postId: string, ids: string[]): Promise<PostPrisma> {
+    try {
+      return await this.prisma.post.update({
+        where: { post_id: postId },
+        data: {
+          post_tag: {
+            createMany: {
+              data: TagMapper.toPrisma(ids),
+            },
+          },
+        },
+      });
+    } catch (e) {
+      Logger.error(
+        `insertCharacters: Ошибка во время добавления тега к посту по id: ${postId}. ${e?.message}`,
       );
       return null;
     }

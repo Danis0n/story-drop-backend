@@ -27,7 +27,15 @@ export class PostService {
     if (!post)
       throw new GrpcInvalidArgumentException('Ошибка при создании поста!');
 
-    return { post: PostMapper.toDto(post), success: true };
+    const postId = post.post_id;
+
+    await this.insertGenres(postId, payload.genreIds);
+    await this.insertTags(postId, payload.tagIds);
+    await this.insertFandoms(postId, payload.fandomIds);
+    await this.insertCharacters(postId, payload.characterIds);
+    await this.insertParings(postId, payload.paringIds);
+
+    return { postId: postId, success: true };
   }
 
   public async findId({
@@ -43,42 +51,19 @@ export class PostService {
   public async update(
     payload: UpdatePostRequestDto,
   ): Promise<UpdatePostResponseDto> {
-    const postId = payload.postId;
-    const deleteTags: string[] = payload.deleteTags;
-    const deleteGenres: string[] = payload.deleteGenres;
-
-    if (deleteTags && deleteTags.length > 0) {
-      await this.deleteTags(deleteTags, postId);
-    }
-
-    if (deleteGenres && deleteGenres.length > 0) {
-      await this.deleteGenres(deleteGenres, postId);
-    }
-
     const post = await this.r.update(payload);
     if (!post)
       throw new GrpcInvalidArgumentException('Ошибка при обновлении поста!');
 
-    return { post: PostMapper.toDto(post), success: true };
-  }
+    const postId = payload.postId;
 
-  public async deleteGenres(deleteGenres: string[], postId: string) {
-    for (const genre in deleteGenres) {
-      const deleted = await this.r.deleteGenre(postId, genre);
-      if (!deleted)
-        throw new GrpcInvalidArgumentException(
-          'Ошибка при удалении жанра с поста!',
-        );
-    }
-  }
-  public async deleteTags(deleteTags: string[], postId: string) {
-    for (const tag in deleteTags) {
-      const deleted = await this.r.deleteTag(postId, tag);
-      if (!deleted)
-        throw new GrpcInvalidArgumentException(
-          'Ошибка при удалении тэга с поста!',
-        );
-    }
+    await this.insertGenres(postId, payload.insertGenres);
+    await this.insertTags(postId, payload.insertTags);
+
+    await this.deleteTags(postId, payload.deleteTags);
+    await this.deleteGenres(postId, payload.deleteGenres);
+
+    return { postId: postId, success: true };
   }
 
   public async delete({
@@ -98,5 +83,47 @@ export class PostService {
     const { user_id: id } = await this.r.isOwner(postId);
 
     return { success: userId === id };
+  }
+
+  private async insertGenres(postId: string, ids: string[]) {
+    ids && ids.length > 0 ? await this.r.insertGenres(postId, ids) : null;
+  }
+
+  private async insertTags(postId: string, ids: string[]) {
+    ids && ids.length > 0 ? await this.r.insertTags(postId, ids) : null;
+  }
+
+  private async insertCharacters(postId: string, ids: string[]) {
+    ids && ids.length > 0 ? await this.r.insertCharacters(postId, ids) : null;
+  }
+
+  private async insertFandoms(postId: string, ids: string[]) {
+    ids && ids.length > 0 ? await this.r.insertFandoms(postId, ids) : null;
+  }
+
+  private async insertParings(postId: string, ids: string[]) {
+    ids && ids.length > 0 ? await this.r.insertParings(postId, ids) : null;
+  }
+
+  private async deleteGenres(postId: string, ids: string[]) {
+    if (ids && ids.length > 0) return;
+    for (const genre in ids) {
+      const deleted = await this.r.deleteGenre(postId, genre);
+      if (!deleted)
+        throw new GrpcInvalidArgumentException(
+          'Ошибка при удалении жанра с поста!',
+        );
+    }
+  }
+
+  private async deleteTags(postId: string, ids: string[]) {
+    if (ids && ids.length > 0) return;
+    for (const tag in ids) {
+      const deleted = await this.r.deleteTag(postId, tag);
+      if (!deleted)
+        throw new GrpcInvalidArgumentException(
+          'Ошибка при удалении тэга с поста!',
+        );
+    }
   }
 }
