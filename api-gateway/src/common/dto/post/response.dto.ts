@@ -8,13 +8,13 @@ import {
 import { PostDto } from './post.dto';
 
 export class CreatePostResponseDto implements CreatePostResponse {
-  post: PostDto;
   success: boolean;
+  postId: string;
 }
 
 export class UpdatePostResponseDto implements UpdatePostResponse {
-  post: PostDto;
   success: boolean;
+  postId: string;
 }
 
 export class DeletePostResponseDto implements DeletePostResponse {
