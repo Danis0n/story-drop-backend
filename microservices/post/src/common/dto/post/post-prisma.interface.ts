@@ -10,5 +10,5 @@ export interface PostPrisma {
   dedication: string;
   is_hidden: boolean;
   is_hidden_admin: boolean;
-  status_id: string;
+  is_finished: boolean;
 }

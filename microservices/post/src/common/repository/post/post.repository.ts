@@ -34,9 +34,7 @@ export class PostRepository {
           date_of_creation: new Date(),
           is_hidden: false,
           is_hidden_admin: false,
-          status: {
-            connect: { status_id: 'writingId!' }, // TODO: fix IT!!
-          },
+          is_finished: true,
           post_genre: {
             createMany: {
               data: GenreMapper.toPrisma(payload.genreIds),
@@ -100,9 +98,7 @@ export class PostRepository {
           dedication: payload.dedication || undefined,
           description: payload.description || undefined,
           is_hidden: payload.isHidden || undefined,
-          status: {
-            update: { status_id: payload.statusId || undefined },
-          },
+          is_finished: payload.isFinished || undefined,
           post_tag: {
             createMany: {
               data: TagMapper.toPrisma(payload.insertTags) || undefined,

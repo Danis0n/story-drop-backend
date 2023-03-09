@@ -102,7 +102,7 @@ export interface UpdatePostRequest {
   name: string;
   description: string;
   dedication: string;
-  statusId: string;
+  isFinished: boolean;
   isHidden: boolean;
   insertGenres: string[];
   deleteGenres: string[];

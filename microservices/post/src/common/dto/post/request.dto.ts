@@ -23,8 +23,8 @@ export class UpdatePostRequestDto implements UpdatePostRequest {
   dedication: string;
   description: string;
   isHidden: boolean;
+  isFinished: boolean;
   name: string;
-  statusId: string;
   deleteGenres: string[];
   deleteTags: string[];
   insertGenres: string[];

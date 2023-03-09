@@ -118,14 +118,13 @@ model post {
   date_of_creation DateTime          @db.Timestamp(6)
   is_hidden        Boolean
   is_hidden_admin  Boolean
-  status_id        String            @db.Uuid
+  is_finished      Boolean           @default(false)
   chapter          chapter[]
   character_post   character_post[]
   collection_post  collection_post[]
   fandom_post      fandom_post[]
   likes            likes[]
   paring_post      paring_post[]
-  status           status            @relation(fields: [status_id], references: [status_id], onDelete: Cascade, onUpdate: NoAction)
   post_genre       post_genre[]
   post_tag         post_tag[]
   read_post        read_post[]
@@ -138,12 +137,6 @@ model post_tag {
   tag     tag    @relation(fields: [tag_id], references: [tag_id], onDelete: Cascade)
 
   @@id([tag_id, post_id], map: "tag_post_pkey")
-}
-
-model status {
-  status_id   String @id @db.Uuid
-  status_name String @unique @db.VarChar(100)
-  post        post[]
 }
 
 model tag {
