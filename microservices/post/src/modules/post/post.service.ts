@@ -41,11 +41,46 @@ export class PostService {
     return { post: PostMapper.toDto(post), success: true };
   }
 
-  // TODO: delete userId
+  // TODO: check if works and make better
   public async update(
     payload: UpdatePostRequestDto,
   ): Promise<UpdatePostResponseDto> {
-    return { post: null, success: true };
+    const postId = payload.postId;
+    const deleteTags: string[] = payload.deleteTags;
+    const deleteGenres: string[] = payload.deleteGenres;
+
+    if (deleteTags && deleteTags.length > 0) {
+      await this.deleteTags(deleteTags, postId);
+    }
+
+    if (deleteGenres && deleteGenres.length > 0) {
+      await this.deleteGenres(deleteGenres, postId);
+    }
+
+    const post = await this.r.update(payload);
+    if (!post)
+      throw new GrpcInvalidArgumentException('Ошибка при обновлении поста!');
+
+    return { post: PostMapper.toDto(post), success: true };
+  }
+
+  public async deleteGenres(deleteGenres: string[], postId: string) {
+    for (const genre in deleteGenres) {
+      const deleted = await this.r.deleteGenre(postId, genre);
+      if (!deleted)
+        throw new GrpcInvalidArgumentException(
+          'Ошибка при удалении жанра с поста!',
+        );
+    }
+  }
+  public async deleteTags(deleteTags: string[], postId: string) {
+    for (const tag in deleteTags) {
+      const deleted = await this.r.deleteTag(postId, tag);
+      if (!deleted)
+        throw new GrpcInvalidArgumentException(
+          'Ошибка при удалении тэга с поста!',
+        );
+    }
   }
 
   public async delete({

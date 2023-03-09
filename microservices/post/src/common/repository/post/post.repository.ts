@@ -1,7 +1,11 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { PostInclude, PostWithRelations } from '../../validation/post.prisma';
-import { CreatePostRequestDto, PostPrisma } from '../../dto';
+import {
+  CreatePostRequestDto,
+  PostPrisma,
+  UpdatePostRequestDto,
+} from '../../dto';
 import { randomUUID } from 'crypto';
 import {
   CharacterMapper,
@@ -34,19 +38,29 @@ export class PostRepository {
             connect: { status_id: 'writingId!' }, // TODO: fix IT!!
           },
           post_genre: {
-            create: GenreMapper.toPrisma(payload.genreIds),
+            createMany: {
+              data: GenreMapper.toPrisma(payload.genreIds),
+            },
           },
           fandom_post: {
-            create: FandomMapper.toPrisma(payload.fandomIds),
+            createMany: {
+              data: FandomMapper.toPrisma(payload.fandomIds),
+            },
           },
           paring_post: {
-            create: ParingMapper.toPrisma(payload.paringIds),
+            createMany: {
+              data: ParingMapper.toPrisma(payload.paringIds),
+            },
           },
           post_tag: {
-            create: TagMapper.toPrisma(payload.tagIds),
+            createMany: {
+              data: TagMapper.toPrisma(payload.tagIds),
+            },
           },
           character_post: {
-            create: CharacterMapper.toPrisma(payload.characterIds),
+            createMany: {
+              data: CharacterMapper.toPrisma(payload.characterIds),
+            },
           },
         },
         include: PostInclude,
@@ -70,6 +84,75 @@ export class PostRepository {
     } catch (e) {
       Logger.error(
         `findId: Ошибка во время поиска поста по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async update(
+    payload: UpdatePostRequestDto,
+  ): Promise<PostWithRelations> {
+    try {
+      return await this.prisma.post.update({
+        where: { post_id: payload.postId },
+        data: {
+          post_name: payload.name || undefined,
+          dedication: payload.dedication || undefined,
+          description: payload.description || undefined,
+          is_hidden: payload.isHidden || undefined,
+          status: {
+            update: { status_id: payload.statusId || undefined },
+          },
+          post_tag: {
+            createMany: {
+              data: TagMapper.toPrisma(payload.insertTags) || undefined,
+            },
+          },
+          post_genre: {
+            createMany: {
+              data: GenreMapper.toPrisma(payload.insertGenres) || undefined,
+            },
+          },
+        },
+        include: PostInclude,
+      });
+    } catch (e) {
+      Logger.error(
+        `update: Ошибка во время обновления поста по id: ${JSON.stringify(
+          payload,
+        )}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async deleteTag(
+    postId: string,
+    tagId,
+  ): Promise<{ post_id: string; tag_id: string }> {
+    try {
+      return await this.prisma.post_tag.delete({
+        where: { tag_id_post_id: { tag_id: tagId, post_id: postId } },
+      });
+    } catch (e) {
+      Logger.error(
+        `deleteTags: Ошибка во время удаления тега с поста по id: ${postId}. ${e?.message}`,
+      );
+      return null;
+    }
+  }
+
+  public async deleteGenre(
+    postId: string,
+    genreId,
+  ): Promise<{ post_id: string; genre_id: string }> {
+    try {
+      return await this.prisma.post_genre.delete({
+        where: { genre_id_post_id: { genre_id: genreId, post_id: postId } },
+      });
+    } catch (e) {
+      Logger.error(
+        `deleteTags: Ошибка во время удаления тега с поста по id: ${postId}. ${e?.message}`,
       );
       return null;
     }
