@@ -15,10 +15,10 @@ export class PostDto implements Post {
   genres: GenreDto[];
   isHidden: boolean;
   isHiddenAdmin: boolean;
+  isFinished: boolean;
   name: string;
   parings: ParingDto[];
   postId: string;
-  status: string;
   tags: TagDto[];
   userId: string;
 }

@@ -477,7 +477,7 @@ export interface Post {
   dedication: string;
   isHidden: boolean;
   isHiddenAdmin: boolean;
-  status: string;
+  isFinished: boolean;
   genres: Genre[];
   tags: Tag[];
   characters: Character[];

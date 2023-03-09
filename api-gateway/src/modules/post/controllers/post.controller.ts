@@ -51,6 +51,7 @@ export class PostController implements OnModuleInit {
     return this.serviceClient.createPost(payload);
   }
 
+  @UseInterceptors(GrpcToHttpInterceptor)
   @Get('/:id')
   private async findOneId(
     @Param('id') postId: string,

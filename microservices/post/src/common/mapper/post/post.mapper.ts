@@ -14,7 +14,7 @@ export class PostMapper {
     return Builder(PostDto)
       .dateOfCreation(post.date_of_creation.toString())
       .isHiddenAdmin(post.is_hidden_admin)
-      .status(post.status.status_name)
+      .isFinished(post.is_finished)
       .description(post.description)
       .dedication(post.description)
       .isHidden(post.is_hidden)
