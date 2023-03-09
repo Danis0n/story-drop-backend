@@ -8,6 +8,7 @@ export class ParingMapper {
   }
 
   public static toPrisma(paringIds: string[]): { paring_id: string }[] {
+    if (!paringIds) return null;
     return paringIds.map((id) => {
       return { paring_id: id };
     });

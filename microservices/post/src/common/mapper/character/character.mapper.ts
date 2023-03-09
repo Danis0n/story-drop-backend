@@ -11,6 +11,7 @@ export class CharacterMapper {
   }
 
   public static toPrisma(characterIds: string[]) {
+    if (!characterIds) return null;
     return characterIds.map((id) => {
       return { character_id: id };
     });

@@ -7,6 +7,7 @@ import { ParingMapper } from '../paring';
 import { GenreMapper } from '../genre';
 import { CharacterMapper } from '../character';
 import { FandomMapper } from '../fandom';
+import { TagMapper } from '../tag';
 
 @Injectable()
 export class PostMapper {
@@ -44,6 +45,11 @@ export class PostMapper {
       .parings(
         post.paring_post.map(({ paring }) => {
           return ParingMapper.toDto(paring);
+        }),
+      )
+      .tags(
+        post.post_tag.map(({ tag }) => {
+          return TagMapper.toDto(tag);
         }),
       )
       .build();

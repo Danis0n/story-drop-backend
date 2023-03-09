@@ -5,11 +5,7 @@ import { Builder } from 'builder-pattern';
 
 @Injectable()
 export class TagMapper {
-  public static mapToTagDto({
-    tag_id,
-    tag_name,
-    age,
-  }: TagWithRelation): TagDto {
+  public static toDto({ tag_id, tag_name, age }: TagWithRelation): TagDto {
     return Builder(TagDto)
       .tagId(tag_id)
       .name(tag_name)

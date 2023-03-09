@@ -7,13 +7,7 @@ import {
   UpdatePostRequestDto,
 } from '../../dto';
 import { randomUUID } from 'crypto';
-import {
-  CharacterMapper,
-  FandomMapper,
-  GenreMapper,
-  ParingMapper,
-  TagMapper,
-} from '../../mapper';
+import { FandomMapper, GenreMapper, TagMapper } from '../../mapper';
 
 @Injectable()
 export class PostRepository {
@@ -45,21 +39,21 @@ export class PostRepository {
               data: FandomMapper.toPrisma(payload.fandomIds),
             },
           },
-          paring_post: {
-            createMany: {
-              data: ParingMapper.toPrisma(payload.paringIds),
-            },
-          },
+          // paring_post: {
+          //   createMany: {
+          //     data: ParingMapper.toPrisma(payload.paringIds) || undefined,
+          //   },
+          // },
           post_tag: {
             createMany: {
               data: TagMapper.toPrisma(payload.tagIds),
             },
           },
-          character_post: {
-            createMany: {
-              data: CharacterMapper.toPrisma(payload.characterIds),
-            },
-          },
+          // character_post: {
+          //   createMany: {
+          //     data: CharacterMapper.toPrisma(payload.characterIds) || undefined,
+          //   },
+          // },
         },
         include: PostInclude,
       });
@@ -87,6 +81,7 @@ export class PostRepository {
     }
   }
 
+  // TODO: fix if create new post_tag, post_genre
   public async update(
     payload: UpdatePostRequestDto,
   ): Promise<PostWithRelations> {
@@ -101,12 +96,12 @@ export class PostRepository {
           is_finished: payload.isFinished || undefined,
           post_tag: {
             createMany: {
-              data: TagMapper.toPrisma(payload.insertTags) || undefined,
+              data: TagMapper.toPrisma(payload.insertTags),
             },
           },
           post_genre: {
             createMany: {
-              data: GenreMapper.toPrisma(payload.insertGenres) || undefined,
+              data: GenreMapper.toPrisma(payload.insertGenres),
             },
           },
         },

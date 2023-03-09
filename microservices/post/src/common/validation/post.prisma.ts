@@ -4,7 +4,7 @@ export const PostInclude = Prisma.validator<Prisma.postInclude>()({
   paring_post: { include: { paring: true } },
   collection_post: { include: { collection: true } },
   post_genre: { include: { genre: true } },
-  post_tag: { include: { tag: true } },
+  post_tag: { include: { tag: { include: { age: true } } } },
   fandom_post: { include: { fandom: true } },
   character_post: { include: { character: true } },
   chapter: true,

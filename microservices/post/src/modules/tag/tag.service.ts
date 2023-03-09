@@ -29,7 +29,7 @@ export class TagService {
     if (!tag)
       throw new GrpcInvalidArgumentException('Ошибка при создании тэга!');
 
-    return { success: true, tag: TagMapper.mapToTagDto(tag) };
+    return { success: true, tag: TagMapper.toDto(tag) };
   }
 
   public async findId({
@@ -38,7 +38,7 @@ export class TagService {
     const tag = await this.r.findId(tagId);
     if (!tag) throw new GrpcNotFoundException('Ошибка при поиске тэга!');
 
-    return { success: true, tag: TagMapper.mapToTagDto(tag) };
+    return { success: true, tag: TagMapper.toDto(tag) };
   }
 
   public async update({
@@ -48,7 +48,7 @@ export class TagService {
     const tag = await this.r.update(tagId, name);
     if (!tag) throw new GrpcNotFoundException('Ошибка при обновлении тэга!');
 
-    return { success: true, tag: TagMapper.mapToTagDto(tag) };
+    return { success: true, tag: TagMapper.toDto(tag) };
   }
 
   public async delete({

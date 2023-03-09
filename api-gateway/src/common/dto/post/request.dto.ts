@@ -8,37 +8,20 @@ import {
 import { IsOptional } from 'class-validator';
 
 export class CreatePostRequestDto implements CreatePostRequest {
+  name: string;
+  @IsOptional()
   characterIds: string[];
+  @IsOptional()
   dedication: string;
+  @IsOptional()
   description: string;
   fandomIds: string[];
   genreIds: string[];
-  name: string;
+  @IsOptional()
   paringIds: string[];
   tagIds: string[];
+  @IsOptional()
   userId: string;
-}
-
-export class UpdatePostDto {
-  postId: string;
-  @IsOptional()
-  isFinished: boolean;
-  @IsOptional()
-  dedication: string;
-  @IsOptional()
-  description: string;
-  @IsOptional()
-  isHidden: boolean;
-  @IsOptional()
-  name: string;
-  @IsOptional()
-  deleteGenres: string[];
-  @IsOptional()
-  deleteTags: string[];
-  @IsOptional()
-  insertGenres: string[];
-  @IsOptional()
-  insertTags: string[];
 }
 
 export class UpdatePostRequestDto implements UpdatePostRequest {
