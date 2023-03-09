@@ -22,7 +22,7 @@ export class CreatePostRequestDto implements CreatePostRequest {
 export class UpdatePostDto {
   postId: string;
   @IsOptional()
-  statusId: string;
+  isFinished: boolean;
   @IsOptional()
   dedication: string;
   @IsOptional()
@@ -52,8 +52,9 @@ export class UpdatePostRequestDto implements UpdatePostRequest {
   @IsOptional()
   isHidden: boolean;
   @IsOptional()
+  isFinished: boolean;
+  @IsOptional()
   name: string;
-
   @IsOptional()
   deleteGenres: string[];
   @IsOptional()

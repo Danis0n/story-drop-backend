@@ -62,7 +62,6 @@ export class AuthController implements OnModuleInit {
   @UseGuards(IsAuthenticatedGuard, UserIdValidateGuard)
   @Get('protected')
   private protected(@UserId() uuid: string) {
-    console.log(uuid);
     return {
       message: 'This route is protected against unauthenticated users!',
     };
