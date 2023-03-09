@@ -30,7 +30,6 @@ export class PostService {
     return { post: PostMapper.toDto(post), success: true };
   }
 
-  // TODO: fix to postId later
   public async findId({
     postId,
   }: FindOnePostByIdRequestDto): Promise<FindOnePostResponse> {
@@ -41,7 +40,6 @@ export class PostService {
     return { post: PostMapper.toDto(post), success: true };
   }
 
-  // TODO: check if works and make better
   public async update(
     payload: UpdatePostRequestDto,
   ): Promise<UpdatePostResponseDto> {
