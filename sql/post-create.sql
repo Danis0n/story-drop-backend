@@ -28,8 +28,10 @@ CREATE TABLE character
 CREATE TABLE status
 (
     status_id UUID UNIQUE NOT NULL PRIMARY KEY,
-    status_name VARCHAR(100) UNIQUE  NOT NULL
+    status_state BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+
 
 CREATE TABLE genre
 (
@@ -47,8 +49,10 @@ CREATE TABLE post
     date_of_creation TIMESTAMP NOT NULL,
     is_hidden BOOLEAN NOT NULL,
     is_hidden_admin BOOLEAN NOT NULL,
-    status_id UUID NOT NULL REFERENCES status(status_id) ON DELETE CASCADE
+    is_finished BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+ALTER TABLE post ADD COLUMN is_finished BOOLEAN NOT NULL DEFAULT false;
 
 CREATE TABLE chapter
 (
