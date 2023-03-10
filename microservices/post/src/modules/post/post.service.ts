@@ -90,24 +90,24 @@ export class PostService {
   }
 
   private async insertTags(postId: string, ids: string[]) {
-    ids && ids.length > 0 ? await this.r.insertTags(postId, ids) : null;
+    ids ? await this.r.insertTags(postId, ids) : null;
   }
 
   private async insertCharacters(postId: string, ids: string[]) {
-    ids && ids.length > 0 ? await this.r.insertCharacters(postId, ids) : null;
+    ids ? await this.r.insertCharacters(postId, ids) : null;
   }
 
   private async insertFandoms(postId: string, ids: string[]) {
-    ids && ids.length > 0 ? await this.r.insertFandoms(postId, ids) : null;
+    ids ? await this.r.insertFandoms(postId, ids) : null;
   }
 
   private async insertParings(postId: string, ids: string[]) {
-    ids && ids.length > 0 ? await this.r.insertParings(postId, ids) : null;
+    ids ? await this.r.insertParings(postId, ids) : null;
   }
 
   private async deleteGenres(postId: string, ids: string[]) {
-    if (ids && ids.length > 0) return;
-    for (const genre in ids) {
+    if (!ids) return;
+    for (const genre of ids) {
       const deleted = await this.r.deleteGenre(postId, genre);
       if (!deleted)
         throw new GrpcInvalidArgumentException(
@@ -117,8 +117,8 @@ export class PostService {
   }
 
   private async deleteTags(postId: string, ids: string[]) {
-    if (ids && ids.length > 0) return;
-    for (const tag in ids) {
+    if (!ids) return;
+    for (const tag of ids) {
       const deleted = await this.r.deleteTag(postId, tag);
       if (!deleted)
         throw new GrpcInvalidArgumentException(
